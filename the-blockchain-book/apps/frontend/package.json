@@ -8,10 +8,11 @@
     "build": "tsc -b && vite build"
   },
   "dependencies": {
+    "@repo/validations": "*",
     "jsx": "^0.9.89",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "@repo/validations": "*"
+    "react-router": "^8.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
