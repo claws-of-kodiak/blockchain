@@ -1,6 +1,6 @@
-# blockchain
+# The Blockchain Book
 
-Public projects
+## Portfolio Project
 
 This project hosts a curriculm with content including but not limited to vocabulary, videos, slide decks, paragraphs, flashcards, quizes, tutorials, and excercises realting to blockchain token research. The project includes code from the Admin side as well as the User side. The admin is allowed to update and change course progress for users. Users are students and have certain requirements like video watch time and quiz completion that they must complete in order to access the next objective.
 
