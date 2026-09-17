@@ -5,13 +5,18 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc -b",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "migrate:create": "npx node-pg-migrate create --migration-file-language js",
+    "migrate:up": "npx node-pg-migrate  up",
+    "migrate:down": "npx node-pg-migrate  down"
   },
   "dependencies": {
     "@repo/validations": "*",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.1.0",
-    "pg": "^8.16.3"
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
