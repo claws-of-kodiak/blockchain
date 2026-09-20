@@ -6,13 +6,24 @@ export class CourseRepository {
     this.pool = pool;
   }
   // Begin progress for user
-  async beginCourse(userId: number) {
+  async beginCourse(userId: string) {
     const queryText = `
-        INSERT INTO user_progress (user_id, current_step, updated_at)
-        VALUES ($1, $2, $3)
+        INSERT INTO user_progress (user_id, current_step)
+        VALUES ($1, $2)
         RETURNING updated_at;
     `;
-    const result = await this.pool.query(queryText, [userId, 0.0, Date.now()]);
+    const result = await this.pool.query(queryText, [userId, 0.1]);
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
+  // Get user progress
+  async getProgressById(userId: string) {}
+  // Unlock next step
+  async unlockNextStep(userId: string, nextStep: number) {
+    const result = await this.pool.query(
+      `UPDATE user_progress SET current_step = $1 WHERE user_id = $2 RETURNING current_step`,
+      [nextStep, userId]
+    );
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }

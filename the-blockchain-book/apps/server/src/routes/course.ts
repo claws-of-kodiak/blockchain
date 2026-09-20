@@ -8,6 +8,7 @@ const courseRepo = new CourseRepository(pool);
 courseRouter.post("/begin", async (req, res) => {
   const userId = req.body.userId;
   console.log("req.body.userID", userId);
+  // ◻ Check if userId already exists in db
   const time = await courseRepo.beginCourse(userId);
   if (time === null)
     return res
@@ -16,9 +17,12 @@ courseRouter.post("/begin", async (req, res) => {
   return res.status(200).json({ time, message: "Course progress has begun." });
 });
 
-courseRouter.get("/unlockStep", (req, res) => {
-  console.log("Recieved request to course/unlockStep", req);
-  return res.status(200).json({ message: "You have unlocked the next step." });
+courseRouter.post("/unlockStep", async (req, res) => {
+  // Getting Error after this is called for some reason.
+  const { userId, nextStep } = req.body;
+  const currentStep = await courseRepo.unlockNextStep(userId, nextStep);
+  console.log("currentStep response", currentStep);
+  return res.status(200).json(currentStep);
 });
 
 export default courseRouter;
