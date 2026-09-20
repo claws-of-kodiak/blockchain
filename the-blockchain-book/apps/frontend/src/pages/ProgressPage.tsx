@@ -1,28 +1,22 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { publicFetch } from "../services/apiClient";
 
 // Need Util function to generate UUID for user_id
 const userId: string = "123e4567-e89b-12d3-a456-426655440000";
 
 const postUnlockStep = async (nextStep: number) => {
-  const res = await fetch("http://localhost:3000/course/unlockStep", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId, nextStep }),
+  const data = await publicFetch.post("/course/unlockStep", {
+    userId,
+    nextStep,
   });
-  if (!res.ok) throw new Error("Failed to unlock next step.");
-  return res.json();
+  return data;
 };
 
 const postBeginCourse = async () => {
-  const res = await fetch("http://localhost:3000/course/begin", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId }),
-  });
-  if (!res.ok) throw new Error("Failed to unlock next step.");
-  console.log("Course begun at", res);
-  return res.json();
+  const data = await publicFetch.post("/course/begin", { userId });
+  console.log("Course begun at", data);
+  return data;
 };
 
 export default function ProgressPage() {
