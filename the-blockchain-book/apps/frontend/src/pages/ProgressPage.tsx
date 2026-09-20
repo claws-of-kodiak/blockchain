@@ -50,15 +50,15 @@ export default function ProgressPage() {
 
   return (
     <>
-      <p>Current Step: {step.toFixed(1)}</p>
-      <button onClick={() => handleBeginCourse()}>Begin Course</button>
-      {step > 0 && (
+      {step > 0 ? (
         <div>
           <p>Current Step: {step.toFixed(1)}</p>
           <button onClick={() => handleStepUnlock(step)}>
             {isPending ? "..." : "Next Step"}
           </button>
         </div>
+      ) : (
+        <button onClick={() => handleBeginCourse()}>Begin Course</button>
       )}
     </>
   );
