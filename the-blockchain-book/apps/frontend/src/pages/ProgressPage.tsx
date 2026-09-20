@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 // Need Util function to generate UUID for user_id
@@ -11,7 +11,7 @@ const postUnlockStep = async (nextStep: number) => {
     body: JSON.stringify({ userId, nextStep }),
   });
   if (!res.ok) throw new Error("Failed to unlock next step.");
-  return res;
+  return res.json();
 };
 
 const postBeginCourse = async () => {
@@ -27,16 +27,19 @@ const postBeginCourse = async () => {
 
 export default function ProgressPage() {
   const [step, setStep] = useState<number>(0);
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["nextStep"],
     mutationFn: postUnlockStep,
+    onSuccess: (res, newStep) => {
+      setStep(newStep);
+      console.log("Successful step update: ", res);
+    },
+    onError: (error) => console.error("Mutation fn failed", error),
   });
 
-  const handleStepUnlock = (step: number) => {
+  const handleStepUnlock = async (step: number) => {
     const nextStep = step + 0.1;
-    const res = mutate(nextStep);
-    if (error) return;
-    console.log("res (from mutationFn)", res);
+    mutate(nextStep);
   };
 
   const handleBeginCourse = async () => {
@@ -51,7 +54,7 @@ export default function ProgressPage() {
       <button onClick={() => handleBeginCourse()}>Begin Course</button>
       {step > 0 && (
         <div>
-          <p>Current Step: {step}</p>
+          <p>Current Step: {step.toFixed(1)}</p>
           <button onClick={() => handleStepUnlock(step)}>
             {isPending ? "..." : "Next Step"}
           </button>
