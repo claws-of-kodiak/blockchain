@@ -1,0 +1,191 @@
+/* Import a clean, geometric font for retro-modern tech vibe */
+@import url("https://googleapis.com");
+
+:root {
+  --bg-dark: #0f141c;
+  --bg-surface: #171e29;
+  --bg-card: #1f2937;
+  --accent-retro: #39ff14; /* Matrix neon green */
+  --accent-muted: #10b981; /* Professional emerald */
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-color: #2e3b4e;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header / Hero Section */
+header {
+  text-align: center;
+  padding: 5rem 1.5rem 3rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+header h1 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+header p {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+header button {
+  background-color: transparent;
+  color: var(--accent-retro);
+  border: 2px solid var(--accent-retro);
+  padding: 0.75rem 2rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+header button:hover {
+  background-color: var(--accent-retro);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+}
+
+/* Main Container Layout */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+section {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+section h2 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: #ffffff;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+/* Framework Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  font-family: var(--font-display);
+  color: var(--accent-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+td strong {
+  color: var(--accent-retro);
+  font-family: var(--font-display);
+}
+
+tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Core Operating Principles (Lists) */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+ul li::before {
+  content: "■";
+  position: absolute;
+  left: 0;
+  color: var(--accent-retro);
+  font-size: 0.8rem;
+  top: 0.2rem;
+}
+
+ul li strong {
+  color: #ffffff;
+}
+
+/* Maxim Blockquote Styling */
+#maxim {
+  background: linear-gradient(135deg, var(--bg-surface) 0%, #1a2332 100%);
+  border-left: 4px solid var(--accent-retro);
+  text-align: center;
+}
+
+blockquote {
+  margin: 0;
+  padding: 1rem 0;
+}
+
+blockquote p {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-style: italic;
+  color: #ffffff;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+cite {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Footer Styling */
+footer {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
