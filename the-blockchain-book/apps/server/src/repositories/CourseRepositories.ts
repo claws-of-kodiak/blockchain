@@ -17,7 +17,16 @@ export class CourseRepository {
     return result.rows[0];
   }
   // Get user progress
-  async getProgressById(userId: string) {}
+  async getProgressById(userId: string) {
+    const result = await this.pool.query(
+      `
+      SELECT current_step FROM user_progress WHERE user_id = $1
+      `,
+      [userId]
+    );
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
   // Unlock next step
   async unlockNextStep(userId: string, nextStep: number) {
     const result = await this.pool.query(
