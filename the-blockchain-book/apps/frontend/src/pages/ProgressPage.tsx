@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { publicFetch } from "../services/apiClient";
+import GetProgress from "../features/progress/GetProgress";
 
 // Need Util function to generate UUID for user_id
-export const userId: string = "123e4567-e89b-12d3-a456-426655440000";
+const userId: string = "123e4567-e89b-12d3-a456-426655440000";
 
 const postUnlockStep = async (nextStep: number) => {
   const data = await publicFetch.post("/course/unlockStep", {
@@ -50,6 +51,7 @@ export default function ProgressPage() {
           <button onClick={() => handleStepUnlock(step)}>
             {isPending ? "..." : "Next Step"}
           </button>
+          <GetProgress />
         </div>
       ) : (
         <button onClick={() => handleBeginCourse()}>Begin Course</button>

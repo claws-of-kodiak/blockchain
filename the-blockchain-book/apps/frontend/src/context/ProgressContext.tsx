@@ -1,16 +1,17 @@
 import { createContext, useContext } from "react";
 import { publicFetch } from "../services/apiClient";
-import { userId } from "../pages/ProgressPage";
 import { useQuery } from "@tanstack/react-query";
 
+// Need Util function to generate UUID for user_id
+const userId: string = "123e4567-e89b-12d3-a456-426655440000";
+
 const fetchUserProgress = async (): Promise<number> => {
-  const data = publicFetch.get(`/course/userProgress/${userId}`);
-  return Number(data);
+  const data = await publicFetch.get(`/course/userProgress/${userId}`);
+  return data;
 };
 
 type ProgressContextType = {
-  currentStep: number;
-  nextStep: number;
+  currentStep: number | null;
   isLoading: boolean;
   isError: boolean;
   refetch: () => void;
@@ -34,7 +35,6 @@ export default function ProgressProvider({
 
   const value: ProgressContextType = {
     currentStep: data ?? null,
-    nextStep: data + 0.1,
     isLoading,
     isError,
     refetch,
