@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import "../../styles/auth-card.css";
 
 export default function LogInCard() {
@@ -9,10 +9,12 @@ export default function LogInCard() {
     reset,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log("Form skelton works", data);
     reset();
+    navigate("/progress");
   };
 
   return (
