@@ -4,12 +4,12 @@ import { progress } from "../services/progressClient";
 // import GetProgress from "../features/progress/GetProgress";
 
 const postUnlockStep = async (nextStep: number) => {
-  const data = await progress.nextStep("/course/unlockStep", nextStep);
+  const data = await progress.nextStep(nextStep);
   return data;
 };
 
 const postBeginCourse = async () => {
-  const data = await progress.begin("/course/begin");
+  const data = await progress.begin();
   console.log("Course begun at", data);
   return data;
 };
@@ -36,6 +36,10 @@ export default function ProgressPage() {
     if (res === null) return;
     setStep(0.1);
   };
+  const handleDeleteProgress = async () => {
+    await progress.delete();
+    setStep(null);
+  };
 
   return (
     <>
@@ -46,6 +50,9 @@ export default function ProgressPage() {
             {isPending ? "..." : "Next Step"}
           </button>
           {/* <GetProgress /> */}
+          <button onClick={() => handleDeleteProgress()}>
+            Restart Progress
+          </button>
         </div>
       ) : (
         <button onClick={() => handleBeginCourse()}>Begin Course</button>

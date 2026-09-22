@@ -31,11 +31,25 @@ courseRouter.post("/begin", async (req, res) => {
 });
 
 courseRouter.post("/unlockStep", async (req, res) => {
-  // Getting Error after this is called for some reason.
-  const { userId, nextStep } = req.body;
-  const currentStep = await courseRepo.unlockNextStep(userId, nextStep);
+  if (!req.headers.authorization) throw new Error("No authorization found");
+  const email = extractBearerToken(req.headers.authorization);
+  if (!email) throw new Error("No email found");
+  const user = await authRepo.findUserByEmail(email);
+  const currentStep = await courseRepo.unlockNextStep(
+    user.id,
+    req.body.nextStep
+  );
   console.log("currentStep response", currentStep);
   return res.status(201).json(currentStep);
+});
+
+courseRouter.delete("/deleteProgress", async (req, res) => {
+  if (!req.headers.authorization) throw new Error("No authorization found");
+  const email = extractBearerToken(req.headers.authorization);
+  if (!email) throw new Error("No email found");
+  const user = await authRepo.findUserByEmail(email);
+  await courseRepo.deleteProgress(user.id);
+  return res.status(204).json();
 });
 
 export default courseRouter;
