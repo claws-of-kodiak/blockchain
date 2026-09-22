@@ -1,12 +1,11 @@
 import express from "express";
 import pool from "../db";
 import { AuthRepository } from "../repositories/AuthRepositories";
-import courseRouter from "./course";
 
 const authRouter = express.Router();
 const authRepo = new AuthRepository(pool);
 
-courseRouter.post("/register", async (req, res) => {
+authRouter.post("/register", async (req, res) => {
   const { email, birthDate, password } = req.body;
   // Install and integrate bcrypt()
   const hash = password;

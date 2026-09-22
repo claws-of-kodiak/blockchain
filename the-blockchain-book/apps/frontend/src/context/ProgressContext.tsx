@@ -30,7 +30,7 @@ export default function ProgressProvider({
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["progress"],
     queryFn: fetchUserProgress,
-    enabled: !!userId,
+    enabled: false,
   });
 
   const value: ProgressContextType = {
