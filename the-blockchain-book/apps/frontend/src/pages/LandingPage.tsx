@@ -1,5 +1,6 @@
 import LogInCard from "../features/auth/LogInCard";
 import ".././styles/landing-page.css";
+import { Link } from "react-router";
 
 export default function LandingPage() {
   return (
@@ -10,7 +11,11 @@ export default function LandingPage() {
           A repeatable diagnostic framework for evaluating any blockchain token
           (network, protocol, or application) across three layers of analysis.
         </p>
-        <button>Enroll Now</button>
+        <button>
+          <Link style={{ all: "unset" }} to="/register">
+            Enroll Now
+          </Link>
+        </button>
       </header>
 
       <main>
