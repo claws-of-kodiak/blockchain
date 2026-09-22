@@ -1,9 +1,10 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { authFetch } from "../services/apiClient";
 import { useQuery } from "@tanstack/react-query";
+import { getAccessToken } from "../services/authClient";
 
 const fetchUserProgress = async (): Promise<number> => {
-  const data = await authFetch.get(`/course/userProgress`);
+  const data = await authFetch.get(`/course/progress`);
   return data;
 };
 
@@ -23,11 +24,12 @@ export default function ProgressProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const token = getAccessToken();
   // insert useUser hook to pull real userId
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["progress"],
     queryFn: fetchUserProgress,
-    enabled: false,
+    enabled: !!token,
   });
 
   const value: ProgressContextType = {
@@ -38,10 +40,3 @@ export default function ProgressProvider({
   };
   return <ProgressContext value={value}>{children}</ProgressContext>;
 }
-
-export const useProgress = () => {
-  const context = useContext(ProgressContext);
-  if (!context)
-    throw new Error("useProgress must be used within ProgressProvider.");
-  return context;
-};

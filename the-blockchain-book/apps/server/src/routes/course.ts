@@ -8,12 +8,16 @@ const courseRouter = express.Router();
 const courseRepo = new CourseRepository(pool);
 const authRepo = new AuthRepository(pool);
 
-courseRouter.get("/userProgress", async (req, res) => {
-  const userId = "asdfjkl"; // Need to pull token from Authorization
-  const stepObj = await courseRepo.getProgressById(userId);
+courseRouter.get("/progress", async (req, res) => {
+  if (!req.headers.authorization) throw new Error("No authorization found");
+  const email = extractBearerToken(req.headers.authorization);
+  if (!email) throw new Error("No email found");
+  const user = await authRepo.findUserByEmail(email);
+  const stepObj = await courseRepo.getProgressById(user.id);
   if (stepObj === null)
-    return res.status(404).json({ message: "No user progress found." });
-  const currentStep = Number(stepObj.currentStep);
+    return res.status(404).json({ message: "No progress found." });
+  const currentStep = Number(stepObj.current_step);
+  console.log("currentStep ", currentStep);
   return res.status(200).json(currentStep);
 });
 

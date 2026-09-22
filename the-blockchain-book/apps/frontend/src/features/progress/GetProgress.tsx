@@ -1,11 +1,11 @@
-import { useProgress } from "../../context/ProgressContext";
+import { useProgress } from "../../hooks/useProgress";
 
 export default function GetProgress() {
-  const { isLoading, refetch } = useProgress();
+  const { currentStep, refetch } = useProgress();
 
   return (
     <>
-      <p> Loading? {isLoading}</p>
+      <p> Loading? {currentStep}</p>
 
       <button onClick={() => refetch()}>Refresh</button>
     </>
