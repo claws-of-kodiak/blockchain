@@ -13,12 +13,13 @@ export default function RegisterCard() {
   } = useForm();
   const navigate = useNavigate();
 
-  const { mutate, isPending, isError } = useMutation({
+  const { data, mutate, isPending, isError } = useMutation({
     mutationKey: ["register"],
     mutationFn: registerUser,
     onSuccess: () => {
       reset();
       navigate("/home"); // create home route and constant
+      localStorage.setItem("userId", data);
     },
   });
 

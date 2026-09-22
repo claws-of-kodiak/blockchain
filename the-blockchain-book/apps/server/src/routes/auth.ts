@@ -10,10 +10,10 @@ courseRouter.post("/register", async (req, res) => {
   const { email, birthDate, password } = req.body;
   // Install and integrate bcrypt()
   const hash = password;
-  const newUser = await authRepo.registerUser(email, birthDate, hash);
-  if (newUser === null)
+  const newUserId = await authRepo.registerUser(email, birthDate, hash);
+  if (newUserId === null)
     return res.status(500).json({ message: "Failed to insert user." });
-  return res.status(201).json(newUser);
+  return res.status(201).json(newUserId);
 });
 
 export default authRouter;
