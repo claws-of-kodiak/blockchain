@@ -1,5 +1,6 @@
 const APP_ROUTES = {
   LANDING: "/",
+  LOG_IN: "/login",
   PROGRESS: "/progress",
   REGISTER: "/register",
   HOME: "/home",

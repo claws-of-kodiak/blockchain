@@ -18,7 +18,7 @@ export default function RegisterCard() {
     mutationFn: registerUser,
     onSuccess: () => {
       reset();
-      navigate("/home"); // create home route and constant
+      navigate("/login"); // create home route and constant
       localStorage.setItem("userId", data);
     },
   });
