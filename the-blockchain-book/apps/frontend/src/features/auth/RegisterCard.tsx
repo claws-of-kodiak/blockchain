@@ -3,6 +3,7 @@ import "../../styles/auth-card.css";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../services/authClient";
 import { useNavigate } from "react-router";
+import ErrorMsg from "../../shared/components/ErrorMsg";
 
 export default function RegisterCard() {
   const {
@@ -13,7 +14,7 @@ export default function RegisterCard() {
   } = useForm();
   const navigate = useNavigate();
 
-  const { mutate, isPending, isError } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationKey: ["register"],
     mutationFn: registerUser,
     onSuccess: () => {
@@ -36,14 +37,12 @@ export default function RegisterCard() {
           placeholder="Password"
           {...register("password")}
         />
-        {errors.root && <p>Error with form - please try again.</p>}
+        {errors.root && <ErrorMsg msg={errors.root.message} />}
         <button disabled={isPending} type="submit">
           {isPending ? "..." : "Create Account"}
         </button>
       </form>
-      {isError && ( // Need to copy ErrorMsg component over
-        <p>There was an error creating your account. Please try again. </p>
-      )}
+      {error && <ErrorMsg msg={error.message} />}
     </div>
   );
 }
