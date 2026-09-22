@@ -36,7 +36,7 @@ export default function LandingPage() {
             <tbody>
               <tr>
                 <td>
-                  <strong>1. Utility</strong>
+                  <strong>Utility</strong>
                 </td>
                 <td>
                   What does this network or protocol provide that I can't find
@@ -46,7 +46,7 @@ export default function LandingPage() {
               </tr>
               <tr>
                 <td>
-                  <strong>2. Token</strong>
+                  <strong>Token</strong>
                 </td>
                 <td>
                   Given utility and usage rates increase, will the token also
@@ -56,7 +56,7 @@ export default function LandingPage() {
               </tr>
               <tr>
                 <td>
-                  <strong>3. Human</strong>
+                  <strong>Human</strong>
                 </td>
                 <td>
                   Who has influence over this project and how much do they have?
