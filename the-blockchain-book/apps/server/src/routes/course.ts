@@ -1,12 +1,15 @@
 import express from "express";
 import { CourseRepository } from "../repositories/CourseRepositories";
 import pool from "../db";
+import { extractBearerToken } from "../util/auth";
+import { AuthRepository } from "../repositories/AuthRepositories";
 
 const courseRouter = express.Router();
 const courseRepo = new CourseRepository(pool);
+const authRepo = new AuthRepository(pool);
 
-courseRouter.get("/userProgress/:id", async (req, res) => {
-  const userId = req.params.id;
+courseRouter.get("/userProgress", async (req, res) => {
+  const userId = "asdfjkl"; // Need to pull token from Authorization
   const stepObj = await courseRepo.getProgressById(userId);
   if (stepObj === null)
     return res.status(404).json({ message: "No user progress found." });
@@ -15,10 +18,11 @@ courseRouter.get("/userProgress/:id", async (req, res) => {
 });
 
 courseRouter.post("/begin", async (req, res) => {
-  const userId: string = req.body.userId;
-  console.log("req.body.userID", userId);
-  // ◻ Check if userId already exists in db
-  const time = await courseRepo.beginCourse(userId);
+  if (!req.headers.authorization) throw new Error("No authorization found");
+  const email = extractBearerToken(req.headers.authorization);
+  if (!email) throw new Error("No email found");
+  const user = await authRepo.findUserByEmail(email);
+  const time = await courseRepo.beginCourse(user.id);
   if (time === null)
     return res
       .status(500)

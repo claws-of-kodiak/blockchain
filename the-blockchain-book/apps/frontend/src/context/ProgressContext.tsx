@@ -1,12 +1,9 @@
 import { createContext, useContext } from "react";
-import { publicFetch } from "../services/apiClient";
+import { authFetch } from "../services/apiClient";
 import { useQuery } from "@tanstack/react-query";
 
-// Need Util function to generate UUID for user_id
-const userId: string = "123e4567-e89b-12d3-a456-426655440000";
-
 const fetchUserProgress = async (): Promise<number> => {
-  const data = await publicFetch.get(`/course/userProgress/${userId}`);
+  const data = await authFetch.get(`/course/userProgress`);
   return data;
 };
 

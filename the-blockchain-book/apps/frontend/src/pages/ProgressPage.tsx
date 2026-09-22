@@ -1,21 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { publicFetch } from "../services/apiClient";
+import { progress } from "../services/progressClient";
 // import GetProgress from "../features/progress/GetProgress";
 
-// Need Util function to generate UUID for user_id
-const userId: string = "123e4567-e89b-12d3-a456-426655440000";
-
 const postUnlockStep = async (nextStep: number) => {
-  const data = await publicFetch.post("/course/unlockStep", {
-    userId,
-    nextStep,
-  });
+  const data = await progress.nextStep("/course/unlockStep", nextStep);
   return data;
 };
 
 const postBeginCourse = async () => {
-  const data = await publicFetch.post("/course/begin", { userId });
+  const data = await progress.begin("/course/begin");
   console.log("Course begun at", data);
   return data;
 };
