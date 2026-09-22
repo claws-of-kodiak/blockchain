@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import courseRouter from "./routes/course";
+import authRouter from "./routes/auth";
 
 const app = express();
 const port = 3000;
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Server Routes
 app.use("/course", courseRouter);
+app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.send(`You made a GET request to port: ${port}`);

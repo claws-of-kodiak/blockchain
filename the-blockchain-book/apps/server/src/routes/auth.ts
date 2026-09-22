@@ -1,0 +1,19 @@
+import express from "express";
+import pool from "../db";
+import { AuthRepository } from "../repositories/AuthRepositories";
+import courseRouter from "./course";
+
+const authRouter = express.Router();
+const authRepo = new AuthRepository(pool);
+
+courseRouter.post("/register", async (req, res) => {
+  const { email, birthDate, password } = req.body;
+  // Install and integrate bcrypt()
+  const hash = password;
+  const newUser = await authRepo.registerUser(email, birthDate, hash);
+  if (newUser === null)
+    return res.status(500).json({ message: "Failed to insert user." });
+  return res.status(201).json(newUser);
+});
+
+export default authRouter;
