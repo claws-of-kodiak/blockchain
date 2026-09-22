@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import "../../styles/auth-card.css";
 import { useMutation } from "@tanstack/react-query";
+import { login } from "../../services/authClient";
 
 export default function LogInCard() {
   const {
@@ -12,10 +13,17 @@ export default function LogInCard() {
   } = useForm();
   const navigate = useNavigate();
 
+  const { mutate, isPending, isError } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: login,
+    onSuccess: () => {
+      reset();
+      navigate("/home");
+    },
+  });
+
   const onSubmit = (data) => {
-    console.log("Form skelton works", data);
-    reset();
-    navigate("/progress");
+    mutate(data);
   };
 
   return (
@@ -29,8 +37,9 @@ export default function LogInCard() {
           {...register("password")}
         />
         {errors.root && <p>Error with form - please try again.</p>}
-        <button type="submit">Log In</button>
+        <button type="submit">{isPending ? "..." : "Log In"}</button>
       </form>
+      {isError && <p>Error Message here</p>}
       <span>
         <Link to="/register">Create an Account</Link>
       </span>

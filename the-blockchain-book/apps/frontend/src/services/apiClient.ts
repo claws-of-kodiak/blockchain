@@ -34,7 +34,7 @@ export const authFetch = {
     return coreFetch(path, { ...options, method: "GET", headers });
   },
 
-  post: async (path: string, body: any, options: RequestInit = {}) => {
+  post: async (path: string, body?: any, options: RequestInit = {}) => {
     const headers = await getAuthHeaders(options.headers);
     return coreFetch(path, {
       ...options,

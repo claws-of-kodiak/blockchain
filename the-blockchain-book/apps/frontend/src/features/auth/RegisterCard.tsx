@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import "../../styles/auth-card.css";
 import { useMutation } from "@tanstack/react-query";
-import registerUser from "../../services/authClient";
+import { registerUser } from "../../services/authClient";
 import { useNavigate } from "react-router";
 
 export default function RegisterCard() {
@@ -13,13 +13,12 @@ export default function RegisterCard() {
   } = useForm();
   const navigate = useNavigate();
 
-  const { data, mutate, isPending, isError } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationKey: ["register"],
     mutationFn: registerUser,
     onSuccess: () => {
       reset();
       navigate("/login"); // create home route and constant
-      localStorage.setItem("userId", data);
     },
   });
 

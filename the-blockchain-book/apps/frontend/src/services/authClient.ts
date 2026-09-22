@@ -5,6 +5,12 @@ export async function registerUser(formData) {
   return res;
 }
 
+export async function login(creds): Promise<boolean> {
+  const res = await publicFetch.post("/auth/login", creds);
+  setAccessToken(res.accessToken);
+  return true;
+}
+
 export function setAccessToken(email: string) {
   localStorage.setItem("token", email);
   return console.log("Email set as accessToken");
