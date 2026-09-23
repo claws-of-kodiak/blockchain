@@ -1,4 +1,4 @@
-import { useProgress } from "../../hooks/useProgress";
+import { useProgress } from "../../context/useProgress";
 
 export default function GetProgress() {
   const { currentStep, refetch } = useProgress();

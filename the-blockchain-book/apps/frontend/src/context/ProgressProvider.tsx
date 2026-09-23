@@ -1,23 +1,12 @@
-import { createContext } from "react";
-import { authFetch } from "../services/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import { getAccessToken } from "../services/authClient";
+import { authFetch } from "../services/apiClient";
+import { ProgressContext, type ProgressContextType } from "./context";
 
 const fetchUserProgress = async (): Promise<number> => {
   const data = await authFetch.get(`/course/progress`);
   return data;
 };
-
-type ProgressContextType = {
-  currentStep: number | null;
-  isLoading: boolean;
-  isError: boolean;
-  refetch: () => void;
-};
-
-export const ProgressContext = createContext<ProgressContextType | undefined>(
-  undefined
-);
 
 export default function ProgressProvider({
   children,

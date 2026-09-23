@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { BrowserRouter } from "react-router";
-import ProgressProvider from "./context/ProgressContext";
+import ProgressProvider from "./context/context";
 
 const query = new QueryClient();
 
