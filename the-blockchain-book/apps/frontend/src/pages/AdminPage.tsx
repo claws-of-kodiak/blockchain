@@ -1,4 +1,5 @@
 import DisplaySections from "../features/admin/DisplaySections";
+import NewSectionForm from "../features/admin/NewSectionForm";
 import Header from "../shared/components/Header";
 
 export default function AdminPage() {
@@ -7,7 +8,7 @@ export default function AdminPage() {
       <Header />
       <div id="admin-wrapper">
         <h2>Create and Manage Course Here</h2>
-        {/* NEED TO CREATE POP UP HOOK */}
+        <NewSectionForm />
         <DisplaySections />
       </div>
     </>
