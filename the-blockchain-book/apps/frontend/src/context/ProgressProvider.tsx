@@ -15,7 +15,7 @@ export default function ProgressProvider({
 }) {
   const token = getAccessToken();
   // insert useUser hook to pull real userId
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["progress"],
     queryFn: fetchUserProgress,
     enabled: !!token,
@@ -24,7 +24,7 @@ export default function ProgressProvider({
   const value: ProgressContextType = {
     currentStep: data ?? null,
     isLoading,
-    isError,
+    error,
     refetch,
   };
   return <ProgressContext value={value}>{children}</ProgressContext>;

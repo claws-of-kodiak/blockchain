@@ -3,7 +3,7 @@ import { createContext } from "react";
 export type ProgressContextType = {
   currentStep: number | null;
   isLoading: boolean;
-  isError: boolean;
+  error: Error;
   refetch: () => void;
 };
 

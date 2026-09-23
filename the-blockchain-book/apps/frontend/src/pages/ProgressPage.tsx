@@ -38,7 +38,7 @@ export default function ProgressPage() {
   };
   const handleDeleteProgress = async () => {
     await progress.delete();
-    setStep(null);
+    setStep(0);
   };
 
   return (

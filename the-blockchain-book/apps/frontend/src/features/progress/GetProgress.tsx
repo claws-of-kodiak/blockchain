@@ -1,13 +1,14 @@
 import { useProgress } from "../../context/useProgress";
+import ErrorMsg from "../../shared/components/ErrorMsg";
 
 export default function GetProgress() {
-  const { currentStep, refetch } = useProgress();
+  const { currentStep, error } = useProgress();
+
+  if (error) return <ErrorMsg msg={error.message} />;
 
   return (
     <>
-      <p> Loading? {currentStep}</p>
-
-      <button onClick={() => refetch()}>Refresh</button>
+      <p> CurrentStep: {currentStep}</p>
     </>
   );
 }

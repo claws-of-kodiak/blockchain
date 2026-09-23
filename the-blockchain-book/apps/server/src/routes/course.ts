@@ -13,10 +13,9 @@ courseRouter.get("/progress", async (req, res) => {
   const email = extractBearerToken(req.headers.authorization);
   if (!email) throw new Error("No email found");
   const user = await authRepo.findUserByEmail(email);
-  const stepObj = await courseRepo.getProgressById(user.id);
-  if (stepObj === null)
-    return res.status(404).json({ message: "No progress found." });
-  const currentStep = Number(stepObj.current_step);
+  if (!user) return res.status(401).json({ message: "Invalid user." });
+  const stepRes = await courseRepo.getProgressById(user.id);
+  const currentStep = Number(stepRes.current_step);
   console.log("currentStep ", currentStep);
   return res.status(200).json(currentStep);
 });
