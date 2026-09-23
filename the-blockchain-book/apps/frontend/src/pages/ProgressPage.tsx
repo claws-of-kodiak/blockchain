@@ -45,6 +45,7 @@ export default function ProgressPage() {
   return (
     <>
       <Header />
+      <h2>Track Your Progress</h2>
       {step > 0 ? (
         <div>
           <p>Current Step: {step.toFixed(1)}</p>

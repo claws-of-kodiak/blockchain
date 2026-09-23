@@ -1,0 +1,89 @@
+/* Fullscreen Backdrop Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(
+    15,
+    20,
+    28,
+    0.75
+  ); /* var(--bg-dark) with alpha transparency */
+  backdrop-filter: blur(8px); /* Smooth background blur effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Stays structural layer above sticky headers */
+  animation: fadeIn 0.2s ease-out;
+}
+
+button {
+  margin: 20px;
+  background-color: transparent;
+  color: var(--accent-retro);
+  border: 1px solid var(--accent-retro);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Central Popup Card (70% Window Size) */
+.popup-content {
+  position: relative; /* Keeps absolute elements like the X button contained */
+  width: 70vw;
+  height: 70vh;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  overflow-y: auto; /* Adds clean scrollbar inside card if form text overflows */
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Sticky 'X' Close Button in Top Right */
+.popup-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 2rem; /* Clean visual presence for &times; */
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.popup-close-btn:hover {
+  color: #ef4444; /* Bright red error color indicator for destructive cancel */
+  transform: scale(1.1);
+}
+
+/* Keyframe Animations for Smooth Fluid Entrance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
