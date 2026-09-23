@@ -11,6 +11,11 @@ export async function login(creds): Promise<boolean> {
   return true;
 }
 
+export async function logout() {
+  localStorage.removeItem("token");
+  // Insert more server logic when implemented
+}
+
 export function setAccessToken(email: string) {
   localStorage.setItem("token", email);
   return console.log("Email set as accessToken");

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ProgressContext } from "./context";
+import { ProgressContext } from "../../context/context";
 
 // Custom Hook for clean consumption in components
 export function useProgress() {

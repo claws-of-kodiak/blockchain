@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { progress } from "../services/progressClient";
+import Header from "../shared/components/Header";
 // import GetProgress from "../features/progress/GetProgress";
 
 const postUnlockStep = async (nextStep: number) => {
@@ -43,6 +44,7 @@ export default function ProgressPage() {
 
   return (
     <>
+      <Header />
       {step > 0 ? (
         <div>
           <p>Current Step: {step.toFixed(1)}</p>
