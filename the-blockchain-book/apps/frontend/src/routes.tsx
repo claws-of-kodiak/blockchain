@@ -3,6 +3,7 @@ import ProgressPage from "./pages/ProgressPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
+import AdminPage from "./pages/AdminPage";
 
 export const routeList = [
   { path: "/home", label: "Home", element: <HomePage />, inHeader: true },
@@ -25,6 +26,12 @@ export const routeList = [
     label: "Register",
     element: <RegisterPage />,
     inHeader: false,
+  },
+  {
+    path: "/admin",
+    label: "Admin",
+    element: <AdminPage />,
+    inHeader: true,
   },
 ];
 

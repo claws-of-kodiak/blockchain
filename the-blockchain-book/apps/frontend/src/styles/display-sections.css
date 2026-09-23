@@ -1,0 +1,74 @@
+/* Layout Wrapper for Sections */
+.display-sections-wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--bg-dark);
+}
+
+/* Individual Section Cards */
+.section-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-muted);
+}
+
+/* Card Typography */
+.section-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Objectives List styling */
+.section-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Hide global custom bullet pseudo-elements if they apply here too */
+.section-card ul li::before {
+  content: none !important;
+  display: none !important;
+}
+
+.section-card ul li {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background-color: var(--bg-card);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-retro); /* Matrix green accent bar */
+}
+
+/* Metadata Text (Dates) */
+.section-card p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.section-card p:first-of-type {
+  margin-top: auto; /* Pushes the dates to the bottom of the card */
+}
