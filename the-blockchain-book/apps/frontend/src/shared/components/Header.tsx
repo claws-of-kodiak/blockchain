@@ -18,9 +18,7 @@ export default function Header() {
           {headerRouteList &&
             headerRouteList.map((route) => (
               <li key={route.path}>
-                <Link style={{ all: "unset" }} to={route.path}>
-                  {route.label}
-                </Link>
+                <Link to={route.path}>{route.label}</Link>
               </li>
             ))}
         </ul>
