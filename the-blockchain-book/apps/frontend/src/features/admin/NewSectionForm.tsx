@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postNewSection } from "../../services/sectionClient";
+import { postNewSection } from "../../services/courseClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import "../../styles/form.css";
 
@@ -18,7 +18,7 @@ export default function NewSectionForm() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: postNewSection,
     onSuccess: (data) => {
-      console.log("Section created successfully:", data);
+      console.log("Section created at:", data.createdAt);
       reset(); // Clear the form fields upon success
       queryClient.invalidateQueries({ queryKey: ["courses"] }); // Refetch data in DisplaySections
     },
