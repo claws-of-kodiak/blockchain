@@ -4,7 +4,7 @@ import { authFetch } from "../services/apiClient";
 import { ProgressContext, type ProgressContextType } from "./context";
 
 const fetchUserProgress = async (): Promise<number> => {
-  const data = await authFetch.get(`/course/progress`);
+  const data = await authFetch.get(`/progress/user`);
   return data;
 };
 

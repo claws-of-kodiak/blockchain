@@ -5,7 +5,9 @@ import { CourseRepository } from "../repositories/CourseRepositories";
 const courseRouter = express.Router();
 const courseRepo = new CourseRepository(pool);
 
-courseRouter.get("/create", (req, res) => {});
+courseRouter.get("/create", (req, res) => {
+  // called by postNewSection in sectionClient.ts
+});
 
 courseRouter.post("/addSection", (req, res) => {});
 

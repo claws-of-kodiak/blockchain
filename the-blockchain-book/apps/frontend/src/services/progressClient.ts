@@ -2,18 +2,18 @@ import { authFetch } from "./apiClient";
 
 export const progress = {
   begin: async (options: RequestInit = {}) => {
-    return authFetch.post("/course/begin", { ...options });
+    return authFetch.post("/progress/begin", { ...options });
   },
 
   nextStep: async (nextStep: number, options: RequestInit = {}) => {
     return authFetch.post(
-      "/course/unlockStep",
+      "/progress/unlockStep",
       { nextStep: nextStep },
       { ...options }
     );
   },
 
   delete: async (options: RequestInit = {}) => {
-    return authFetch.delete("/course/deleteProgress", { ...options });
+    return authFetch.delete("/progress/deleteProgress", { ...options });
   },
 };
