@@ -20,12 +20,12 @@ export class CourseRepository {
   async getSections() {
     const result = await this.pool.query(`SELECT * FROM sections;`);
     if (result.rows.length === 0) return null;
-    return result.rows[0];
+    return result.rows;
   }
   // Get all objectives
   async getObjectives() {
     const result = await this.pool.query(`SELECT * FROM objectives;`);
     if (result.rows.length === 0) return null;
-    return result.rows[0];
+    return result.rows;
   }
 }
