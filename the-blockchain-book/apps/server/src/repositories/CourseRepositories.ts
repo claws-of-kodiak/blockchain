@@ -28,4 +28,22 @@ export class CourseRepository {
     if (result.rows.length === 0) return null;
     return result.rows;
   }
+  // Delete section
+  async deleteSection(sectionId: string) {
+    const result = await this.pool.query(
+      `DELETE FROM sections WHERE section_id = $1;`,
+      [sectionId]
+    );
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
+  // Get all objectives
+  async deleteObjective(objectiveId: string) {
+    const result = await this.pool.query(
+      `DELETE FROM sections WHERE objective_id = $1;`,
+      [objectiveId]
+    );
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
 }
