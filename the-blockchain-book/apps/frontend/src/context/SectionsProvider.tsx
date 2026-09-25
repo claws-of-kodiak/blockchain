@@ -12,7 +12,7 @@ type CourseContent = {
 };
 
 const fetchCourseContent = async (): Promise<CourseContent> => {
-  const data = await authFetch.get(`/course`);
+  const data = await authFetch.get("/course");
   return data;
 };
 
@@ -29,8 +29,8 @@ export default function SectionsProvider({
     enabled: !!token,
   });
 
-  const sections = data.sections || null;
-  const objectives = data.objectives || null;
+  const sections = data?.sections || [];
+  const objectives = data?.objectives || [];
 
   const value: SectionsContextType = {
     sections,
