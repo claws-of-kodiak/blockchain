@@ -16,7 +16,7 @@ courseRouter.get("/", async (req, res) => {
   return res.status(200).json({ sections, objectives });
 });
 
-courseRouter.post("/create", async (req, res) => {
+courseRouter.post("/addSection", async (req, res) => {
   try {
     if (!req.headers.authorization) throw new Error("No authorization found");
     const email = extractBearerToken(req.headers.authorization);
@@ -38,12 +38,34 @@ courseRouter.post("/addSection", (req, res) => {});
 
 courseRouter.post("/updateSection", (req, res) => {});
 
-courseRouter.delete("/deleteSection", (req, res) => {});
+courseRouter.delete("/deleteSection:id", async (req, res) => {
+  try {
+    const sectionid = req.params.id;
+    if (!sectionid)
+      return res.status(400).json({ message: "No section id found." });
+    await courseRepo.deleteSection(sectionid);
+    return res.status(200).json({ message: "Section deleted" });
+  } catch (err) {
+    console.error("Unexpected error with server");
+    return res.status(500).json({ message: "Error with server - check logs" });
+  }
+});
 
 courseRouter.post("/addObjective", (req, res) => {});
 
 courseRouter.post("/updateObjective", (req, res) => {});
 
-courseRouter.delete("/deleteObjective", (req, res) => {});
+courseRouter.delete("/deleteObjective:id", async (req, res) => {
+  try {
+    const objectiveId = req.params.id;
+    if (!objectiveId)
+      return res.status(400).json({ message: "No objective id found." });
+    await courseRepo.deleteObjective(objectiveId);
+    return res.status(200).json({ message: "Objective deleted." });
+  } catch (err) {
+    console.error("Unexpected error with server");
+    return res.status(500).json({ message: "Error with server - check logs" });
+  }
+});
 
 export default courseRouter;
