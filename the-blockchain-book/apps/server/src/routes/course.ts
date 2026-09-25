@@ -38,9 +38,9 @@ courseRouter.post("/addSection", (req, res) => {});
 
 courseRouter.post("/updateSection", (req, res) => {});
 
-courseRouter.delete("/deleteSection:id", async (req, res) => {
+courseRouter.delete("/deleteSection/:id", async (req, res) => {
   try {
-    const sectionid = req.params.id;
+    const sectionid: string = req.params.id;
     if (!sectionid)
       return res.status(400).json({ message: "No section id found." });
     await courseRepo.deleteSection(sectionid);
@@ -55,9 +55,9 @@ courseRouter.post("/addObjective", (req, res) => {});
 
 courseRouter.post("/updateObjective", (req, res) => {});
 
-courseRouter.delete("/deleteObjective:id", async (req, res) => {
+courseRouter.delete("/deleteObjective/:id", async (req, res) => {
   try {
-    const objectiveId = req.params.id;
+    const objectiveId: string = req.params.id;
     if (!objectiveId)
       return res.status(400).json({ message: "No objective id found." });
     await courseRepo.deleteObjective(objectiveId);
