@@ -1,5 +1,8 @@
+import { useCourseClient } from "../../services/courseClient";
+
 export default function SectionCard({ payload }) {
-  const { title, objectives, created_at } = payload;
+  const { section_id, title, objectives, created_at } = payload;
+  const { deleteSection } = useCourseClient();
 
   return (
     <div className="section-card">
@@ -13,7 +16,9 @@ export default function SectionCard({ payload }) {
           ))}
       </ul>
       <p>Created at: {created_at}</p>
-      {/* <span onClick={deleteSection(section_id)}>🗑️</span> */}
+      <span className="delete-span" onClick={() => deleteSection(section_id)}>
+        🗑️
+      </span>
     </div>
   );
 }

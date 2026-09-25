@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postNewSection } from "../../services/courseClient";
+import { useQueryClient } from "@tanstack/react-query";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import "../../styles/form.css";
+import { useCourseClient } from "../../services/courseClient";
 
 export default function NewSectionForm({ onClose }) {
   const queryClient = useQueryClient();
+  const { addSection } = useCourseClient();
+  const { error, isPending } = addSection;
 
   // React Hook Form initialization
   const {
@@ -15,21 +17,17 @@ export default function NewSectionForm({ onClose }) {
     formState: { errors },
   } = useForm();
 
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: postNewSection,
-    onSuccess: (data) => {
-      console.log("Section created at:", data.createdAt);
-      reset(); // Clear the form fields upon success
-      queryClient.invalidateQueries({ queryKey: ["courses"] }); // Refetch data in DisplaySections
-      onClose();
-    },
-    onError: (err) => {
-      console.error("Error creating section:", err);
-    },
-  });
-
   const onSubmit = (data) => {
-    mutate(data);
+    addSection.mutate(data, {
+      onSuccess: () => {
+        reset(); // Clear the form fields upon success
+        queryClient.invalidateQueries({ queryKey: ["courses"] }); // Refetch data in DisplaySections
+        onClose();
+      },
+      onError: (err) => {
+        console.error("Error creating section:", err);
+      },
+    });
   };
 
   return (
@@ -38,7 +36,7 @@ export default function NewSectionForm({ onClose }) {
 
       {error && (
         <p className="error-banner">
-          {error.message || "Something went wrong"}
+          {addSection.error.message || "Something went wrong"}
         </p>
       )}
 
@@ -54,8 +52,8 @@ export default function NewSectionForm({ onClose }) {
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
 
-        <button type="submit" disabled={isPending}>
-          {isPending ? "Creating..." : "Create Section"}
+        <button type="submit">
+          {isPending ? "Creating Section..." : "Create new section."}
         </button>
       </form>
     </div>
