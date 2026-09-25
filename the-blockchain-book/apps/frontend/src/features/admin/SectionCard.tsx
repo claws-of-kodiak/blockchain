@@ -16,7 +16,10 @@ export default function SectionCard({ payload }) {
           ))}
       </ul>
       <p>Created at: {created_at}</p>
-      <span className="delete-span" onClick={() => deleteSection(section_id)}>
+      <span
+        className="delete-span"
+        onClick={() => deleteSection.mutate(section_id)}
+      >
         🗑️
       </span>
     </div>
