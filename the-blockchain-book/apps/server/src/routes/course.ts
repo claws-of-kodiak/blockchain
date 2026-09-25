@@ -8,6 +8,14 @@ const courseRouter = express.Router();
 const courseRepo = new CourseRepository(pool);
 const authRepo = new AuthRepository(pool);
 
+courseRouter.get("/", async (req, res) => {
+  const sections = await courseRepo.getSections();
+  const objectives = await courseRepo.getObjectives();
+  if (!sections || !objectives)
+    return res.status(404).json({ message: "No course content found." });
+  return res.status(200).json({ sections, objectives });
+});
+
 courseRouter.post("/create", async (req, res) => {
   try {
     if (!req.headers.authorization) throw new Error("No authorization found");
