@@ -1,0 +1,12 @@
+.delete-span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #555555; /* Default gray color */
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.delete-span:hover {
+  color: #ff0000; /* Bright red on hover */
+}
