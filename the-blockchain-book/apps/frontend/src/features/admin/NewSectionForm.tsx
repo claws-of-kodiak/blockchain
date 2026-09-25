@@ -4,7 +4,7 @@ import { postNewSection } from "../../services/courseClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import "../../styles/form.css";
 
-export default function NewSectionForm() {
+export default function NewSectionForm({ onClose }) {
   const queryClient = useQueryClient();
 
   // React Hook Form initialization
@@ -21,6 +21,7 @@ export default function NewSectionForm() {
       console.log("Section created at:", data.createdAt);
       reset(); // Clear the form fields upon success
       queryClient.invalidateQueries({ queryKey: ["courses"] }); // Refetch data in DisplaySections
+      onClose();
     },
     onError: (err) => {
       console.error("Error creating section:", err);
