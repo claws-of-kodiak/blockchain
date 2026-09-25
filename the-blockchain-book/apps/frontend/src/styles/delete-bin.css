@@ -10,3 +10,32 @@
 .delete-span:hover {
   color: #ff0000; /* Bright red on hover */
 }
+
+/* Individual Pixel Particles */
+.pixel-particle {
+  position: absolute;
+  width: 4px; /* Retro square size */
+  height: 4px; /* Retro square size */
+  top: 50%;
+  left: 50%;
+  pointer-events: none; /* Ignore clicks */
+  animation: pixel-burst-animation 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+/* Instantly hide the icon when the delete animation triggers */
+.delete-span.deleting svg {
+  opacity: 0;
+}
+
+/* Animation handling the trajectory and fade-out */
+@keyframes pixel-burst-animation {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    /* Flies out to custom CSS variables calculated in React */
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty)))
+      scale(0);
+    opacity: 0;
+  }
+}
