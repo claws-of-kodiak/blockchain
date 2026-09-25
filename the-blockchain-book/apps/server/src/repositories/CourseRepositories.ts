@@ -31,7 +31,7 @@ export class CourseRepository {
   // Delete section
   async deleteSection(sectionId: string) {
     const result = await this.pool.query(
-      `DELETE FROM sections WHERE section_id = $1;`,
+      `DELETE FROM sections WHERE section_id = $1 RETURNING *;`,
       [sectionId]
     );
     if (result.rows.length === 0) return null;
@@ -40,7 +40,7 @@ export class CourseRepository {
   // Get all objectives
   async deleteObjective(objectiveId: string) {
     const result = await this.pool.query(
-      `DELETE FROM sections WHERE objective_id = $1;`,
+      `DELETE FROM sections WHERE objective_id = $1 RETURNING *;`,
       [objectiveId]
     );
     if (result.rows.length === 0) return null;
