@@ -1,7 +1,5 @@
 export default function SectionCard({ payload }) {
-  const { title, objectives, createdAt, updatedAt } = payload;
-
-  console.log(payload);
+  const { title, objectives, created_at } = payload;
 
   return (
     <div className="section-card">
@@ -14,8 +12,8 @@ export default function SectionCard({ payload }) {
             </li>
           ))}
       </ul>
-      <p>Created at: {createdAt}</p>
-      <p>Last update: {updatedAt}</p>
+      <p>Created at: {created_at}</p>
+      {/* <span onClick={deleteSection(section_id)}>🗑️</span> */}
     </div>
   );
 }
