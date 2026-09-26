@@ -25,6 +25,7 @@ async function getAuthHeaders(
   let token = getAccessToken(); // holder fn that pulls email from localStorage
   if (!token) {
     token = await refreshAccessToken(); // setTimeout as holder fn that always fails
+    if (!token) throw new Error("Access denied.");
   }
   return {
     "Content-Type": "application/json",

@@ -25,7 +25,7 @@ export default function NewSectionForm({ onClose }) {
         onClose();
       },
       onError: (err) => {
-        console.error("Error creating section:", err);
+        console.error("Err", err);
       },
     });
   };

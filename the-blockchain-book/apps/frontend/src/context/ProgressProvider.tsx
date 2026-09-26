@@ -5,6 +5,10 @@ import { ProgressContext, type ProgressContextType } from "./context";
 
 const fetchUserProgress = async (): Promise<number> => {
   const data = await authFetch.get(`/progress/user`);
+  if (data.error) {
+    console.log("No authorization found.");
+    throw new Error(data.error.message);
+  }
   return data;
 };
 
