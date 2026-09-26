@@ -14,7 +14,7 @@ export default function DisplaySections() {
     <div className="display-sections-wrap">
       {sections ? (
         sections.map((section: Section) => (
-          <SectionCard key={section.section_id} payload={section} />
+          <SectionCard key={section.sectionId} payload={section} />
         ))
       ) : (
         <p>No course content found.</p>

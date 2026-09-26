@@ -2,7 +2,7 @@ import { useCourseClient } from "../../services/courseClient";
 import DeleteBin from "../../shared/components/DeleteBin";
 
 export default function SectionCard({ payload }) {
-  const { section_id, title, objectives, created_at } = payload;
+  const { sectionId, title, objectives, createdAt } = payload;
   const { deleteSection } = useCourseClient();
 
   return (
@@ -16,8 +16,8 @@ export default function SectionCard({ payload }) {
             </li>
           ))}
       </ul>
-      <p>Created at: {created_at}</p>
-      <DeleteBin onClick={() => deleteSection.mutate(section_id)} />
+      <p>Created at: {createdAt}</p>
+      <DeleteBin onClick={() => deleteSection.mutate(sectionId)} />
     </div>
   );
 }
