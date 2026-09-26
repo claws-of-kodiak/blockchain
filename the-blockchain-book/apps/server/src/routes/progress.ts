@@ -1,12 +1,12 @@
 import express from "express";
-import pool from "../db";
+import db from "../db";
 import { extractBearerToken } from "../util/auth";
 import { AuthRepository } from "../repositories/AuthRepositories";
 import { ProgressRepository } from "../repositories/ProgressRepositories";
 
 const progressRouter = express.Router();
-const progressRepo = new ProgressRepository(pool);
-const authRepo = new AuthRepository(pool);
+const progressRepo = new ProgressRepository(db);
+const authRepo = new AuthRepository(db);
 
 progressRouter.get("/user", async (req, res) => {
   if (!req.headers.authorization) throw new Error("No authorization found");

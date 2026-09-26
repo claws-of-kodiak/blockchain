@@ -1,12 +1,12 @@
 import express from "express";
-import pool from "../db";
+import db from "../db";
 import { CourseRepository } from "../repositories/CourseRepositories";
 import { extractBearerToken } from "../util/auth";
 import { AuthRepository } from "../repositories/AuthRepositories";
 
 const courseRouter = express.Router();
-const courseRepo = new CourseRepository(pool);
-const authRepo = new AuthRepository(pool);
+const courseRepo = new CourseRepository(db);
+const authRepo = new AuthRepository(db);
 
 courseRouter.get("/", async (req, res) => {
   const sections = await courseRepo.getSections();

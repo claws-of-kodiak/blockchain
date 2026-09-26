@@ -1,9 +1,9 @@
 import express from "express";
-import pool from "../db";
+import db from "../db";
 import { AuthRepository } from "../repositories/AuthRepositories";
 
 const authRouter = express.Router();
-const authRepo = new AuthRepository(pool);
+const authRepo = new AuthRepository(db);
 
 authRouter.post("/login", async (req, res) => {
   const { email } = req.body; // Insert password bcrypt.compare() later

@@ -1,9 +1,9 @@
-import { Pool } from "pg";
+import { Database } from "../db";
 
 export class AuthRepository {
-  private pool: Pool;
-  constructor(pool: Pool) {
-    this.pool = pool;
+  private db: Database;
+  constructor(db: Database) {
+    this.db = db;
   }
   // Begin progress for user
   async registerUser(email: string, birthDate: Date, hash: string) {
@@ -12,7 +12,7 @@ export class AuthRepository {
         VALUES ($1, $2, $3)
         RETURNING email;
     `;
-    const result = await this.pool.query(queryText, [email, birthDate, hash]);
+    const result = await this.db.query(queryText, [email, birthDate, hash]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
@@ -23,7 +23,7 @@ export class AuthRepository {
         FROM users
         WHERE email = $1;
     `;
-    const result = await this.pool.query(queryText, [email]);
+    const result = await this.db.query(queryText, [email]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }

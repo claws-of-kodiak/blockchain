@@ -1,9 +1,9 @@
-import { Pool } from "pg";
+import { Database } from "../db";
 
 export class ProgressRepository {
-  private pool: Pool;
-  constructor(pool: Pool) {
-    this.pool = pool;
+  private db: Database;
+  constructor(db: Database) {
+    this.db = db;
   }
   // Begin progress for user
   async beginCourse(userId: string) {
@@ -12,13 +12,13 @@ export class ProgressRepository {
         VALUES ($1, $2)
         RETURNING updated_at;
     `;
-    const result = await this.pool.query(queryText, [userId, 0.1]);
+    const result = await this.db.query(queryText, [userId, 0.1]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
   // Get user progress
   async getProgressById(userId: string) {
-    const result = await this.pool.query(
+    const result = await this.db.query(
       `
       SELECT current_step FROM user_progress WHERE user_id = $1
       `,
@@ -29,7 +29,7 @@ export class ProgressRepository {
   }
   // Unlock next step
   async unlockNextStep(userId: string, nextStep: number) {
-    const result = await this.pool.query(
+    const result = await this.db.query(
       `UPDATE user_progress SET current_step = $1 WHERE user_id = $2 RETURNING current_step`,
       [nextStep, userId]
     );
@@ -37,7 +37,7 @@ export class ProgressRepository {
     return result.rows[0];
   }
   async deleteProgress(userId: string) {
-    const result = await this.pool.query(
+    const result = await this.db.query(
       `DELETE FROM user_progress WHERE user_id = $1`,
       [userId]
     );
