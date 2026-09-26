@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
 import AdminPage from "./pages/AdminPage";
 import type { Route } from "@repo/validations";
+import EditSection from "./features/admin/EditSection";
 
 export const routeList: Route[] = [
   { path: "/home", label: "Home", element: <HomePage />, inHeader: true },
@@ -33,6 +34,12 @@ export const routeList: Route[] = [
     label: "Admin",
     element: <AdminPage />,
     inHeader: true,
+  },
+  {
+    path: "/admin/section/:sectionId",
+    label: "Edit Section",
+    element: <EditSection />,
+    inHeader: false,
   },
 ];
 
