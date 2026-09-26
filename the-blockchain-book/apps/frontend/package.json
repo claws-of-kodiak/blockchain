@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@repo/validations": "*",
     "@tanstack/react-query": "^5.103.1",
     "jsx": "^0.9.89",

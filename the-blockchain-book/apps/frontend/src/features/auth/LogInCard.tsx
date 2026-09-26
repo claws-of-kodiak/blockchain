@@ -4,6 +4,8 @@ import "../../styles/auth-card.css";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../services/authClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "../../../../../packages/validations/auth.types";
 
 export default function LogInCard() {
   const {
@@ -11,7 +13,7 @@ export default function LogInCard() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: zodResolver(loginSchema) });
   const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
