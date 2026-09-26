@@ -17,8 +17,17 @@ export class CourseRepository {
     return result.rows[0];
   }
   // Get all sections
-  async getSections() {
+  async getAllSections() {
     const result = await this.db.query(`SELECT * FROM sections;`);
+    if (result.rows.length === 0) return null;
+    return result.rows;
+  }
+  // Get one section
+  async getSection(sectionId: string) {
+    const result = await this.db.query(
+      `SELECT * FROM sections WHERE section_id = $1;`,
+      [sectionId]
+    );
     if (result.rows.length === 0) return null;
     return result.rows;
   }

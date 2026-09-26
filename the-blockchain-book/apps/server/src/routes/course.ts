@@ -9,7 +9,7 @@ const courseRepo = new CourseRepository(db);
 const authRepo = new AuthRepository(db);
 
 courseRouter.get("/", async (req, res) => {
-  const sections = await courseRepo.getSections();
+  const sections = await courseRepo.getAllSections();
   const objectives = await courseRepo.getObjectives();
   if (!sections && !objectives)
     return res.status(200).json({ message: "No course content found." });
@@ -34,8 +34,6 @@ courseRouter.post("/addSection", async (req, res) => {
   }
 });
 
-courseRouter.post("/addSection", (req, res) => {});
-
 courseRouter.post("/updateSection", (req, res) => {});
 
 courseRouter.delete("/deleteSection/:id", async (req, res) => {
@@ -52,6 +50,13 @@ courseRouter.delete("/deleteSection/:id", async (req, res) => {
 });
 
 courseRouter.post("/addObjective", (req, res) => {});
+
+courseRouter.get("/getObjectives/:sectionId", async (req, res) => {
+  const sectionId = req.params.sectionId;
+  const section = await courseRepo.getSection(sectionId);
+  if (!section) throw new Error("No section found.");
+  return res.status(200).json(section);
+});
 
 courseRouter.post("/updateObjective", (req, res) => {});
 

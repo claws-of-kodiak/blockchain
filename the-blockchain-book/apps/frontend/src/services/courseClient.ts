@@ -2,6 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authFetch } from "./apiClient";
 import type { Section } from "@repo/validations";
 
+export async function getObjectives(sectionId: string) {
+  const res = await authFetch.get(`/course/getObjectives/${sectionId}`);
+  return res;
+}
+
 async function postNewSection(formData: Section) {
   const res = await authFetch.post("/course/addSection", formData);
   return res;
