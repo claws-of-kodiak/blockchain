@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router";
 import { headerRouteList } from "../../routes";
 import "../../styles/header.css";
 import { logout } from "../../services/authClient";
+import type { Route } from "@repo/validations";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function Header() {
       <nav>
         <ul>
           {headerRouteList &&
-            headerRouteList.map((route) => (
+            headerRouteList.map((route: Route) => (
               <li key={route.path}>
                 <Link to={route.path}>{route.label}</Link>
               </li>
