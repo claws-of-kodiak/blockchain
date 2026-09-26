@@ -4,6 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../services/authClient";
 import { useNavigate } from "react-router";
 import ErrorMsg from "../../shared/components/ErrorMsg";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "../../../../../packages/validations/auth.types";
 
 export default function RegisterCard() {
   const {
@@ -11,7 +13,7 @@ export default function RegisterCard() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: zodResolver(registerSchema) });
   const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
