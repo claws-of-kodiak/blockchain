@@ -33,7 +33,7 @@ export default function ProgressPage() {
       {step > 0 ? (
         <div>
           <p>Current Step: {step.toFixed(1)}</p>
-          <button onClick={handleNextStep}>
+          <button onClick={handleNextStep} disabled={unlockStep.isPending}>
             {unlockStep.isPending ? "..." : "Next Step"}
           </button>
           {/* <GetProgress /> */}
