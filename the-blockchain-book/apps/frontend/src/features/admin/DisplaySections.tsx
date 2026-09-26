@@ -2,6 +2,7 @@ import ErrorMsg from "../../shared/components/ErrorMsg";
 import SectionCard from "./SectionCard";
 import "../../styles/display-sections.css";
 import { useSections } from "../../shared/hooks/useSections";
+import type { Section } from "@repo/validations";
 
 export default function DisplaySections() {
   const { sections, isLoading, error } = useSections();
@@ -12,7 +13,7 @@ export default function DisplaySections() {
   return (
     <div className="display-sections-wrap">
       {sections ? (
-        sections.map((section) => (
+        sections.map((section: Section) => (
           <SectionCard key={section.section_id} payload={section} />
         ))
       ) : (
