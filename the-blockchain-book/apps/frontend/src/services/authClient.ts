@@ -1,11 +1,12 @@
+import type { LogInCreds, RegisterForm } from "@repo/validations";
 import { publicFetch } from "./apiClient";
 
-export async function registerUser(formData) {
+export async function registerUser(formData: RegisterForm) {
   const res = await publicFetch.post("/auth/register", formData);
   return res;
 }
 
-export async function login(creds): Promise<boolean> {
+export async function login(creds: LogInCreds): Promise<boolean> {
   const res = await publicFetch.post("/auth/login", creds);
   setAccessToken(res.accessToken);
   return true;
@@ -22,7 +23,7 @@ export function setAccessToken(email: string) {
 }
 
 export function getAccessToken() {
-  const email = localStorage.getItem("token");
+  const email: string = localStorage.getItem("token");
   return email;
 }
 

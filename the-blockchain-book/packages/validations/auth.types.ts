@@ -1,6 +1,6 @@
 import z from "zod";
 
-export type RegesiterForm = z.infer<typeof registerSchema>;
+export type RegisterForm = z.infer<typeof registerSchema>;
 
 export const registerSchema = z.object({
   // THIS DOES NOT EXECUTE AT RUNTIME

@@ -4,8 +4,9 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
 import AdminPage from "./pages/AdminPage";
+import type { Route } from "@repo/validations";
 
-export const routeList = [
+export const routeList: Route[] = [
   { path: "/home", label: "Home", element: <HomePage />, inHeader: true },
 
   {

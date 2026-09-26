@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authFetch } from "./apiClient";
+import type { Section } from "@repo/validations";
 
-async function postNewSection(formData) {
+async function postNewSection(formData: Section) {
   const res = await authFetch.post("/course/addSection", formData);
   return res;
 }
-async function deleteSection(sectionId) {
+async function deleteSection(sectionId: string) {
   const res = await authFetch.delete(`/course/deleteSection/${sectionId}`);
   return res;
 }
-async function deleteObjective(objectiveId) {
+async function deleteObjective(objectiveId: string) {
   const res = await authFetch.delete(`/course/deleteObjective/${objectiveId}`);
   return res;
 }
