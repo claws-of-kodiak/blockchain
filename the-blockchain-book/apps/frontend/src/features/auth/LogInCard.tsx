@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "../../services/authClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../../../../../packages/validations/auth.types";
+import { loginSchema } from "@repo/validations";
 
 export default function LogInCard() {
   const {

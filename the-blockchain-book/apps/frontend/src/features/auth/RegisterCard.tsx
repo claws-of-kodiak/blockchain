@@ -5,7 +5,7 @@ import { registerUser } from "../../services/authClient";
 import { useNavigate } from "react-router";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "../../../../../packages/validations/auth.types";
+import { registerSchema } from "@repo/validations";
 
 export default function RegisterCard() {
   const {
