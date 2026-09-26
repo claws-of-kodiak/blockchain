@@ -1,8 +1,8 @@
-import ErrorMsg from "../../shared/components/ErrorMsg";
-import SectionCard from "./SectionCard";
 import "../../styles/display-sections.css";
 import { useSections } from "../../shared/hooks/useSections";
 import type { Section } from "@repo/validations";
+import ErrorMsg from "../../shared/components/ErrorMsg";
+import SectionCard from "./SectionCard";
 
 export default function DisplaySections() {
   const { sections, isLoading, error } = useSections();
