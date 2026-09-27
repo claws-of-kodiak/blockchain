@@ -22,15 +22,19 @@ body {
   padding: 0;
 }
 
-/* Header / Hero Section */
-header {
+/* Header / Hero Section -> Changed to .hero */
+.hero {
   text-align: center;
   padding: 5rem 1.5rem 3rem;
   max-width: 800px;
   margin: 0 auto;
+
+  /* Reset background/borders if it's inheriting from generic section styles */
+  background-color: transparent !important;
+  border: none !important;
 }
 
-header h1 {
+.hero h1 {
   font-family: var(--font-display);
   font-size: 3rem;
   font-weight: 700;
@@ -40,13 +44,13 @@ header h1 {
   text-transform: uppercase;
 }
 
-header p {
+.hero p {
   font-size: 1.25rem;
   color: var(--text-muted);
   margin-bottom: 2rem;
 }
 
-header button {
+.hero button {
   background-color: transparent;
   color: var(--accent-retro);
   border: 2px solid var(--accent-retro);
@@ -61,7 +65,7 @@ header button {
   box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
 }
 
-header button:hover {
+.hero button:hover {
   background-color: var(--accent-retro);
   color: var(--bg-dark);
   box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
