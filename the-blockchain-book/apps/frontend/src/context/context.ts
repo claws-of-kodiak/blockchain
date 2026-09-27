@@ -1,4 +1,4 @@
-import type { Objective, Section } from "@repo/validations";
+import type { Objective, Section, User } from "@repo/validations";
 import { createContext } from "react";
 
 export type ProgressContextType = {
@@ -23,3 +23,13 @@ export type SectionsContextType = {
 export const SectionsContext = createContext<SectionsContextType | undefined>(
   undefined
 );
+
+// export type UserContextType = User & {
+//   isLoading: boolean;
+//   error: Error;
+//   refetch: () => void;
+// };
+
+// export const UserContext = createContext<UserContextType | undefined>(
+//   undefined
+// );
