@@ -6,12 +6,8 @@ const progress = {
     return authFetch.post("/progress/begin", { ...options });
   },
 
-  nextStep: async (nextStep: number, options: RequestInit = {}) => {
-    return authFetch.post(
-      "/progress/unlockStep",
-      { nextStep: nextStep },
-      { ...options }
-    );
+  nextStep: async () => {
+    return authFetch.post("/progress/unlockStep");
   },
 
   delete: async (options: RequestInit = {}) => {
@@ -24,20 +20,20 @@ export function useProgressClient() {
 
   // Invalidates query cache when progress changes
   const refreshCache = () =>
-    queryClient.invalidateQueries({ queryKey: ["progress"] });
+    queryClient.invalidateQueries({ queryKey: ["currentStep"] });
 
   const beginMut = useMutation({
-    mutationFn: () => progress.begin(),
+    mutationFn: (options?: RequestInit) => progress.begin(options),
     onSuccess: refreshCache,
   });
 
   const nextStepMut = useMutation({
-    mutationFn: (nextStep: number) => progress.nextStep(nextStep),
+    mutationFn: () => progress.nextStep(),
     onSuccess: refreshCache,
   });
 
   const deleteMut = useMutation({
-    mutationFn: () => progress.delete(),
+    mutationFn: (options?: RequestInit) => progress.delete(options),
     onSuccess: refreshCache,
   });
 

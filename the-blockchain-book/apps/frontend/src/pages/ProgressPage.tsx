@@ -1,46 +1,32 @@
-import { useState } from "react";
 import Header from "../shared/components/Header";
 import { useProgressClient } from "../services/progressClient";
+import { useProgress } from "../shared/hooks/useProgress";
 
 export default function ProgressPage() {
-  const [step, setStep] = useState<number>(0);
+  const { currentStep = 0, isLoading } = useProgress();
   const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
 
-  const handleBegin = () => {
-    beginCourse.mutate(undefined, {
-      onSuccess: (res) => {
-        if (res !== null) setStep(0.1);
-      },
-    });
-  };
-
-  const handleDelete = () => {
-    deleteProgress.mutate(undefined, {
-      onSuccess: () => setStep(0),
-    });
-  };
-
-  const handleNextStep = () => {
-    unlockStep.mutate(step + 0.1, {
-      onSuccess: (_, nextStep) => setStep(nextStep),
-    });
-  };
+  if (isLoading) return <p>Loading page...</p>;
 
   return (
     <>
       <Header />
       <h2>Track Your Progress</h2>
-      {step > 0 ? (
+      {currentStep > 0 ? (
         <div>
-          <p>Current Step: {step.toFixed(1)}</p>
-          <button onClick={handleNextStep} disabled={unlockStep.isPending}>
-            {unlockStep.isPending ? "..." : "Next Step"}
+          <p>Current Step: {currentStep}</p>
+          <button
+            onClick={() => unlockStep.mutate()}
+            disabled={unlockStep.isPending}
+          >
+            Next Step
           </button>
-          {/* <GetProgress /> */}
-          <button onClick={handleDelete}>Restart Progress</button>
+          <button onClick={() => deleteProgress.mutate()}>
+            Restart Progress
+          </button>
         </div>
       ) : (
-        <button onClick={handleBegin}>Begin Course</button>
+        <button onClick={() => beginCourse.mutate()}>Begin Course</button>
       )}
     </>
   );
