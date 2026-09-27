@@ -5,7 +5,7 @@ import { Link } from "react-router";
 export default function LandingPage() {
   return (
     <>
-      <header>
+      <section className="hero">
         <h1>Token Analysis Masterclass</h1>
         <p>
           A repeatable diagnostic framework for evaluating any blockchain token
@@ -16,7 +16,7 @@ export default function LandingPage() {
             Enroll Now
           </Link>
         </button>
-      </header>
+      </section>
 
       <main>
         <section id="description">
