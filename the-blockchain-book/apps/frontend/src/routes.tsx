@@ -3,9 +3,11 @@ import ProgressPage from "./pages/ProgressPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
-import AdminPage from "./pages/AdminPage";
 import type { Route } from "@repo/validations";
 import EditSection from "./features/admin/EditSection";
+import AdminPage from "./pages/profile/AdminPage";
+import SettingsPage from "./pages/profile/SettingsPage";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 export const routeList: Route[] = [
   { path: "/home", label: "Home", element: <HomePage />, inHeader: true },
@@ -30,10 +32,22 @@ export const routeList: Route[] = [
     inHeader: false,
   },
   {
+    path: "/profile",
+    label: "Profile",
+    element: <ProfilePage />,
+    inHeader: true,
+  },
+  {
+    path: "/settings",
+    label: "Settings",
+    element: <SettingsPage />,
+    inHeader: false,
+  },
+  {
     path: "/admin",
     label: "Admin",
     element: <AdminPage />,
-    inHeader: true,
+    inHeader: false,
   },
   {
     path: "/admin/section/:sectionId",
@@ -43,4 +57,11 @@ export const routeList: Route[] = [
   },
 ];
 
-export const headerRouteList = routeList.filter((r) => r.inHeader === true);
+export const headerRouteList = routeList.filter(
+  (r) => r.inHeader === true && r.path !== "/profile"
+);
+
+// Define the routes specific to the profile dropdown
+export const profileMenuRoutes = routeList.filter(
+  (r) => r.path === "/settings" || r.path === "/admin"
+);
