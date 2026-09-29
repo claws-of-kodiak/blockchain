@@ -1,7 +1,7 @@
-import DisplaySections from "../features/admin/DisplaySections";
-import NewSectionForm from "../features/admin/NewSectionForm";
-import Header from "../shared/components/Header";
-import PopUp from "../shared/components/PopUp";
+import DisplaySections from "../../features/admin/DisplaySections";
+import NewSectionForm from "../../features/admin/NewSectionForm";
+import Header from "../../shared/components/Header";
+import PopUp from "../../shared/components/PopUp";
 
 export default function AdminPage() {
   return (
