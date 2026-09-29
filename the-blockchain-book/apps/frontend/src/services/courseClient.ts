@@ -1,11 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authFetch } from "./apiClient";
-import type { Section } from "@repo/validations";
-
-export async function getObjectives(sectionId: string) {
-  const res = await authFetch.get(`/course/getObjectives/${sectionId}`);
-  return res;
-}
+import type { Objective, Section } from "@repo/validations";
 
 async function postNewSection(formData: Section) {
   const res = await authFetch.post("/course/addSection", formData);
@@ -13,6 +8,16 @@ async function postNewSection(formData: Section) {
 }
 async function deleteSection(sectionId: string) {
   const res = await authFetch.delete(`/course/deleteSection/${sectionId}`);
+  return res;
+}
+
+export async function getObjectives(sectionId: string) {
+  const res = await authFetch.get(`/course/getObjectives/${sectionId}`);
+  return res;
+}
+
+async function postNewObjective(formData: Objective) {
+  const res = await authFetch.post("/course/addObjective", formData);
   return res;
 }
 async function deleteObjective(objectiveId: string) {
@@ -25,7 +30,7 @@ export function useCourseClient() {
 
   // Helper to refresh the Context data cache
   const refreshCache = () =>
-    queryClient.invalidateQueries({ queryKey: ["sections"] });
+    queryClient.invalidateQueries({ queryKey: ["course-content"] });
 
   // Define individual mutations implicitly
   const addSectionMut = useMutation({
@@ -34,6 +39,10 @@ export function useCourseClient() {
   });
   const deleteSectionMut = useMutation({
     mutationFn: deleteSection,
+    onSuccess: refreshCache,
+  });
+  const addObjectiveMut = useMutation({
+    mutationFn: postNewObjective,
     onSuccess: refreshCache,
   });
   const deleteObjectiveMut = useMutation({
@@ -54,6 +63,13 @@ export function useCourseClient() {
       mutate: deleteSectionMut.mutate,
       isPending: deleteSectionMut.isPending,
       error: deleteSectionMut.error,
+    },
+    addObjective: {
+      mutate: addObjectiveMut.mutate,
+      mutateAsync: addObjectiveMut.mutateAsync, // Great to include both!
+      isPending: addObjectiveMut.isPending,
+      error: addObjectiveMut.error,
+      isSuccess: addObjectiveMut.isSuccess,
     },
     deleteObjective: {
       mutate: deleteObjectiveMut.mutate,
