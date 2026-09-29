@@ -24,7 +24,7 @@ export default function SectionsProvider({
   const token = getAccessToken();
   // insert useUser hook to pull real userId
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["sections"],
+    queryKey: ["course-content"],
     queryFn: fetchCourseContent,
     enabled: !!token,
   });
