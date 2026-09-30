@@ -31,7 +31,7 @@ export class ProgressRepository {
   async getUserById(userId: string) {
     const result = await this.db.query(
       `
-      SELECT id, email, birth_date, created_at FROM users WHERE id = $1
+      SELECT id, email, birth_date, created_at, is_admin FROM users WHERE id = $1
       `,
       [userId]
     );
