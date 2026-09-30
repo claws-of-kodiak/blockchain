@@ -19,7 +19,7 @@ export class AuthRepository {
   // Begin progress for user
   async findUserByEmail(email: string) {
     const queryText = `
-        SELECT id, email, birth_date, password_hash
+        SELECT id, email, birth_date, password_hash, created_at, is_admin
         FROM users
         WHERE email = $1;
     `;
