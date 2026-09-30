@@ -7,6 +7,7 @@ export const registerSchema = z.object({
   email: z.string().min(1, "Email required"),
   birthDate: z.date(),
   password: z.string().min(1, "Password required"),
+  isAdmin: z.boolean(),
 });
 
 export const loginSchema = z.object({

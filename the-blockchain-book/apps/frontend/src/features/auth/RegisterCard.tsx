@@ -39,6 +39,7 @@ export default function RegisterCard() {
           placeholder="Password"
           {...register("password")}
         />
+        <input type="checkbox" {...register("isAdmin")} />
         {errors.root && <ErrorMsg msg={errors.root.message} />}
         <button disabled={isPending} type="submit">
           {isPending ? "..." : "Create Account"}

@@ -4,4 +4,5 @@ export type User = {
   birthDate: Date;
   passwordHash: string;
   createdAt: Date;
+  isAdmin: boolean;
 };

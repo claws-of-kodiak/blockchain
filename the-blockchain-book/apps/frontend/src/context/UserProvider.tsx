@@ -28,6 +28,7 @@ export default function UserProvider({
       email: data?.email,
       birthDate: data?.birthDate,
       createdAt: data?.createdAt,
+      isAdmin: data?.isAdmin,
       isLoading,
       error,
       refetch,
