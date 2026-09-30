@@ -27,6 +27,17 @@ export class ProgressRepository {
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
+  // Get user progress
+  async getUserById(userId: string) {
+    const result = await this.db.query(
+      `
+      SELECT id, email, birth_date, created_at FROM users WHERE id = $1
+      `,
+      [userId]
+    );
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
   // Unlock next step
   async unlockNextStep(userId: string, nextStep: number) {
     const result = await this.db.query(
