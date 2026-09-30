@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { UserContext, type UserContextType } from "./context";
 import type { User } from "@repo/validations";
 
-const fetchUser = async (): Promise<User> => {
+const fetchUser = async (): Promise<Omit<User, "passwordHash">> => {
   const data = await authFetch.get(`/progress/userData`);
   return data;
 };
@@ -16,7 +16,6 @@ export default function UserProvider({
   children: React.ReactNode;
 }) {
   const token = getAccessToken();
-  // insert useUser hook to pull real userId
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUser,
@@ -25,10 +24,10 @@ export default function UserProvider({
 
   const value: UserContextType = useMemo(
     () => ({
-      id: data.id,
-      email: data.email,
-      birthDate: data.birthDate,
-      createdAt: data.createdAt,
+      id: data?.id,
+      email: data?.email,
+      birthDate: data?.birthDate,
+      createdAt: data?.createdAt,
       isLoading,
       error,
       refetch,
