@@ -24,12 +24,12 @@ export const SectionsContext = createContext<SectionsContextType | undefined>(
   undefined
 );
 
-// export type UserContextType = User & {
-//   isLoading: boolean;
-//   error: Error;
-//   refetch: () => void;
-// };
+export type UserContextType = Omit<User, "passwordHash"> & {
+  isLoading: boolean;
+  error: Error;
+  refetch: () => void;
+};
 
-// export const UserContext = createContext<UserContextType | undefined>(
-//   undefined
-// );
+export const UserContext = createContext<UserContextType | undefined>(
+  undefined
+);
