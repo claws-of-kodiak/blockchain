@@ -1,11 +1,22 @@
 import { Link, useNavigate } from "react-router";
-import { headerRouteList, profileMenuRoutes } from "../../routes";
+import {
+  getHeaderRoutes,
+  getProfileMenuRoutes,
+  getRouteList,
+} from "../../routes";
 import "../../styles/header.css";
 import { logout } from "../../services/authClient";
 import type { Route } from "@repo/validations";
+import { useUser } from "../hooks/useUser";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { isAdmin } = useUser();
+
+  // 4. Dynamically generate the routes based on isAdmin
+  const currentRoutes = getRouteList(isAdmin);
+  const headerRouteList = getHeaderRoutes(currentRoutes);
+  const profileMenuRoutes = getProfileMenuRoutes(currentRoutes);
 
   const handleLogOut = () => {
     logout();

@@ -1,8 +1,11 @@
 import { useRoutes } from "react-router";
-import { routeList } from "./routes";
+import { getRouteList } from "./routes";
+import { useUser } from "./shared/hooks/useUser";
 
 const AppRoutes = () => {
-  let routes = useRoutes(routeList);
+  const { isAdmin } = useUser();
+  const list = getRouteList(isAdmin);
+  let routes = useRoutes(list);
   return routes;
 };
 
