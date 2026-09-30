@@ -20,6 +20,18 @@ progressRouter.get("/user", async (req, res) => {
   return res.status(200).json(currentStep);
 });
 
+progressRouter.get("/userData", async (req, res) => {
+  if (!req.headers.authorization) throw new Error("No authorization found");
+  const email = extractBearerToken(req.headers.authorization);
+  if (!email) throw new Error("No email found");
+  const user = await authRepo.findUserByEmail(email);
+  if (!user) return res.status(401).json({ message: "Invalid user." });
+  const userData = await progressRepo.getUserById(user.id);
+  console.log("userData", userData);
+  if (!userData) return res.status(200).json(0);
+  return res.status(200).json(userData);
+});
+
 progressRouter.post("/begin", async (req, res) => {
   if (!req.headers.authorization) throw new Error("No authorization found");
   const email = extractBearerToken(req.headers.authorization);
