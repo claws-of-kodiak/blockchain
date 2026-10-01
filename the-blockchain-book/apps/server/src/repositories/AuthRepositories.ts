@@ -6,13 +6,23 @@ export class AuthRepository {
     this.db = db;
   }
   // Begin progress for user
-  async registerUser(email: string, birthDate: Date, hash: string) {
+  async registerUser(
+    email: string,
+    birthDate: Date,
+    hash: string,
+    isAdmin: boolean
+  ) {
     const queryText = `
-        INSERT INTO users (email, birth_date, password_hash)
-        VALUES ($1, $2, $3)
+        INSERT INTO users (email, birth_date, password_hash, is_admin)
+        VALUES ($1, $2, $3, $4)
         RETURNING email;
     `;
-    const result = await this.db.query(queryText, [email, birthDate, hash]);
+    const result = await this.db.query(queryText, [
+      email,
+      birthDate,
+      hash,
+      isAdmin,
+    ]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }

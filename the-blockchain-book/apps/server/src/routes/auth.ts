@@ -20,10 +20,15 @@ authRouter.post("/login", async (req, res, next) => {
 
 authRouter.post("/register", async (req, res, next) => {
   try {
-    const { email, birthDate, password } = req.body;
+    const { email, birthDate, password, isAdmin } = req.body;
     // Install and integrate bcrypt()
     const hash = password;
-    const newEmail = await authRepo.registerUser(email, birthDate, hash);
+    const newEmail = await authRepo.registerUser(
+      email,
+      birthDate,
+      hash,
+      isAdmin
+    );
     if (newEmail === null)
       return res.status(500).json({ message: "Failed to insert user." });
     return res.status(201).json(newEmail);
