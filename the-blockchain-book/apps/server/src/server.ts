@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import authRouter from "./routes/auth";
-import progressRouter from "./routes/progress";
 import courseRouter from "./routes/course";
 import { handleErrors } from "./middleware/middleware";
+import userRouter from "./routes/user";
 
 const app = express();
 const port = 3000;
@@ -19,7 +19,7 @@ app.use(express.json());
 // Server Routes
 app.use("/course", courseRouter);
 app.use("/auth", authRouter);
-app.use("/progress", progressRouter);
+app.use("/progress", userRouter);
 
 app.get("/", (req, res) => {
   res.send(`You made a GET request to port: ${port}`);

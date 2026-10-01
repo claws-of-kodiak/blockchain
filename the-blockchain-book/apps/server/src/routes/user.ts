@@ -1,19 +1,19 @@
 import express from "express";
 import db from "../db";
-import { ProgressRepository } from "../repositories/ProgressRepositories";
 import addStep from "../util/addStep";
 import { AuthRequest, requireAuth } from "../middleware/middleware";
+import { UserRepository } from "../repositories/UserRepositories";
 
-const progressRouter = express.Router();
-const progressRepo = new ProgressRepository(db);
+const userRouter = express.Router();
+const userRepo = new UserRepository(db);
 
-progressRouter.use(requireAuth);
+userRouter.use(requireAuth);
 
-progressRouter.get("/user", async (req: AuthRequest, res, next) => {
+userRouter.get("/user", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
-    const currentStep = await progressRepo.getProgressById(id);
+    const currentStep = await userRepo.getProgressById(id);
     if (!currentStep) return res.status(200).json(0);
     return res.status(200).json(currentStep);
   } catch (err) {
@@ -21,11 +21,11 @@ progressRouter.get("/user", async (req: AuthRequest, res, next) => {
   }
 });
 
-progressRouter.get("/userData", async (req: AuthRequest, res, next) => {
+userRouter.get("/userData", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
-    const userData = await progressRepo.getUserById(id);
+    const userData = await userRepo.getUserById(id);
     console.log("userData", userData);
     if (!userData) return res.status(200).json(0);
     return res.status(200).json(userData);
@@ -34,11 +34,11 @@ progressRouter.get("/userData", async (req: AuthRequest, res, next) => {
   }
 });
 
-progressRouter.post("/begin", async (req: AuthRequest, res, next) => {
+userRouter.post("/begin", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
-    const time = await progressRepo.beginCourse(id);
+    const time = await userRepo.beginCourse(id);
     if (time === null)
       return res
         .status(500)
@@ -51,36 +51,33 @@ progressRouter.post("/begin", async (req: AuthRequest, res, next) => {
   }
 });
 
-progressRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
+userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
-    const progress = await progressRepo.getProgressById(id);
+    const progress = await userRepo.getProgressById(id);
     if (!progress) {
       return res
         .status(400)
         .json({ message: "No progress found. Begin the course first." });
     }
     const nextStep = addStep(progress);
-    const updated = await progressRepo.unlockNextStep(id, nextStep);
+    const updated = await userRepo.unlockNextStep(id, nextStep);
     return res.status(200).json(updated); // { current_step: nextStep }
   } catch (err) {
     next(err);
   }
 });
 
-progressRouter.delete(
-  "/deleteProgress",
-  async (req: AuthRequest, res, next) => {
-    try {
-      if (!req.payload) throw new Error("Auth failed");
-      const id = req.payload.id;
-      await progressRepo.deleteProgress(id);
-      return res.status(204).json();
-    } catch (err) {
-      next(err);
-    }
+userRouter.delete("/deleteProgress", async (req: AuthRequest, res, next) => {
+  try {
+    if (!req.payload) throw new Error("Auth failed");
+    const id = req.payload.id;
+    await userRepo.deleteProgress(id);
+    return res.status(204).json();
+  } catch (err) {
+    next(err);
   }
-);
+});
 
-export default progressRouter;
+export default userRouter;

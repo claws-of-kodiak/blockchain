@@ -1,6 +1,6 @@
 import { Database } from "../db";
 
-export class ProgressRepository {
+export class UserRepository {
   private db: Database;
   constructor(db: Database) {
     this.db = db;
