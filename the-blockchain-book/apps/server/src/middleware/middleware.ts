@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express"; // Ensure Express types are imported
-
 import { AuthRepository } from "../repositories/AuthRepositories";
 import { extractBearerToken } from "../util/auth";
 import db from "../db";
@@ -30,4 +29,23 @@ export const requireAuth = async (
   };
   req.payload = payload;
   next();
+};
+
+export const handleErrors = (
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const statusCode = err.status || 500;
+  const errorRoute = req.route ? req.route.path : "unknwon";
+  console.error(`Error at ${errorRoute}`);
+  console.error(err.stack);
+
+  res.status(statusCode).json({
+    code: "ANY_ERROR",
+    path: "error",
+    message: err.message || `Unaccounted Error with server.`,
+    requestId: "insert_random_string",
+  });
 };
