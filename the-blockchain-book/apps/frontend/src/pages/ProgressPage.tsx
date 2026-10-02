@@ -1,6 +1,7 @@
 import Header from "../shared/components/Header";
 import { useProgressClient } from "../services/progressClient";
 import { useProgress } from "../shared/hooks/useProgress";
+import { Button } from "../shared/components/Button";
 
 export default function ProgressPage() {
   const { currentStep = 0, isLoading } = useProgress();
@@ -15,18 +16,18 @@ export default function ProgressPage() {
       {currentStep > 0 ? (
         <div>
           <p>Current Step: {currentStep}</p>
-          <button
+          <Button
             onClick={() => unlockStep.mutate()}
             disabled={unlockStep.isPending}
           >
             Next Step
-          </button>
-          <button onClick={() => deleteProgress.mutate()}>
+          </Button>
+          <Button onClick={() => deleteProgress.mutate()}>
             Restart Progress
-          </button>
+          </Button>
         </div>
       ) : (
-        <button onClick={() => beginCourse.mutate()}>Begin Course</button>
+        <Button onClick={() => beginCourse.mutate()}>Begin Course</Button>
       )}
     </>
   );

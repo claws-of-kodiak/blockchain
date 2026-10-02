@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import "../../styles/form.css";
 import { useCourseClient } from "../../services/courseClient";
+import { Button } from "../../shared/components/Button";
 
 export default function NewSectionForm({ onClose }) {
   const queryClient = useQueryClient();
@@ -52,9 +53,9 @@ export default function NewSectionForm({ onClose }) {
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
 
-        <button type="submit">
-          {isPending ? "Creating Section..." : "Create new section."}
-        </button>
+        <Button type="submit" isLoading={isPending}>
+          Create New Section
+        </Button>
       </form>
     </div>
   );

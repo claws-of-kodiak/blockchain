@@ -6,6 +6,7 @@ import { useCourseClient } from "../../services/courseClient";
 import { useParams } from "react-router";
 import { newObjectiveSchema } from "@repo/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../../shared/components/Button";
 
 export default function NewObjectiveForm({ onClose }) {
   const queryClient = useQueryClient();
@@ -66,9 +67,9 @@ export default function NewObjectiveForm({ onClose }) {
           />
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
-        <button type="submit">
-          {isPending ? "Creating Objective..." : "Add to Section"}
-        </button>
+        <Button type="submit" isLoading={isPending}>
+          Add to Section
+        </Button>
       </form>
     </div>
   );

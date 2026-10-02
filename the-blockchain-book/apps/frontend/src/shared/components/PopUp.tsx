@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../../styles/pop-up.css";
+import { Button } from "./Button";
 
 export default function PopUp({ label, component: Component }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,22 +11,22 @@ export default function PopUp({ label, component: Component }) {
   return (
     <>
       {/* Trigger Button displayed to the user */}
-      <button onClick={openPopup} type="button">
+      <Button onClick={openPopup} type="button">
         {label}
-      </button>
+      </Button>
 
       {/* Conditionally rendered popup interface */}
       {isOpen && (
         <div className="popup-overlay">
           <div className="popup-content">
             {/* The 'X' cancellation button */}
-            <button
+            <Button
               className="popup-close-btn"
               onClick={closePopup}
               type="button"
             >
               &times;
-            </button>
+            </Button>
 
             {/* The dynamically injected form or layout element */}
             <Component onClose={closePopup} />

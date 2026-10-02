@@ -6,6 +6,7 @@ import { login } from "../../services/authClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@repo/validations";
+import { Button } from "../../shared/components/Button";
 
 export default function LogInCard() {
   const {
@@ -40,7 +41,9 @@ export default function LogInCard() {
           {...register("password")}
         />
         {errors.root && <ErrorMsg msg={errors.root.message} />}
-        <button type="submit">{isPending ? "..." : "Log In"}</button>
+        <Button type="submit" isLoading={isPending}>
+          Log In
+        </Button>
       </form>
       {error && <ErrorMsg msg={error.message} />}
       <span>

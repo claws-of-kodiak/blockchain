@@ -8,6 +8,7 @@ import "../../styles/header.css";
 import { logout } from "../../services/authClient";
 import type { Route } from "@repo/validations";
 import { useUser } from "../hooks/useUser";
+import { Button } from "./Button";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -54,9 +55,9 @@ export default function Header() {
             </ul>
           </li>
           <li>
-            <button type="button" onClick={handleLogOut}>
+            <Button type="button" variant="header" onClick={handleLogOut}>
               Log Out
-            </button>
+            </Button>
           </li>
         </ul>
       </nav>

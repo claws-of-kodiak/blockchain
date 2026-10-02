@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@repo/validations";
+import { Button } from "../../shared/components/Button";
 
 export default function RegisterCard() {
   const {
@@ -41,9 +42,9 @@ export default function RegisterCard() {
         />
         <input type="checkbox" {...register("isAdmin")} />
         {errors.root && <ErrorMsg msg={errors.root.message} />}
-        <button disabled={isPending} type="submit">
-          {isPending ? "..." : "Create Account"}
-        </button>
+        <Button type="submit" isLoading={isPending}>
+          Create Account
+        </Button>
       </form>
       {error && <ErrorMsg msg={error.message} />}
     </div>
