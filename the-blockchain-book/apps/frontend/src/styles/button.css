@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Shared Global Configurations
+   ========================================================================== */
+.btn {
+  background-color: transparent;
+  color: var(--accent-retro);
+  font-family: var(--font-display);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Disabled Actions */
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Structural loading alignments */
+.btn__loading-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+     Precise Re-implementations of your 3 original styles
+     ========================================================================== */
+
+/* Style 1: Your original default 'button' ruleset */
+.btn--base {
+  margin: 20px;
+  border: 1px solid var(--accent-retro);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Style 2: Your original '.hero button' ruleset */
+.btn--hero {
+  border: 2px solid var(--accent-retro);
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+/* Style 3: Your original 'header button' ruleset */
+.btn--header {
+  border: 1px solid var(--accent-retro);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin: 0; /* Keeps it tight for navigation layouts */
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+     Optional Scale Multipliers
+     ========================================================================== */
+.btn--sm {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+.btn--md {
+  /* Inherits preset variant sizing definitions cleanly */
+}
+.btn--lg {
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
+}
