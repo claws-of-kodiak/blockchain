@@ -2,6 +2,7 @@ import Header from "../shared/components/Header";
 import { useProgressClient } from "../services/progressClient";
 import { useProgress } from "../shared/hooks/useProgress";
 import { Button } from "../shared/components/Button";
+import DisplayCourseContent from "../features/course/DisplayCourseContent";
 
 export default function ProgressPage() {
   const { currentStep = 0, isLoading } = useProgress();
@@ -29,6 +30,7 @@ export default function ProgressPage() {
       ) : (
         <Button onClick={() => beginCourse.mutate()}>Begin Course</Button>
       )}
+      <DisplayCourseContent />
     </>
   );
 }

@@ -20,10 +20,9 @@ export default function EditSection() {
     <>
       <div>
         <PopUp component={NewObjectiveForm} label="+ Add New Objective" />
-        {objectives.length === 0 && <p>You need to add objectives.</p>}
         {objectives &&
           objectives.map((obj) => (
-            <p key={obj.objectiveId}>
+            <p key={obj.label}>
               {obj.label} - {obj.description}
               <DeleteBin
                 onClick={() => deleteObjective.mutate(obj.objectiveId)}
