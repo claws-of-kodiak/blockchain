@@ -7,28 +7,29 @@ export class CourseRepository {
     this.db = db;
   }
   // Create section for admin
-  async createSection(adminId: string, title: string) {
+  async createSection(adminId: string, title: string, position: number) {
     const queryText = `
-        INSERT INTO sections (admin_id, title)
-        VALUES ($1, $2)
+        INSERT INTO sections (admin_id, title, position)
+        VALUES ($1, $2, $3)
         RETURNING created_at;
     `;
-    const result = await this.db.query(queryText, [adminId, title]);
+    const result = await this.db.query(queryText, [adminId, title, position]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
   // Create objective for section
   async createObjective(formData: Objective) {
-    const { label, description, sectionId } = formData;
+    const { label, description, sectionId, position } = formData;
     const queryText = `
-        INSERT INTO objectives (label, description, section_id)
-        VALUES ($1, $2, $3)
+        INSERT INTO objectives (label, description, section_id, position)
+        VALUES ($1, $2, $3, $4)
         RETURNING created_at;
     `;
     const result = await this.db.query(queryText, [
       label,
       description,
       sectionId,
+      position,
     ]);
     if (result.rows.length === 0) return null;
     return result.rows[0];

@@ -27,8 +27,8 @@ courseRouter.post("/addSection", async (req, res, next) => {
     if (!email) throw new Error("No email found");
     const user = await authRepo.findUserByEmail(email);
     if (!user) return res.status(401).json({ message: "Invalid user." });
-    const { title } = req.body;
-    const createdAt = await courseRepo.createSection(user.id, title);
+    const { title, position } = req.body;
+    const createdAt = await courseRepo.createSection(user.id, title, position);
     return res
       .status(201)
       .json({ createdAt, message: "Section insert success!" });
