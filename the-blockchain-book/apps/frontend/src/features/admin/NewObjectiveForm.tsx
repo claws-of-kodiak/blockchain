@@ -65,6 +65,12 @@ export default function NewObjectiveForm({ onClose }) {
             placeholder="e.g., How to find Satoshi"
             {...register("description")}
           />
+          <input
+            id="positon"
+            type="number"
+            placeholder="enter position of objective"
+            {...register("position", { required: "Position is required" })}
+          />
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
         <Button type="submit" isLoading={isPending}>

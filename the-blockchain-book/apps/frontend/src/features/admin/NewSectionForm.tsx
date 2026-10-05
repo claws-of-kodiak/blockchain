@@ -50,6 +50,12 @@ export default function NewSectionForm({ onClose }) {
             placeholder="e.g., The First Objective"
             {...register("title", { required: "Title is required" })}
           />
+          <input
+            id="positon"
+            type="number"
+            placeholder="enter position of section"
+            {...register("position", { required: "Position is required" })}
+          />
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
 
