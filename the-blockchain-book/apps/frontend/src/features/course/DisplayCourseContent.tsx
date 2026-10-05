@@ -17,9 +17,13 @@ export default function DisplayCourseContent() {
           );
           return (
             <div className="display-section-content" key={section.sectionId}>
-              <h3>{section.title}</h3>
+              <h3>
+                {section.title} - position: {section.position}
+              </h3>
               {sectionObjectives.map((obj) => (
-                <p>{obj.description}</p>
+                <p>
+                  {obj.description} - position: {obj.position}
+                </p>
               ))}
             </div>
           );

@@ -3,17 +3,20 @@ import { useSections } from "../../shared/hooks/useSections";
 import type { Section } from "@repo/validations";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import SectionCard from "./SectionCard";
+import { sortByPosition } from "../../util/sortByPosition";
 
 export default function DisplaySections() {
   const { sections, isLoading, error } = useSections();
+
+  const sortedSections = sortByPosition(sections);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <ErrorMsg msg={error.message} />;
 
   return (
     <div className="display-sections-wrap">
-      {sections ? (
-        sections.map((section: Section) => (
+      {sortedSections ? (
+        sortedSections.map((section: Section) => (
           <SectionCard key={section.sectionId} payload={section} />
         ))
       ) : (

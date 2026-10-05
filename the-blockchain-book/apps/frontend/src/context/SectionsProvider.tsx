@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAccessToken } from "../services/authClient";
 import { authFetch } from "../services/apiClient";
 import { SectionsContext, type SectionsContextType } from "./context";
+import { sortByPosition } from "../util/sortByPosition";
 
 type Section = any;
 type Objective = any;
@@ -29,7 +30,7 @@ export default function SectionsProvider({
     enabled: !!token,
   });
 
-  const sections = data?.sections || [];
+  const sections = sortByPosition(data?.sections) || [];
   const objectives = data?.objectives || [];
 
   const value: SectionsContextType = {
