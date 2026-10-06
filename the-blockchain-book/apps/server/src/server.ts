@@ -4,6 +4,8 @@ import authRouter from "./routes/auth";
 import courseRouter from "./routes/course";
 import { handleErrors } from "./middleware/middleware";
 import userRouter from "./routes/user";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./lib/auth";
 
 const app = express();
 const port = 3000;
@@ -14,6 +16,7 @@ app.use(
     credentials: true,
   })
 );
+authRouter.all("/auth/*any", toNodeHandler(auth));
 app.use(express.json());
 
 // Server Routes
