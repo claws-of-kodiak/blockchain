@@ -1,9 +1,13 @@
 import express from "express";
 import db from "../db";
 import { AuthRepository } from "../repositories/AuthRepositories";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "../lib/auth";
 
 const authRouter = express.Router();
 const authRepo = new AuthRepository(db);
+
+authRouter.all("/*", toNodeHandler(auth));
 
 authRouter.post("/login", async (req, res, next) => {
   try {
