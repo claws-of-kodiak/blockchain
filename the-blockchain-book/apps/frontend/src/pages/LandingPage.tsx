@@ -14,11 +14,10 @@ export default function LandingPage() {
           A repeatable diagnostic framework for evaluating any blockchain token
           (network, protocol, or application) across three layers of analysis.
         </p>
-        <Button variant="hero">
-          <Link style={{ all: "unset" }} to="/register">
-            Enroll Now
-          </Link>
-        </Button>
+
+        <Link style={{ all: "unset" }} to="/register">
+          <Button variant="hero">Enroll Now</Button>
+        </Link>
       </section>
 
       <main>
