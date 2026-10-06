@@ -8,5 +8,5 @@
     "composite": true,
     "strict": true
   },
-  "include": [".", "server.ts"]
+  "include": [".", "server.ts", "../frontend/src/services/auth-client.ts"]
 }
