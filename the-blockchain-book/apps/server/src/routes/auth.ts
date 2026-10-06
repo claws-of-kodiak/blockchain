@@ -7,7 +7,7 @@ import { auth } from "../lib/auth";
 const authRouter = express.Router();
 const authRepo = new AuthRepository(db);
 
-authRouter.all("/*", toNodeHandler(auth));
+authRouter.all("/*any", toNodeHandler(auth));
 
 authRouter.post("/login", async (req, res, next) => {
   try {
