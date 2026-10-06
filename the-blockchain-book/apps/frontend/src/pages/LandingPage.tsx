@@ -2,11 +2,13 @@ import LogInCard from "../features/auth/LogInCard";
 import ".././styles/landing-page.css";
 import { Link } from "react-router";
 import { Button } from "../shared/components/Button";
+import PopUp from "../shared/components/PopUp";
 
 export default function LandingPage() {
   return (
     <>
       <section className="hero">
+        <PopUp label="Log In" component={LogInCard} id="log-in" />
         <h1>Token Analysis Masterclass</h1>
         <p>
           A repeatable diagnostic framework for evaluating any blockchain token
@@ -28,7 +30,6 @@ export default function LandingPage() {
             convert that reading into a defensible investment judgment.
           </p>
         </section>
-        <LogInCard />
         <section id="framework">
           <h2>The Three Layers</h2>
           <table>

@@ -50,6 +50,12 @@ body {
   margin-bottom: 2rem;
 }
 
+.hero #log-in {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
 .hero button:hover {
   background-color: var(--accent-retro);
   color: var(--bg-dark);

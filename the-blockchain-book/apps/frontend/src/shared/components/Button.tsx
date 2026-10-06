@@ -19,6 +19,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       isLoading = false,
       className = "",
+      id = "",
       disabled,
       ...props
     },
@@ -41,6 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={classNames}
         disabled={disabled || isLoading}
         type={props.type || "button"}
+        id={id}
         {...props}
       >
         {isLoading ? (

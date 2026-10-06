@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../styles/pop-up.css";
 import { Button } from "./Button";
 
-export default function PopUp({ label, component: Component }) {
+export default function PopUp({ label, component: Component, id }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openPopup = () => setIsOpen(true);
@@ -11,7 +11,7 @@ export default function PopUp({ label, component: Component }) {
   return (
     <>
       {/* Trigger Button displayed to the user */}
-      <Button onClick={openPopup} type="button">
+      <Button onClick={openPopup} type="button" id={id}>
         {label}
       </Button>
 
