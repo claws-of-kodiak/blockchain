@@ -1,0 +1,49 @@
+/* Container hit zone */
+.hover-trigger-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+/* Subtle dot indicator when not hovered */
+.hover-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #cbd5e1;
+  border-radius: 50%;
+  transition: opacity 0.15s ease;
+}
+
+.hover-trigger-wrapper:hover .hover-dot {
+  opacity: 0;
+}
+
+/* 
+  Target the trigger button inside the wrapper.
+  If using Option 1, target .add-item-btn-hover.
+  If using Option 2, target > button (the first direct child button rendered by PopUp).
+*/
+.hover-trigger-wrapper .add-item-btn-hover,
+.hover-trigger-wrapper > button {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  white-space: nowrap;
+}
+
+/* Reveal button when mouse hovers over wrapper span OR button gets keyboard focus */
+.hover-trigger-wrapper:hover .add-item-btn-hover,
+.hover-trigger-wrapper:hover > button,
+.hover-trigger-wrapper .add-item-btn-hover:focus-visible,
+.hover-trigger-wrapper > button:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}

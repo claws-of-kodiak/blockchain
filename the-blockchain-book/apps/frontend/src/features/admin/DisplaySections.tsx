@@ -4,6 +4,9 @@ import type { Section } from "@repo/validations";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import SectionCard from "./SectionCard";
 import { sortByPosition } from "../../util/sortByPosition";
+import { HoverAddItemButton } from "./AddItemButton";
+import PopUp from "../../shared/components/PopUp";
+import NewSectionForm from "./NewSectionForm";
 
 export default function DisplaySections() {
   const { sections, isLoading, error } = useSections();
@@ -17,7 +20,10 @@ export default function DisplaySections() {
     <div className="display-sections-wrap">
       {sortedSections ? (
         sortedSections.map((section: Section) => (
-          <SectionCard key={section.sectionId} payload={section} />
+          <div key={section.sectionId}>
+            <HoverAddItemButton component={NewSectionForm} />
+            <SectionCard payload={section} />
+          </div>
         ))
       ) : (
         <p>No course content found.</p>
