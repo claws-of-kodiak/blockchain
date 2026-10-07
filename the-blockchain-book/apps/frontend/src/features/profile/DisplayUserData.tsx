@@ -4,8 +4,6 @@ import { formatDate } from "../../util/formatDate";
 export default function DisplayUserData() {
   const { email, birthDate, createdAt, isAdmin } = useUser();
 
-  console.log(email, birthDate, createdAt);
-
   return (
     <div id="user-data-wrap">
       <p>{email}</p>
