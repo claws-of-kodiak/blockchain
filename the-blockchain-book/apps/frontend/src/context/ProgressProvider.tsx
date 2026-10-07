@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAccessToken } from "../services/authClient";
 import { authFetch } from "../services/apiClient";
 import { ProgressContext, type ProgressContextType } from "./context";
 import { useMemo } from "react";
@@ -18,7 +17,7 @@ export default function ProgressProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const token = getAccessToken();
+  const token = "";
   // insert useUser hook to pull real userId
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["currentStep"],

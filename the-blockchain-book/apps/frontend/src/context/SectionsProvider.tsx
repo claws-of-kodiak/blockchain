@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAccessToken } from "../services/authClient";
 import { authFetch } from "../services/apiClient";
 import { SectionsContext, type SectionsContextType } from "./context";
 import { sortByPosition } from "../util/sortByPosition";
@@ -22,7 +21,7 @@ export default function SectionsProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const token = getAccessToken();
+  const token = "";
   // insert useUser hook to pull real userId
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["course-content"],
