@@ -1,39 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAccessToken } from "../services/authClient";
-import { authFetch } from "../services/apiClient";
 import { useMemo } from "react";
 import { UserContext, type UserContextType } from "./context";
-import type { User } from "@repo/validations";
-
-const fetchUser = async (): Promise<Omit<User, "passwordHash">> => {
-  const data = await authFetch.get(`/progress/userData`);
-  return data;
-};
+import { authClient } from "../services/auth-client";
 
 export default function UserProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const token = getAccessToken();
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
-    enabled: !!token,
-  });
+  const { data: session, isPending, error, refetch } = authClient.useSession();
+  const user = session?.user;
 
   const value: UserContextType = useMemo(
     () => ({
-      id: data?.id,
-      email: data?.email,
-      birthDate: data?.birthDate,
-      createdAt: data?.createdAt,
-      isAdmin: data?.isAdmin,
-      isLoading,
+      id: user?.id,
+      email: user?.email,
+      birthDate: user?.birthDate,
+      createdAt: user?.createdAt,
+      isAdmin: user?.isAdmin,
+      isLoading: isPending,
       error,
       refetch,
     }),
-    [data, isLoading, error, refetch]
+    [user, isPending, error, refetch]
   );
   return <UserContext value={value}>{children}</UserContext>;
 }
