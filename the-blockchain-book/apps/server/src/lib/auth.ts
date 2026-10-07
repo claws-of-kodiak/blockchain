@@ -1,10 +1,11 @@
-import { betterAuth } from "better-auth";
 import "dotenv/config";
+import { betterAuth } from "better-auth";
 import { pool } from "../db";
 
 export const auth = betterAuth({
   database: pool,
-  trustedOrigins: [process.env.CLIENT_APP_URL!],
+  trustedOrigins: [process.env.REACT_APP_URL!],
+  baseURL: process.env.BETTER_AUTH_URL,
   user: {
     modelName: "users",
     fields: {
@@ -40,8 +41,9 @@ export const auth = betterAuth({
   },
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      enabled: true,
+      clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.BETTER_AUTH_GOOGLE_CLIENT_SECRET as string,
     },
   },
 });

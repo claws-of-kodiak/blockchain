@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import "../../styles/auth-card.css";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../services/authClient";
+import { login, loginWithGoogle } from "../../services/authClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@repo/validations";
 import { Button } from "../../shared/components/Button";
+import { authClient } from "../../services/auth-client";
 
 export default function LogInCard() {
   const {
@@ -26,6 +27,10 @@ export default function LogInCard() {
     },
   });
 
+  const handleGoogleLogIn = async () => {
+    await loginWithGoogle();
+  };
+
   const onSubmit = (data) => {
     mutate(data);
   };
@@ -33,6 +38,7 @@ export default function LogInCard() {
   return (
     <div className="auth-card">
       <h2>Log In</h2>
+      <Button onClick={handleGoogleLogIn}>Log in with Google</Button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" placeholder="Email" {...register("email")} />
         <input
