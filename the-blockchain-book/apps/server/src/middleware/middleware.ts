@@ -1,16 +1,10 @@
 import { Request, Response, NextFunction } from "express"; // Ensure Express types are imported
-import { AuthRepository } from "../repositories/AuthRepositories";
-import { extractBearerToken } from "../util/auth";
-import db from "../db";
 import type { User } from "@repo/validations";
 import { fromNodeHeaders } from "better-auth/node";
-import { authClient } from "../../../frontend/src/services/auth-client";
 import { auth } from "../lib/auth";
 
-const authRepo = new AuthRepository(db);
-
 export interface AuthRequest extends Request {
-  payload?: Omit<User, "passwordHash">;
+  payload?: User;
 }
 
 // export const requireAuth = async (
@@ -47,7 +41,7 @@ export async function requireAuth(
   const payload = {
     id: user.id,
     email: user.email,
-    birthDate: user.birthDate,
+    birthDate: user.birthDate as Date,
     createdAt: user.createdAt,
     isAdmin: user.isAdmin,
   };
