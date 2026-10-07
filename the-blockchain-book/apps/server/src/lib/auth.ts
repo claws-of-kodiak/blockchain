@@ -18,7 +18,7 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       birthDate: { type: "date", required: true },
-      isAdmin: { type: "boolean", required: true, defaultValue: false },
+      isAdmin: { type: "boolean" },
     },
   },
 });
