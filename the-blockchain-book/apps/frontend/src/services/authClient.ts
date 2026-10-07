@@ -21,7 +21,7 @@ export async function login({ email, password }: LogInCreds) {
 export async function loginWithGoogle() {
   await authClient.signIn.social({
     provider: "google",
-    callbackURL: "http://localhost:5173/dashboard", // must be an absolute URL if cross-origin
+    callbackURL: `${window.location.origin}/dashboard`, // must be an absolute URL if cross-origin
   });
 }
 
