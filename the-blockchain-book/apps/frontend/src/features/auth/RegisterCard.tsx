@@ -33,6 +33,7 @@ export default function RegisterCard() {
   return (
     <div className="auth-card">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder="Name" {...register("name")} />
         <input type="email" placeholder="Email" {...register("email")} />
         <input type="date" placeholder="Birthday" {...register("birthDate")} />
         <input
