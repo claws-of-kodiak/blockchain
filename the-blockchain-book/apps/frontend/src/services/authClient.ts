@@ -5,7 +5,7 @@ export async function registerUser(form: RegisterForm) {
   const { data, error } = await authClient.signUp.email({
     email: form.email,
     password: form.password,
-    name: form.name, // required by Better Auth; add to your form or derive it
+    name: form.name,
     birthDate: form.birthDate,
   });
   if (error) throw new Error(error.message ?? "Registration failed");
