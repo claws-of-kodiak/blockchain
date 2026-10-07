@@ -25,7 +25,6 @@ authRouter.post("/login", async (req, res, next) => {
 authRouter.post("/register", async (req, res, next) => {
   try {
     const { email, birthDate, password, isAdmin } = req.body;
-    // Install and integrate bcrypt()
     const hash = password;
     const newEmail = await authRepo.registerUser(
       email,
