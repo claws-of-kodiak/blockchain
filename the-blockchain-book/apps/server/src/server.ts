@@ -16,12 +16,12 @@ app.use(
     credentials: true,
   })
 );
-authRouter.all("/auth/*any", toNodeHandler(auth));
+authRouter.all("/api/auth/*any", toNodeHandler(auth));
 app.use(express.json());
 
 // Server Routes
 app.use("/course", courseRouter);
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
 app.use("/progress", userRouter);
 
 app.get("/", (req, res) => {
