@@ -2,31 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { authFetch } from "../services/apiClient";
 import { SectionsContext, type SectionsContextType } from "./context";
 import { sortByPosition } from "../util/sortByPosition";
-
-type Section = any;
-type Objective = any;
-
-type CourseContent = {
-  sections: Section;
-  objectives: Objective;
-};
-
-const fetchCourseContent = async (): Promise<CourseContent> => {
-  const data = await authFetch.get("/course");
-  return data;
-};
+import { authClient } from "../services/auth-client";
 
 export default function SectionsProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const token = "";
-  // insert useUser hook to pull real userId
+  const { data: session, isPending: sessionPending } = authClient.useSession();
+  const userId = session?.user.id;
+
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["course-content"],
-    queryFn: fetchCourseContent,
-    enabled: !!token,
+    queryKey: ["course-content", userId],
+    queryFn: () => authFetch.get("/course"),
+    enabled: !!userId,
   });
 
   const sections = sortByPosition(data?.sections) || [];
@@ -35,7 +24,7 @@ export default function SectionsProvider({
   const value: SectionsContextType = {
     sections,
     objectives,
-    isLoading,
+    isLoading: isLoading || sessionPending,
     error,
     refetch,
   };
