@@ -1,14 +1,14 @@
 import z from "zod";
 
-export type RegisterForm = z.infer<typeof registerSchema>;
-
 export const registerSchema = z.object({
   // THIS DOES NOT EXECUTE AT RUNTIME
+  name: z.string().min(1, "Name required"),
   email: z.string().min(1, "Email required"),
   birthDate: z.coerce.date(),
   password: z.string().min(1, "Password required"),
   isAdmin: z.boolean(),
 });
+export type RegisterForm = z.infer<typeof registerSchema>;
 
 export const loginSchema = z.object({
   // THIS DOES NOT EXECUTE AT RUNTIME
