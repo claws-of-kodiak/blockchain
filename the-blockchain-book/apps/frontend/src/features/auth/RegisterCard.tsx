@@ -14,7 +14,12 @@ export default function RegisterCard() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(registerSchema) });
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      isAdmin: false,
+    },
+  });
   const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({

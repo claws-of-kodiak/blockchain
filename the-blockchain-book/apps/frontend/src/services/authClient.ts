@@ -7,6 +7,7 @@ export async function registerUser(form: RegisterForm) {
     password: form.password,
     name: form.name,
     birthDate: form.birthDate,
+    isAdmin: form.isAdmin,
   });
   if (error) throw new Error(error.message ?? "Registration failed");
   return data;
