@@ -51,11 +51,6 @@ courseRouter.delete("/deleteSection/:id", async (req, res, next) => {
 
 courseRouter.post("/addObjective", async (req, res, next) => {
   try {
-    if (!req.headers.authorization) throw new Error("No authorization found");
-    const email = extractBearerToken(req.headers.authorization);
-    if (!email) throw new Error("No email found");
-    const user = await authRepo.findUserByEmail(email);
-    if (!user) return res.status(401).json({ message: "Invalid user." });
     const createdAt = await courseRepo.createObjective(req.body);
     return res
       .status(201)
