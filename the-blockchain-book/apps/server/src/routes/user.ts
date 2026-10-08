@@ -47,9 +47,7 @@ userRouter.post("/begin", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
     const userId = req.payload.id;
-    const firstSteps: FirstStep = await courseRepo.getFirstSteps();
-    console.log(firstSteps);
-    const { objectiveId, sectionId } = firstSteps;
+    const { objectiveId, sectionId } = await courseRepo.getFirstSteps();
     if (objectiveId === null || sectionId === null)
       throw Error("Missing first step data.");
     const time = await userRepo.beginCourse(userId, objectiveId, sectionId);
@@ -70,6 +68,7 @@ userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
     const progress = await userRepo.getProgressById(id);
+    console.log(progress);
     if (!progress) {
       return res
         .status(400)

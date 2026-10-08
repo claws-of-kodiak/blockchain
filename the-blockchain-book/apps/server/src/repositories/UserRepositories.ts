@@ -24,7 +24,15 @@ export class UserRepository {
   async getProgressById(userId: string) {
     const result = await this.db.query(
       `
-      SELECT current_objective, current_section FROM user_progress WHERE user_id = $1
+      SELECT 
+        s.section_id,
+        s.title AS section_title,
+        o.objective_id,
+        o.label AS objective_label
+      FROM user_progress p
+      LEFT JOIN sections s ON s.section_id = p.current_section
+      LEFT JOIN objectives o ON o.objective_id = p.current_objective
+      WHERE p.user_id = $1;
       `,
       [userId]
     );

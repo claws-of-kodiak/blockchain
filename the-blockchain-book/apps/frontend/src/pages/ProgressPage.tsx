@@ -5,18 +5,20 @@ import { Button } from "../shared/components/Button";
 import DisplayCourseContent from "../features/course/DisplayCourseContent";
 
 export default function ProgressPage() {
-  const { currentStep = 0, isLoading } = useProgress();
+  const { currentObjective, currentSection, isLoading } = useProgress();
   const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
 
   if (isLoading) return <p>Loading page...</p>;
 
+  console.log(currentObjective, currentSection);
   return (
     <>
       <Header />
       <h2>Track Your Progress</h2>
-      {currentStep > 0 ? (
+      {currentSection !== "Not found" ? (
         <div>
-          <p>Current Step: {currentStep}</p>
+          <p>Current Section: {currentSection}</p>
+          <p>Current Objective: {currentObjective}</p>
           <Button
             onClick={() => unlockStep.mutate()}
             disabled={unlockStep.isPending}

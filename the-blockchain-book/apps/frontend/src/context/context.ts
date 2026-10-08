@@ -2,7 +2,8 @@ import type { Objective, Section, User } from "@repo/validations";
 import { createContext } from "react";
 
 export type ProgressContextType = {
-  currentStep: number | null;
+  currentSection: string | null;
+  currentObjective: string | null;
   isLoading: boolean;
   error: Error;
   refetch: () => void;
