@@ -5,7 +5,6 @@ import ErrorMsg from "../../shared/components/ErrorMsg";
 import SectionCard from "./SectionCard";
 import { sortByPosition } from "../../util/sortByPosition";
 import { HoverAddItemButton } from "./AddItemButton";
-import PopUp from "../../shared/components/PopUp";
 import NewSectionForm from "./NewSectionForm";
 
 export default function DisplaySections() {
