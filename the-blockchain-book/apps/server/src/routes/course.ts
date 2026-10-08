@@ -1,13 +1,10 @@
 import express from "express";
 import db from "../db";
 import { CourseRepository } from "../repositories/CourseRepositories";
-import { extractBearerToken } from "../util/auth";
-import { AuthRepository } from "../repositories/AuthRepositories";
 import { AuthRequest, requireAuth } from "../middleware/middleware";
 
 const courseRouter = express.Router();
 const courseRepo = new CourseRepository(db);
-const authRepo = new AuthRepository(db);
 
 courseRouter.use(requireAuth);
 
