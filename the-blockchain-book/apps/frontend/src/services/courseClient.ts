@@ -1,10 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authFetch } from "./apiClient";
 import type { Objective, Section } from "@repo/validations";
+import { clearPosition, usePosition } from "./positionClient";
 
+// Conditional check for position
 async function postNewSection(formData: Section) {
-  const res = await authFetch.post("/course/addSection", formData);
-  // NEED TO PASS DESIRED POSITION FROM CLIENT TO REPO
+  const { position } = usePosition();
+  let res: Response;
+  if (position === null) {
+    res = await authFetch.post("/course/addSection", formData);
+  }
+  if (position) {
+    const newSection = { ...formData, position };
+    res = await authFetch.post("/course/insertSection", newSection);
+    if (res.ok) clearPosition();
+  }
   return res;
 }
 async function deleteSection(sectionId: string) {
