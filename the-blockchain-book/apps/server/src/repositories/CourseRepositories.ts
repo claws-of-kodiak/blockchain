@@ -1,4 +1,3 @@
-import { Objective } from "@repo/validations";
 import { Database } from "../db";
 
 export class CourseRepository {
@@ -7,7 +6,24 @@ export class CourseRepository {
     this.db = db;
   }
   // Create section for admin
-  async createSection(adminId: string, title: string, position: number) {
+  async createSection(adminId: string, title: string) {
+    // This checks if any sections then add appropiate position
+    // If no sections position = 1
+    // NEED TO UPDATE sections TO AUTO INCREMENT FROM HIGHEST
+    // If sections position = highest poition + 1
+
+    const queryText = `
+        INSERT INTO sections (admin_id, title)
+        VALUES ($1, $2)
+        RETURNING created_at;
+    `;
+    const result = await this.db.query(queryText, [adminId, title]);
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
+  async insertSection(adminId: string, title: string, position: number) {
+    // This adds one to all the positions above position prop
+    // Then it inserts this new section in at position given
     const queryText = `
         INSERT INTO sections (admin_id, title, position)
         VALUES ($1, $2, $3)

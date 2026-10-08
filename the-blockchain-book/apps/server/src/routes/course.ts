@@ -19,13 +19,27 @@ courseRouter.get("/", async (req, res, next) => {
     next(err);
   }
 });
-
+// INSERT AT HIGHEST POSITTION
 courseRouter.post("/addSection", async (req: AuthRequest, res, next) => {
   try {
     const userId = req.payload?.id;
     if (!userId) throw new Error("Error passing user payload from requireAuth");
+    const { title } = req.body;
+    const createdAt = await courseRepo.createSection(userId, title);
+    return res
+      .status(201)
+      .json({ createdAt, message: "Section insert success!" });
+  } catch (err) {
+    next(err);
+  }
+});
+// INSERT BELOW OTHER SECTION
+courseRouter.post("/insertSection", async (req: AuthRequest, res, next) => {
+  try {
+    const userId = req.payload?.id;
+    if (!userId) throw new Error("Error passing user payload from requireAuth");
     const { title, position } = req.body;
-    const createdAt = await courseRepo.createSection(userId, title, position);
+    const createdAt = await courseRepo.insertSection(userId, title, position);
     return res
       .status(201)
       .json({ createdAt, message: "Section insert success!" });
