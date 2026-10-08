@@ -4,6 +4,9 @@ import ErrorMsg from "../../shared/components/ErrorMsg";
 import "../../styles/form.css";
 import { useCourseClient } from "../../services/courseClient";
 import { Button } from "../../shared/components/Button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { newObjectiveSchema } from "@repo/validations";
+import { clearPosition } from "../../services/positionClient";
 
 export default function NewSectionForm({ onClose }) {
   const queryClient = useQueryClient();
@@ -16,9 +19,10 @@ export default function NewSectionForm({ onClose }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: zodResolver(newObjectiveSchema) });
 
   const onSubmit = (data) => {
+    clearPosition();
     addSection.mutate(data, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success
@@ -49,12 +53,6 @@ export default function NewSectionForm({ onClose }) {
             type="text"
             placeholder="e.g., The First Objective"
             {...register("title", { required: "Title is required" })}
-          />
-          <input
-            id="positon"
-            type="number"
-            placeholder="enter position of section"
-            {...register("position", { required: "Position is required" })}
           />
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
