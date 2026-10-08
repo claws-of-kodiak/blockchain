@@ -20,7 +20,7 @@ export default function ProgressPage() {
     <>
       <Header />
       <h2>Track Your Progress</h2>
-      {currentObjective !== "Not found" ? (
+      {currentSection !== "Not found" ? (
         <div>
           <p>Current Section: {currentSection}</p>
           <p>Current Objective: {currentObjective}</p>
