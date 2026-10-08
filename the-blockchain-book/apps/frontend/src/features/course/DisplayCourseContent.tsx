@@ -1,11 +1,11 @@
 import type { Objective } from "@repo/validations";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { Spinner } from "../../shared/components/Spinner";
-import { useSections } from "../../shared/hooks/useSections";
 import { sortByPosition } from "../../util/sortByPosition";
+import { useCourse } from "../../shared/hooks/useCourse";
 
 export default function DisplayCourseContent() {
-  const { sections, objectives, isLoading, error } = useSections();
+  const { sections, objectives, isLoading, error } = useCourse();
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorMsg msg={error.message} />;
