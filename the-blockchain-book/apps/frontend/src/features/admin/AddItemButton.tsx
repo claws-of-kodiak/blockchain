@@ -1,15 +1,21 @@
+import { setPosition } from "../../services/positionClient";
 import PopUp from "../../shared/components/PopUp";
 import "../../styles/hover-add-item-button.css";
+
+type AddItemButtonProps = {
+  label?: string;
+  component: React.FunctionComponent;
+  id?: string;
+  position: number;
+};
 
 export function HoverAddItemButton({
   label = "+",
   component,
-  id = "",
+  id,
   position,
-}) {
-  // NEED TO INTEGRATE POSITION AND PASS TO SERVER FOR REPO
-  // THIS WILL LEAD TO PROP DRILLING - NEED BETTER SOLUTION - positionClient.ts??
-  console.log(position);
+}: AddItemButtonProps) {
+  setPosition(position);
   return (
     <span className="hover-trigger-wrapper">
       <span className="hover-dot" aria-hidden="true" />
