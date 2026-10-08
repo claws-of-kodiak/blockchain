@@ -1,5 +1,5 @@
 import "../../styles/display-sections.css";
-import { useSections } from "../../shared/hooks/useSections";
+import { useCourse } from "../../shared/hooks/useCourse";
 import type { Section } from "@repo/validations";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import SectionCard from "./SectionCard";
@@ -8,7 +8,7 @@ import { HoverAddItemButton } from "./AddItemButton";
 import NewSectionForm from "./NewSectionForm";
 
 export default function DisplaySections() {
-  const { sections, isLoading, error } = useSections();
+  const { sections, isLoading, error } = useCourse();
 
   const sortedSections = sortByPosition(sections);
 
