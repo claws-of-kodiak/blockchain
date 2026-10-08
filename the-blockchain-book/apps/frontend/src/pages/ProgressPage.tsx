@@ -3,19 +3,24 @@ import { useProgressClient } from "../services/progressClient";
 import { useProgress } from "../shared/hooks/useProgress";
 import { Button } from "../shared/components/Button";
 import DisplayCourseContent from "../features/course/DisplayCourseContent";
+import { useCourse } from "../shared/hooks/useCourse";
+import ErrorMsg from "../shared/components/ErrorMsg";
 
 export default function ProgressPage() {
-  const { currentObjective, currentSection, isLoading } = useProgress();
+  const { sections } = useCourse();
+  const isCourse = sections.length !== 0;
+  const { currentObjective, currentSection, isLoading, error } = useProgress();
   const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
 
   if (isLoading) return <p>Loading page...</p>;
 
-  console.log(currentObjective, currentSection);
+  console.log(error);
+
   return (
     <>
       <Header />
       <h2>Track Your Progress</h2>
-      {currentSection !== "Not found" ? (
+      {currentObjective !== "Not found" ? (
         <div>
           <p>Current Section: {currentSection}</p>
           <p>Current Objective: {currentObjective}</p>
@@ -25,14 +30,20 @@ export default function ProgressPage() {
           >
             Next Step
           </Button>
-          <Button onClick={() => deleteProgress.mutate()}>
+          <Button onClick={() => deleteProgress.mutateAsync()}>
             Restart Progress
           </Button>
         </div>
       ) : (
-        <Button onClick={() => beginCourse.mutate()}>Begin Course</Button>
+        <Button disabled={!isCourse} onClick={() => beginCourse.mutate()}>
+          Begin Course
+        </Button>
       )}
-      <DisplayCourseContent />
+      {isCourse ? (
+        <DisplayCourseContent />
+      ) : (
+        <ErrorMsg msg="Contact admin - no course content." />
+      )}
     </>
   );
 }
