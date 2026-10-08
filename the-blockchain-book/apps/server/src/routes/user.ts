@@ -3,9 +3,18 @@ import db from "../db";
 import addStep from "../util/addStep";
 import { AuthRequest, requireAuth } from "../middleware/middleware";
 import { UserRepository } from "../repositories/UserRepositories";
+import { CourseRepository } from "../repositories/CourseRepositories";
 
 const userRouter = express.Router();
 const userRepo = new UserRepository(db);
+const courseRepo = new CourseRepository(db);
+
+type FirstStep = {
+  sectionId: string;
+  title: number;
+  objectiveId: null;
+  label: null;
+};
 
 userRouter.use(requireAuth);
 
@@ -37,8 +46,13 @@ userRouter.get("/userData", async (req: AuthRequest, res, next) => {
 userRouter.post("/begin", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
-    const id = req.payload.id;
-    const time = await userRepo.beginCourse(id);
+    const userId = req.payload.id;
+    const firstSteps: FirstStep = await courseRepo.getFirstSteps();
+    console.log(firstSteps);
+    const { objectiveId, sectionId } = firstSteps;
+    if (objectiveId === null || sectionId === null)
+      throw Error("Missing first step data.");
+    const time = await userRepo.beginCourse(userId, objectiveId, sectionId);
     if (time === null)
       return res
         .status(500)
@@ -61,9 +75,9 @@ userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
         .status(400)
         .json({ message: "No progress found. Begin the course first." });
     }
-    const nextStep = addStep(progress);
-    const updated = await userRepo.unlockNextStep(id, nextStep);
-    return res.status(200).json(updated); // { current_step: nextStep }
+    const nextObj = addStep(progress);
+    const updated = await userRepo.unlockNextStep(id, nextObj);
+    return res.status(200).json(updated);
   } catch (err) {
     next(err);
   }
