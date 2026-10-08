@@ -4,6 +4,7 @@ import type { Objective, Section } from "@repo/validations";
 
 async function postNewSection(formData: Section) {
   const res = await authFetch.post("/course/addSection", formData);
+  // NEED TO PASS DESIRED POSITION FROM CLIENT TO REPO
   return res;
 }
 async function deleteSection(sectionId: string) {
@@ -18,6 +19,7 @@ export async function getObjectives(sectionId: string) {
 
 async function postNewObjective(formData: Objective) {
   const res = await authFetch.post("/course/addObjective", formData);
+  // NEED TO PASS DESIRED POSITION FROM CLIENT TO REPO
   return res;
 }
 async function deleteObjective(objectiveId: string) {

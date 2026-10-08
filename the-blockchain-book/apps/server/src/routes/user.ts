@@ -56,6 +56,7 @@ userRouter.post("/begin", async (req: AuthRequest, res, next) => {
   }
 });
 
+// NEED TO CHANGE POSITION LOGIC FROM CLIENT FIRST
 userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");

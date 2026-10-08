@@ -20,7 +20,10 @@ export default function DisplaySections() {
       {sortedSections ? (
         sortedSections.map((section: Section) => (
           <div key={section.sectionId}>
-            <HoverAddItemButton component={NewSectionForm} />
+            <HoverAddItemButton
+              component={NewSectionForm}
+              position={section.positon - 1}
+            />
             <SectionCard payload={section} />
           </div>
         ))
