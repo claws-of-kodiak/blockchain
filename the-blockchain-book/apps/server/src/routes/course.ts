@@ -3,10 +3,13 @@ import db from "../db";
 import { CourseRepository } from "../repositories/CourseRepositories";
 import { extractBearerToken } from "../util/auth";
 import { AuthRepository } from "../repositories/AuthRepositories";
+import { AuthRequest, requireAuth } from "../middleware/middleware";
 
 const courseRouter = express.Router();
 const courseRepo = new CourseRepository(db);
 const authRepo = new AuthRepository(db);
+
+courseRouter.use(requireAuth);
 
 courseRouter.get("/", async (req, res, next) => {
   try {
@@ -20,15 +23,12 @@ courseRouter.get("/", async (req, res, next) => {
   }
 });
 
-courseRouter.post("/addSection", async (req, res, next) => {
+courseRouter.post("/addSection", async (req: AuthRequest, res, next) => {
   try {
-    if (!req.headers.authorization) throw new Error("No authorization found");
-    const email = extractBearerToken(req.headers.authorization);
-    if (!email) throw new Error("No email found");
-    const user = await authRepo.findUserByEmail(email);
-    if (!user) return res.status(401).json({ message: "Invalid user." });
+    const userId = req.payload?.id;
+    if (!userId) throw new Error("Error passing user payload from requireAuth");
     const { title, position } = req.body;
-    const createdAt = await courseRepo.createSection(user.id, title, position);
+    const createdAt = await courseRepo.createSection(userId, title, position);
     return res
       .status(201)
       .json({ createdAt, message: "Section insert success!" });
