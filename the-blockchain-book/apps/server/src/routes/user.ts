@@ -9,13 +9,6 @@ const userRouter = express.Router();
 const userRepo = new UserRepository(db);
 const courseRepo = new CourseRepository(db);
 
-type FirstStep = {
-  sectionId: string;
-  title: number;
-  objectiveId: null;
-  label: null;
-};
-
 userRouter.use(requireAuth);
 
 userRouter.get("/user", async (req: AuthRequest, res, next) => {
