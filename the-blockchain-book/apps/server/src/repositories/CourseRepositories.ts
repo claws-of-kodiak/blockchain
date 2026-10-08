@@ -34,6 +34,29 @@ export class CourseRepository {
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
+  // Get first steps
+  async getFirstSteps() {
+    const queryText = `
+    WITH first_section AS (
+        SELECT section_id, title
+        FROM sections
+        WHERE position = 1
+        LIMIT 1
+    )
+    SELECT 
+      fs.section_id,
+      fs.title AS title,
+      o.objective_id,
+      o.label AS label
+    FROM first_section fs
+    LEFT JOIN objectives o 
+      ON o.section_id = fs.section_id 
+      AND o.position = 1;`;
+    const result = await this.db.query(queryText);
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
+
   // Get all sections
   async getAllSections() {
     const result = await this.db.query(`SELECT * FROM sections;`);
@@ -41,7 +64,7 @@ export class CourseRepository {
     return result.rows;
   }
   // Get one section
-  async getSection(sectionId: string) {
+  async getSectionById(sectionId: string) {
     const result = await this.db.query(
       `SELECT * FROM sections WHERE section_id = $1;`,
       [sectionId]
