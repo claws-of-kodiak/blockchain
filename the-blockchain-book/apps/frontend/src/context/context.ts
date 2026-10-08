@@ -13,7 +13,7 @@ export const ProgressContext = createContext<ProgressContextType | undefined>(
   undefined
 );
 
-export type SectionsContextType = {
+export type CourseContextType = {
   sections: Section[];
   objectives: Objective[];
   isLoading: boolean;
@@ -21,7 +21,7 @@ export type SectionsContextType = {
   refetch: () => void;
 };
 
-export const SectionsContext = createContext<SectionsContextType | undefined>(
+export const CourseContext = createContext<CourseContextType | undefined>(
   undefined
 );
 
