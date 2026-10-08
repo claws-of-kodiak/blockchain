@@ -1,5 +1,5 @@
-export default function addStep(stepObject: { currentStep: number }): number {
-  const currentStep = Number(stepObject.currentStep);
-  const nextStep = Number((currentStep + 0.1).toFixed(1));
-  return nextStep;
+export default function addStep(stepObject: { currentObj: number }): number {
+  const currentObj = Number(stepObject.currentObj);
+  const nextObj = Number((currentObj + 1).toFixed(1));
+  return nextObj;
 }
