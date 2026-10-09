@@ -5,7 +5,7 @@ import { clearPosition, usePosition } from "./positionClient";
 
 // Conditional check for position
 async function postNewSection(formData: Section) {
-  const { position } = usePosition();
+  const { position } = formData;
   let res: Response;
   if (position === null) {
     res = await authFetch.post("/course/addSection", formData);
