@@ -1,4 +1,4 @@
-import { Pool, QueryResult, QueryResultRow } from "pg";
+import { Pool, PoolClient, QueryResult, QueryResultRow } from "pg";
 import "dotenv/config";
 import { camelizeKeys } from "./util/camelCase";
 
@@ -23,6 +23,23 @@ export class Database {
     const result = await this.pool.query(text, params);
     result.rows = result.rows.map((row) => camelizeKeys<T>(row));
     return result;
+  }
+
+  async transaction<T>(
+    callback: (client: PoolClient) => Promise<T>
+  ): Promise<T> {
+    const client = await this.pool.connect();
+    try {
+      await client.query("BEGIN");
+      const result = await callback(client);
+      await client.query("COMMIT");
+      return result;
+    } catch (err) {
+      await client.query("ROLLBACK");
+      throw err;
+    } finally {
+      client.release();
+    }
   }
 }
 
