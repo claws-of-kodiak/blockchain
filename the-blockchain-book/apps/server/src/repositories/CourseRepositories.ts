@@ -1,3 +1,4 @@
+import { Objective } from "@repo/validations";
 import { Database } from "../db";
 
 export class CourseRepository {
@@ -5,33 +6,45 @@ export class CourseRepository {
   constructor(db: Database) {
     this.db = db;
   }
-  // Create section for admin
-  async createSection(adminId: string, title: string) {
-    // This checks if any sections then add appropiate position
-    // If no sections position = 1
-    // NEED TO UPDATE sections TO AUTO INCREMENT FROM HIGHEST
-    // If sections position = highest poition + 1
-
+  // Create section for admin at highest position
+  async createSection(userId: string, title: string) {
     const queryText = `
-        INSERT INTO sections (admin_id, title)
-        VALUES ($1, $2)
-        RETURNING created_at;
+      INSERT INTO sections (admin_id, title, position)
+      VALUES (
+       $1, $2, (SELECT COALESCE(MAX(position), 0) + 1 FROM sections)
+      )
+       RETURNING created_at;
     `;
-    const result = await this.db.query(queryText, [adminId, title]);
+    const result = await this.db.query(queryText, [userId, title]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
   async insertSection(adminId: string, title: string, position: number) {
-    // This adds one to all the positions above position prop
-    // Then it inserts this new section in at position given
-    const queryText = `
-        INSERT INTO sections (admin_id, title, position)
-        VALUES ($1, $2, $3)
-        RETURNING created_at;
-    `;
-    const result = await this.db.query(queryText, [adminId, title, position]);
-    if (result.rows.length === 0) return null;
-    return result.rows[0];
+    try {
+      const result = await this.db.transaction(async (client) => {
+        await client.query(
+          `
+          UPDATE sections 
+          SET position = position + 1     
+          WHERE position >= $1
+          `,
+          [position]
+        );
+        const newSection = await client.query(
+          `
+            INSERT INTO sections (admin_id, title, position) 
+            VALUES ($1, $2, $3)
+            RETURNING created_at
+          `,
+          [adminId, title, position]
+        );
+        return newSection.rows[0];
+      });
+      return result;
+    } catch (err) {
+      console.error("Transaction failed to commit", err);
+      throw err;
+    }
   }
   // Create objective for section
   async createObjective(formData: Objective) {
@@ -103,7 +116,7 @@ export class CourseRepository {
     if (result.rows.length === 0) return [];
     return result.rows;
   }
-  // Delete section
+  // NEED TO SHIFT POSTIONS DOWN AFTER DELETE
   async deleteSection(sectionId: string) {
     const result = await this.db.query(
       `DELETE FROM sections WHERE section_id = $1 RETURNING *;`,
