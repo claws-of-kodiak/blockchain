@@ -15,11 +15,10 @@ export function HoverAddItemButton({
   id,
   position,
 }: AddItemButtonProps) {
-  setPosition(position);
   return (
     <span className="hover-trigger-wrapper">
       <span className="hover-dot" aria-hidden="true" />
-      <PopUp label={label} component={component} id={id} />
+      <PopUp label={label} component={component} id={id} position={position} />
     </span>
   );
 }

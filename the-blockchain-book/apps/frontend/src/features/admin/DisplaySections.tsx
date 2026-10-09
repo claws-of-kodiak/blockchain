@@ -22,7 +22,7 @@ export default function DisplaySections() {
           <div key={section.sectionId}>
             <HoverAddItemButton
               component={NewSectionForm}
-              position={Number(section.position - 1)}
+              position={section.position}
             />
             <SectionCard payload={section} />
           </div>

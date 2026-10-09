@@ -1,11 +1,20 @@
 import { useState } from "react";
 import "../../styles/pop-up.css";
 import { Button } from "./Button";
+import { setPosition } from "../../services/positionClient";
 
-export default function PopUp({ label, component: Component, id = "" }) {
+export default function PopUp({
+  label,
+  component: Component,
+  id = "",
+  position = null,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openPopup = () => setIsOpen(true);
+  const openPopup = () => {
+    setIsOpen(true);
+    if (position) setPosition(position);
+  };
   const closePopup = () => setIsOpen(false);
 
   return (
