@@ -5,13 +5,14 @@ import "../../styles/form.css";
 import { useCourseClient } from "../../services/courseClient";
 import { Button } from "../../shared/components/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { newObjectiveSchema } from "@repo/validations";
-import { clearPosition } from "../../services/positionClient";
+import { newSectionSchema } from "@repo/validations";
+import { usePosition } from "../../services/positionClient";
 
 export default function NewSectionForm({ onClose }) {
   const queryClient = useQueryClient();
   const { addSection } = useCourseClient();
-  const { error, isPending } = addSection;
+  const { mutate, error, isPending } = addSection;
+  const { position } = usePosition();
 
   // React Hook Form initialization
   const {
@@ -19,11 +20,11 @@ export default function NewSectionForm({ onClose }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(newObjectiveSchema) });
+  } = useForm({ resolver: zodResolver(newSectionSchema) });
 
-  const onSubmit = (data) => {
-    clearPosition();
-    addSection.mutate(data, {
+  const onSubmit = (formData) => {
+    const payload = { ...formData, position };
+    mutate(payload, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success
         queryClient.invalidateQueries({ queryKey: ["courses"] }); // Refetch data in DisplaySections
@@ -54,6 +55,7 @@ export default function NewSectionForm({ onClose }) {
             placeholder="e.g., The First Objective"
             {...register("title", { required: "Title is required" })}
           />
+          {errors.input && <ErrorMsg msg={errors.input.message} />}
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
 
