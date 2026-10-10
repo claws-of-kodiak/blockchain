@@ -14,10 +14,11 @@ export default function DisplaySections() {
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <ErrorMsg msg={error.message} />;
+  const isSections: boolean = !(sortedSections.length === 0);
 
   return (
     <div className="display-sections-wrap">
-      {sortedSections ? (
+      {isSections ? (
         sortedSections.map((section: Section) => (
           <div key={section.sectionId}>
             <HoverAddItemButton
@@ -28,7 +29,7 @@ export default function DisplaySections() {
           </div>
         ))
       ) : (
-        <p>No course content found.</p>
+        <p>No sections found.</p>
       )}
     </div>
   );
