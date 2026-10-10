@@ -26,7 +26,6 @@ export default function NewObjectiveForm({ onClose }) {
 
   const onSubmit = (data) => {
     const payload = { ...data, sectionId };
-    console.log(payload);
     addObjective.mutate(payload, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success

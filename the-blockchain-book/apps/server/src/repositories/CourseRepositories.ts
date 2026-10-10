@@ -46,23 +46,6 @@ export class CourseRepository {
       throw err;
     }
   }
-  // Create objective for section
-  async createObjective(formData: Objective) {
-    const { label, description, sectionId, position } = formData;
-    const queryText = `
-        INSERT INTO objectives (label, description, section_id, position)
-        VALUES ($1, $2, $3, $4)
-        RETURNING created_at;
-    `;
-    const result = await this.db.query(queryText, [
-      label,
-      description,
-      sectionId,
-      position,
-    ]);
-    if (result.rows.length === 0) return null;
-    return result.rows[0];
-  }
   // NEED TO SHIFT POSTIONS DOWN AFTER DELETE
   async deleteSection(sectionId: string) {
     try {
@@ -81,6 +64,51 @@ export class CourseRepository {
           [response.rows[0].position]
         );
         return true;
+      });
+      return result;
+    } catch (err) {
+      console.error("Transaction failed to commit", err);
+      throw err;
+    }
+  }
+  // Create objective for section
+  async createObjective(formData: Objective) {
+    const { label, description, sectionId, position } = formData;
+    const queryText = `
+          INSERT INTO objectives (label, description, section_id, position)
+          VALUES ($1, $2, $3, $4)
+          RETURNING created_at;
+      `;
+    const result = await this.db.query(queryText, [
+      label,
+      description,
+      sectionId,
+      position,
+    ]);
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
+  async insertObjective(formData: Objective) {
+    const { label, description, sectionId, position } = formData;
+    try {
+      const result = await this.db.transaction(async (client) => {
+        await client.query(
+          `
+            UPDATE objectives 
+            SET position = position + 1     
+            WHERE position >= $1
+            `,
+          [position]
+        );
+        const newObjective = await client.query(
+          `
+            INSERT INTO objectives (label, description, section_id, position)
+            VALUES ($1, $2, $3, $4)
+            RETURNING created_at;
+            `,
+          [label, description, sectionId, position]
+        );
+        return newObjective.rows[0];
       });
       return result;
     } catch (err) {
