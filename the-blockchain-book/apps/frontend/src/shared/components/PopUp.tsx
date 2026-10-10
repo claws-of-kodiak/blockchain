@@ -13,6 +13,7 @@ export default function PopUp({
 
   const openPopup = () => {
     setIsOpen(true);
+    console.log(position);
     if (position) setPosition(position);
   };
   const closePopup = () => setIsOpen(false);
