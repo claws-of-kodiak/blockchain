@@ -51,6 +51,14 @@ export class UserRepository {
     return result.rows[0];
   }
   // Unlock next step
+  // Try to move to next objective in same section, if doesnt exist try to move to next section, if doesnt exist course complete
+  // SELECT objective_id and section_id where position = nextObj
+  // Then SELECT section_id WHERE position is +1 current section_id and SELECT objective_id WHERE section_id is = next section
+  // Then UPDATE user_progress
+
+  // First, try simple increment to next objective
+  // If fail, try to increment to next section and objective with position 1 in that section
+  // If fail, Course has been completed! return no more steps to complete
   async unlockNextStep(userId: string, nextObj: number) {
     const result = await this.db.query(
       `UPDATE user_progress SET current_objective = $1 WHERE user_id = $2 RETURNING current_objective`,

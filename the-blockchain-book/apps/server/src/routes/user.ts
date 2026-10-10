@@ -56,7 +56,9 @@ userRouter.post("/begin", async (req: AuthRequest, res, next) => {
   }
 });
 
-// NEED TO CHANGE POSITION LOGIC FROM CLIENT FIRST
+// Try to move to next objective in same section,
+// if doesnt exist try to move to next section,
+// if doesnt exist course complete
 userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
   try {
     if (!req.payload) throw new Error("Auth failed");
