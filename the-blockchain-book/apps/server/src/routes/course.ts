@@ -86,7 +86,6 @@ courseRouter.post("/insertObjective", async (req: AuthRequest, res, next) => {
 courseRouter.delete("/deleteObjective/:objectiveId", async (req, res, next) => {
   try {
     const objectiveId: string = req.params.objectiveId;
-    console.log(objectiveId);
     if (!objectiveId)
       return res.status(400).json({ message: "No objective id found." });
     await courseRepo.deleteObjective(objectiveId); // NEED TO ADJUST POSITIONS DOWN
