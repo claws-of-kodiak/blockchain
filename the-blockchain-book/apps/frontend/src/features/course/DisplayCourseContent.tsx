@@ -20,13 +20,9 @@ export default function DisplayCourseContent() {
           const sortedObjectives = sortByPosition(sectionObjectives);
           return (
             <div className="display-section-content" key={section.sectionId}>
-              <h3>
-                {section.title} - position: {section.position}
-              </h3>
+              <h3>{section.title}</h3>
               {sortedObjectives.map((obj: Objective) => (
-                <p key={obj.objectiveId}>
-                  {obj.description} - position: {obj.position}
-                </p>
+                <p key={obj.objectiveId}>{obj.description}</p>
               ))}
             </div>
           );

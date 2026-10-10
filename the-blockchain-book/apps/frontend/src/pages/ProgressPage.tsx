@@ -14,8 +14,6 @@ export default function ProgressPage() {
 
   if (isLoading) return <p>Loading page...</p>;
 
-  console.log(error);
-
   return (
     <>
       <Header />
@@ -42,7 +40,9 @@ export default function ProgressPage() {
       {isCourse ? (
         <DisplayCourseContent />
       ) : (
-        <ErrorMsg msg="Contact admin - no course content." />
+        <ErrorMsg
+          msg={error ? error.message : "Contact admin - no course content."}
+        />
       )}
     </>
   );
