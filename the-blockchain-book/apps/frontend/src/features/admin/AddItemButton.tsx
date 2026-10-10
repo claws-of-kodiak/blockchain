@@ -1,4 +1,3 @@
-import { setPosition } from "../../services/positionClient";
 import PopUp from "../../shared/components/PopUp";
 import "../../styles/hover-add-item-button.css";
 
