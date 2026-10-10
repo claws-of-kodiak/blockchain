@@ -73,7 +73,7 @@ export class CourseRepository {
   }
   // Create objective for section
   async createObjective(formData: Objective) {
-    const { label, description, sectionId, position } = formData;
+    const { label, description, sectionId } = formData;
     const queryText = `
           INSERT INTO objectives (label, description, section_id, position)
           VALUES ($1, $2, $3, (SELECT COALESCE(MAX(position), 0) + 1 FROM objectives WHERE section_id = $3))
@@ -147,10 +147,10 @@ export class CourseRepository {
   async getFirstSteps() {
     const queryText = `
     WITH first_section AS (
-        SELECT section_id, title
-        FROM sections
-        WHERE position = 1
-        LIMIT 1
+      SELECT section_id, title
+      FROM sections
+      WHERE position = 1
+      LIMIT 1
     )
     SELECT 
       fs.section_id,
