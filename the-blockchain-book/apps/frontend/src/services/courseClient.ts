@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authFetch } from "./apiClient";
 import type { Objective, Section } from "@repo/validations";
-import { clearPosition, usePosition } from "./positionClient";
+import { clearPosition } from "./positionClient";
 
 // Conditional check for position
 async function postNewSection(formData: Section) {

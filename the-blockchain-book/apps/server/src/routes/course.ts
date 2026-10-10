@@ -54,7 +54,7 @@ courseRouter.delete("/deleteSection/:id", async (req, res, next) => {
     const sectionid: string = req.params.id;
     if (!sectionid)
       return res.status(400).json({ message: "No section id found." });
-    await courseRepo.deleteSection(sectionid); // NEED TO ADJUST POSITIONS DOWN
+    await courseRepo.deleteSection(sectionid);
     return res.status(200).json({ message: "Section deleted" });
   } catch (err) {
     next(err);

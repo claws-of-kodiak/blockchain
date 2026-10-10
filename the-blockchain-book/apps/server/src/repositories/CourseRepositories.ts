@@ -63,6 +63,31 @@ export class CourseRepository {
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
+  // NEED TO SHIFT POSTIONS DOWN AFTER DELETE
+  async deleteSection(sectionId: string) {
+    try {
+      const result = await this.db.transaction(async (client) => {
+        const response = await client.query(
+          `
+            DELETE FROM sections WHERE section_id = $1 RETURNING position;`,
+          [sectionId]
+        );
+        await client.query(
+          `
+            UPDATE sections 
+            SET position = position - 1     
+            WHERE position > $1
+            `,
+          [response.rows[0].position]
+        );
+        return true;
+      });
+      return result;
+    } catch (err) {
+      console.error("Transaction failed to commit", err);
+      throw err;
+    }
+  }
   // Get first steps
   async getFirstSteps() {
     const queryText = `
@@ -115,15 +140,6 @@ export class CourseRepository {
     );
     if (result.rows.length === 0) return [];
     return result.rows;
-  }
-  // NEED TO SHIFT POSTIONS DOWN AFTER DELETE
-  async deleteSection(sectionId: string) {
-    const result = await this.db.query(
-      `DELETE FROM sections WHERE section_id = $1 RETURNING *;`,
-      [sectionId]
-    );
-    if (result.rows.length === 0) return null;
-    return result.rows[0];
   }
   // Delete objective
   async deleteObjective(objectiveId: string) {
