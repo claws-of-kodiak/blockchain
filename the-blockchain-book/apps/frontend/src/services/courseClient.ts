@@ -13,7 +13,7 @@ async function postNewSection(formData: Section) {
   if (position) {
     const newSection = { ...formData, position };
     res = await authFetch.post("/course/insertSection", newSection);
-    if (res.ok) clearPosition();
+    clearPosition();
   }
   return res;
 }
@@ -28,9 +28,16 @@ export async function getObjectives(sectionId: string) {
 }
 
 async function postNewObjective(formData: Objective) {
-  const res = await authFetch.post("/course/addObjective", formData);
-  // NEED TO PASS DESIRED POSITION FROM CLIENT TO REPO
-  return res;
+  const { position } = formData;
+  let res: Response;
+  if (position === null) {
+    res = await authFetch.post("/course/addObjective", formData);
+  }
+  if (position) {
+    const newSection = { ...formData, position };
+    res = await authFetch.post("/course/insertObjective", newSection);
+    clearPosition();
+  }
 }
 async function deleteObjective(objectiveId: string) {
   const res = await authFetch.delete(`/course/deleteObjective/${objectiveId}`);

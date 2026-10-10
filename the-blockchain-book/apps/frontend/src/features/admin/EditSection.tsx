@@ -5,6 +5,8 @@ import type { Objective } from "@repo/validations";
 import PopUp from "../../shared/components/PopUp";
 import NewObjectiveForm from "./NewObjectiveForm";
 import DeleteBin from "../../shared/components/DeleteBin";
+import { HoverAddItemButton } from "./AddItemButton";
+import { sortByPosition } from "../../util/sortByPosition";
 
 export default function EditSection() {
   const { sectionId } = useParams(); // New tool learned here
@@ -15,19 +17,26 @@ export default function EditSection() {
     enabled: !!sectionId,
   });
   const objectives: Objective[] = data;
+  const sortedObjectives = sortByPosition(objectives);
 
   return (
     <>
       <div>
         <PopUp component={NewObjectiveForm} label="+ Add New Objective" />
-        {objectives &&
-          objectives.map((obj) => (
-            <p key={obj.label}>
-              {obj.label} - {obj.description}
-              <DeleteBin
-                onClick={() => deleteObjective.mutate(obj.objectiveId)}
+        {sortedObjectives &&
+          sortedObjectives.map((obj) => (
+            <div key={obj.label}>
+              <HoverAddItemButton
+                component={NewObjectiveForm}
+                position={obj.position} // AUDIT POSITION ROUTE TO courseRepos
               />
-            </p>
+              <p>
+                {obj.label} - {obj.description}
+                <DeleteBin
+                  onClick={() => deleteObjective.mutate(obj.objectiveId)}
+                />
+              </p>
+            </div>
           ))}
       </div>
     </>

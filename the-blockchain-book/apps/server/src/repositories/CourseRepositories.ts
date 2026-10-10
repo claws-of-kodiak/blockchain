@@ -76,14 +76,13 @@ export class CourseRepository {
     const { label, description, sectionId, position } = formData;
     const queryText = `
           INSERT INTO objectives (label, description, section_id, position)
-          VALUES ($1, $2, $3, $4)
+          VALUES ($1, $2, $3, (SELECT COALESCE(MAX(position), 0) + 1 FROM objectives WHERE section_id = $3))
           RETURNING created_at;
       `;
     const result = await this.db.query(queryText, [
       label,
       description,
       sectionId,
-      position,
     ]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
@@ -97,8 +96,9 @@ export class CourseRepository {
             UPDATE objectives 
             SET position = position + 1     
             WHERE position >= $1
+              AND section_id = $2
             `,
-          [position]
+          [position, sectionId]
         );
         const newObjective = await client.query(
           `
@@ -109,6 +109,33 @@ export class CourseRepository {
           [label, description, sectionId, position]
         );
         return newObjective.rows[0];
+      });
+      return result;
+    } catch (err) {
+      console.error("Transaction failed to commit", err);
+      throw err;
+    }
+  }
+  // Delete objective
+  async deleteObjective(objectiveId: string) {
+    try {
+      const result = await this.db.transaction(async (client) => {
+        const response = await client.query(
+          `
+              DELETE FROM objectives WHERE objective_id = $1 RETURNING position, section_id;`,
+          [objectiveId]
+        );
+        const { position, section_id } = response.rows[0];
+        await client.query(
+          `
+              UPDATE objectives 
+              SET position = position - 1     
+              WHERE position > $1
+                AND section_id = $2
+              `,
+          [position, section_id]
+        );
+        return true;
       });
       return result;
     } catch (err) {
@@ -168,14 +195,5 @@ export class CourseRepository {
     );
     if (result.rows.length === 0) return [];
     return result.rows;
-  }
-  // Delete objective
-  async deleteObjective(objectiveId: string) {
-    const result = await this.db.query(
-      `DELETE FROM objectives WHERE objective_id = $1 RETURNING *;`,
-      [objectiveId]
-    );
-    if (result.rows.length === 0) return null;
-    return result.rows[0];
   }
 }

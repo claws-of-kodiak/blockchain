@@ -7,12 +7,14 @@ import { useParams } from "react-router";
 import { newObjectiveSchema } from "@repo/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../../shared/components/Button";
+import { usePosition } from "../../services/positionClient";
 
 export default function NewObjectiveForm({ onClose }) {
   const queryClient = useQueryClient();
   const { addObjective } = useCourseClient();
   const { error, isPending } = addObjective;
   const { sectionId } = useParams();
+  const { position } = usePosition();
 
   // React Hook Form initialization
   const {
@@ -25,7 +27,7 @@ export default function NewObjectiveForm({ onClose }) {
   });
 
   const onSubmit = (data) => {
-    const payload = { ...data, sectionId };
+    const payload = { ...data, sectionId, position };
     addObjective.mutate(payload, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success
@@ -63,12 +65,6 @@ export default function NewObjectiveForm({ onClose }) {
             type="text"
             placeholder="e.g., How to find Satoshi"
             {...register("description")}
-          />
-          <input
-            id="positon"
-            type="number"
-            placeholder="enter position of objective"
-            {...register("position", { required: "Position is required" })}
           />
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
