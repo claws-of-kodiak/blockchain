@@ -37,12 +37,12 @@ export default function ProgressPage() {
           Begin Course
         </Button>
       )}
-      {isCourse ? (
+      {error ? (
+        <ErrorMsg msg={error.message} />
+      ) : isCourse ? (
         <DisplayCourseContent />
       ) : (
-        <ErrorMsg
-          msg={error ? error.message : "Contact admin - no course content."}
-        />
+        <ErrorMsg msg="Contact admin - no course content." />
       )}
     </>
   );
