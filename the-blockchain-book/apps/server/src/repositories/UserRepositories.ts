@@ -70,7 +70,7 @@ export class UserRepository {
       const result = await this.db.transaction(async (client) => {
         const objResult = await client.query(
           // Selects next objective_id in line
-          `SELECT objective_id FROM objectives WHERE position = $1 AND section_id = $2 FOR UPDATE`,
+          `SELECT objective_id FROM objectives WHERE position = $1 AND section_id = $2`,
           [nextObjectivePos, sectionId]
         );
         if (objResult.rows.length === 0) {
