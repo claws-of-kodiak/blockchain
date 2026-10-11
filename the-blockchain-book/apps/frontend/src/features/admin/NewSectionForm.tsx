@@ -7,6 +7,8 @@ import { Button } from "../../shared/components/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newSectionSchema } from "@repo/validations";
 import { usePosition } from "../../services/positionClient";
+import { FormField } from "../../shared/components/FormField";
+import { Input } from "../../shared/components/Input";
 
 export default function NewSectionForm({ onClose }) {
   const queryClient = useQueryClient();
@@ -48,14 +50,13 @@ export default function NewSectionForm({ onClose }) {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
-          <label htmlFor="title">Section Title</label>
-          <input
-            id="title"
-            type="text"
-            placeholder="e.g., The First Objective"
-            {...register("title", { required: "Title is required" })}
-          />
-          {errors.input && <ErrorMsg msg={errors.input.message} />}
+          <FormField label="" error={errors.title}>
+            <Input
+              type="text"
+              placeholder="Title"
+              {...register("title", { required: true })}
+            />
+          </FormField>
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
 

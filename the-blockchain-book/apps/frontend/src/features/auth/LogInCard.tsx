@@ -7,7 +7,9 @@ import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@repo/validations";
 import { Button } from "../../shared/components/Button";
-import { authClient } from "../../services/auth-client";
+import { FormField } from "../../shared/components/FormField";
+import { Input } from "../../shared/components/Input";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LogInCard() {
   const {
@@ -38,14 +40,16 @@ export default function LogInCard() {
   return (
     <div className="auth-card">
       <h2>Log In</h2>
-      <Button onClick={handleGoogleLogIn}>Log in with Google</Button>
+      <Button onClick={handleGoogleLogIn}>
+        <FcGoogle /> Sign in with Google
+      </Button>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Email" {...register("email")} />
-        <input
-          type="password"
-          placeholder="password"
-          {...register("password")}
-        />
+        <FormField label="" error={errors.email}>
+          <Input type="email" placeholder="Email" {...register("email")} />
+        </FormField>
+        <FormField label="" error={errors.password}>
+          <Input type="text" placeholder="Password" {...register("password")} />
+        </FormField>
         {errors.root && <ErrorMsg msg={errors.root.message} />}
         <Button type="submit" isLoading={isPending}>
           Log In

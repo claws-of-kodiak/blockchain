@@ -7,6 +7,8 @@ import ErrorMsg from "../../shared/components/ErrorMsg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@repo/validations";
 import { Button } from "../../shared/components/Button";
+import { FormField } from "../../shared/components/FormField";
+import { Input } from "../../shared/components/Input";
 
 export default function RegisterCard() {
   const {
@@ -38,15 +40,32 @@ export default function RegisterCard() {
   return (
     <div className="auth-card">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Name" {...register("name")} />
-        <input type="email" placeholder="Email" {...register("email")} />
-        <input type="date" placeholder="Birthday" {...register("birthDate")} />
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
-        <input type="checkbox" {...register("isAdmin")} />
+        <FormField label="" error={errors.name}>
+          <Input type="text" placeholder="Name" {...register("name")} />
+        </FormField>
+        <FormField label="" error={errors.email}>
+          <Input type="email" placeholder="Email" {...register("email")} />
+        </FormField>
+        <FormField label="" error={errors.date}>
+          <Input
+            type="text"
+            placeholder="Birthday"
+            {...register("birthDate")}
+          />
+        </FormField>
+        <FormField label="" error={errors.password}>
+          <Input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+          />
+        </FormField>
+        <FormField
+          label="Check below if you want to be admin"
+          error={errors.isAdmin}
+        >
+          <Input type="checkbox" {...register("isAdmin")} />
+        </FormField>
         {errors.root && <ErrorMsg msg={errors.root.message} />}
         <Button type="submit" isLoading={isPending}>
           Create Account

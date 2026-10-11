@@ -8,6 +8,8 @@ import { newObjectiveSchema } from "@repo/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../../shared/components/Button";
 import { usePosition } from "../../services/positionClient";
+import { FormField } from "../../shared/components/FormField";
+import { Input } from "../../shared/components/Input";
 
 export default function NewObjectiveForm({ onClose }) {
   const queryClient = useQueryClient();
@@ -52,20 +54,17 @@ export default function NewObjectiveForm({ onClose }) {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
-          <label htmlFor="label">Label</label>
-          <input
-            id="label"
-            type="text"
-            placeholder="e.g., 1.2"
-            {...register("label")}
-          />
-          <label htmlFor="description">Description</label>
-          <input
-            id="description"
-            type="text"
-            placeholder="e.g., How to find Satoshi"
-            {...register("description")}
-          />
+          <FormField label="" error={errors.label}>
+            <Input type="text" placeholder="Label" {...register("label")} />
+          </FormField>
+          <FormField label="" error={errors.description}>
+            <Input
+              id="description"
+              type="text"
+              placeholder="Description"
+              {...register("description")}
+            />
+          </FormField>
           {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
         <Button type="submit" isLoading={isPending}>
