@@ -20,17 +20,28 @@
   letter-spacing: 0.05em;
 }
 
-/* Form Elements */
+/* Form Elements & Shared Components */
 .auth-card form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
 
-.auth-card input[type="text"],
-.auth-card input[type="password"],
-.auth-card input[type="email"],
-.auth-card input[type="number"] {
+.form-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  color: #ffffff;
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Base Input Style matching Input component class `input-base` */
+.input-base {
   background-color: var(--bg-dark, #0f141c);
   color: #ffffff;
   border: 1px solid var(--border-color, #2e3b4e);
@@ -39,24 +50,28 @@
   font-family: var(--font-body, "Inter", sans-serif);
   font-size: 1rem;
   transition: all 0.2s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.auth-card input:focus {
+.input-base:focus {
   outline: none;
   border-color: var(--accent-retro, #39ff14);
   box-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
 }
 
 /* Error States */
-.auth-card p {
+.auth-card p,
+.error-msg {
   color: #ef4444;
   font-size: 0.85rem;
-  margin: -0.5rem 0 0;
+  margin: 0.25rem 0 0;
   font-weight: 500;
 }
 
-/* Submit Action Button */
-.auth-card button[type="submit"] {
+/* Button Styles (Google Log In & Submit Button) */
+.auth-card button,
+.auth-card .btn {
   background-color: var(--accent-muted, #10b981);
   color: #ffffff;
   border: none;
@@ -69,10 +84,11 @@
   letter-spacing: 0.05em;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin-top: 0.5rem;
+  width: 100%;
 }
 
-.auth-card button[type="submit"]:hover {
+.auth-card button:hover,
+.auth-card .btn:hover {
   background-color: #059669; /* Slightly darker teal tint */
 }
 

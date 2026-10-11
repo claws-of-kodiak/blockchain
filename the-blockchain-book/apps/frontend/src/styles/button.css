@@ -30,7 +30,6 @@
 
 /* Style 1: Your original default 'button' ruleset */
 .btn--base {
-  margin: 20px;
   border: 1px solid var(--accent-retro);
   font-size: 0.85rem;
   font-weight: 600;
