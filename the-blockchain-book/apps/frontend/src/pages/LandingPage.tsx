@@ -3,6 +3,8 @@ import ".././styles/landing-page.css";
 import { Link } from "react-router";
 import { Button } from "../shared/components/Button";
 import PopUp from "../shared/components/PopUp";
+import SharedList from "../shared/components/List";
+import { corePrinciples } from "../features/corePrinciples.js";
 
 export default function LandingPage() {
   return (
@@ -74,43 +76,11 @@ export default function LandingPage() {
         </section>
 
         <section id="principles">
-          <h2>Core Operating Principles</h2>
-          <ul>
-            <li>
-              <strong>Intentional Sequence:</strong> “Utility” grabs attention
-              fastest. “Token” requires utility to be established first. “Human”
-              requires you to know what's at stake before asking who controls
-              it.
-            </li>
-            <li>
-              <strong>Dynamic Layer Weighting:</strong> Weakness in one layer
-              means a higher weight placed on the others. Specifically: more
-              transparency means less weight on the human layer.
-            </li>
-            <li>
-              <strong>The Master Frame:</strong> Immutable vs. mutable. Some
-              things are set in stone and others are not. Every downstream
-              question trickles from this one.
-            </li>
-            <li>
-              <strong>Speculation as a Wrapper:</strong> It is not a module; it
-              bleeds through every layer—speculating on HYPE's burn mechanism
-              (Token), on Vitalik's brains (Human), or on replacing the
-              financial system (Utility).
-            </li>
-            <li>
-              <strong>Transparency ≠ Investability:</strong> The most
-              transparent project may have no value-accrual mechanism. The least
-              transparent may have the best token design. They are two separate
-              gates.
-            </li>
-            <li>
-              <strong>The Three-Beat Structure:</strong> Every layer follows a
-              strict progression: Concept &rarr; Arcade application &rarr;
-              Real-world case study. The arcade is the framework, but means
-              nothing if students can't apply it.
-            </li>
-          </ul>
+          <SharedList
+            title="Core Operating Principles"
+            items={corePrinciples}
+            bulletStyle="none"
+          />
         </section>
 
         <section id="maxim">
