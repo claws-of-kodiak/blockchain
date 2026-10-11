@@ -1,6 +1,5 @@
 import express from "express";
 import db from "../db";
-import addStep from "../util/addStep";
 import { AuthRequest, requireAuth } from "../middleware/middleware";
 import { UserRepository } from "../repositories/UserRepositories";
 import { CourseRepository } from "../repositories/CourseRepositories";
@@ -64,15 +63,16 @@ userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
     const progress = await userRepo.getProgressById(id);
-    console.log(progress);
+    console.log("Progress", progress);
     if (!progress) {
       return res
         .status(400)
         .json({ message: "No progress found. Begin the course first." });
     }
-    const nextObj = addStep(progress);
-    const updated = await userRepo.unlockNextStep(id, nextObj);
-    return res.status(200).json(updated);
+    const newProgress = await userRepo.unlockNextStep(id, progress);
+    if (newProgress.status === "complete")
+      return res.status(409).json({ message: newProgress.message });
+    return res.status(200).json(newProgress);
   } catch (err) {
     next(err);
   }
