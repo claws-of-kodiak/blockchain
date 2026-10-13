@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { authFetch } from "./apiClient";
-import { useParams } from "react-router";
 
 export async function getContent(objectiveId: string) {
   const res = await authFetch.get(`/course/content/${objectiveId}`);
@@ -8,13 +7,14 @@ export async function getContent(objectiveId: string) {
 }
 
 async function createContent(objectiveId: string, textBox) {
-  const res = await authFetch.post(`/course/content/:${objectiveId}`, textBox);
+  const res = await authFetch.post(`/course/content/${objectiveId}`, {
+    textBox,
+  });
   return res;
 }
 
-async function updateContent(textBox) {
-  const contentId = useParams();
-  const res = await authFetch.put(`/course/:${contentId}`, textBox);
+async function updateContent({ text, objectiveId }) {
+  const res = await authFetch.put(`/course/${objectiveId}`, { text });
   return res;
 }
 async function deleteContent(contentId: string) {

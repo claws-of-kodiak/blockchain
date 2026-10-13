@@ -127,7 +127,8 @@ courseRouter.post(
   async (req: AuthRequest, res, next) => {
     try {
       const objectiveId = req.params.objectiveId as string;
-      const text = req.body.text;
+      const text = req.body.text || "";
+      console.log(text);
       const userId = req.payload?.id || "";
       const result = await contentRepo.createContent(objectiveId, text, userId);
       return res
@@ -139,13 +140,16 @@ courseRouter.post(
     }
   }
 );
-courseRouter.put("/:contentId", async (req: AuthRequest, res, next) => {
+courseRouter.put("/:objectiveId", async (req: AuthRequest, res, next) => {
   try {
-    const contentId = req.params.contentId as string;
+    const objectiveId = req.params.objectiveId;
+    console.log(objectiveId);
     const text = req.body.text;
     const userId = req.payload?.id || "";
-    await contentRepo.updateContent(contentId.toString(), text, userId);
-    return res.status(200).json({ message: "New content updated." });
+    /// NEED TO FIX TYPE ERROR WITH REPO
+    const updateAt = await contentRepo.updateContent(objectiveId, text, userId);
+    console.log(updateAt);
+    return res.status(200).json({ updateAt, message: "New content updated." });
   } catch (err) {
     console.error(err);
     next(err);
