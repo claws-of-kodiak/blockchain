@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getObjectives, useCourseClient } from "../../services/courseClient";
 import type { Objective } from "@repo/validations";
@@ -7,6 +7,7 @@ import NewObjectiveForm from "./NewObjectiveForm";
 import DeleteBin from "../../shared/components/DeleteBin";
 import { HoverAddItemButton } from "./AddItemButton";
 import { sortByPosition } from "../../util/sortByPosition";
+import { FaEdit } from "react-icons/fa";
 
 export default function EditSection() {
   const { sectionId } = useParams(); // New tool learned here
@@ -32,6 +33,9 @@ export default function EditSection() {
               />
               <p>
                 {obj.label} - {obj.description}
+                <Link to={`/admin/section/${sectionId}/${obj.objectiveId}`}>
+                  <FaEdit />
+                </Link>
                 <DeleteBin
                   onClick={() => deleteObjective.mutate(obj.objectiveId)}
                 />

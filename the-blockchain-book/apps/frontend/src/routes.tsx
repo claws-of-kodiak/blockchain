@@ -8,6 +8,7 @@ import EditSection from "./features/admin/EditSection";
 import AdminPage from "./pages/profile/AdminPage";
 import SettingsPage from "./pages/profile/SettingsPage";
 import ProfilePage from "./pages/profile/ProfilePage";
+import EditContent from "./features/admin/EditContent";
 
 export const getRouteList = (isAdmin: boolean): Route[] => {
   const baseRoutes: Route[] = [
@@ -62,6 +63,12 @@ export const getRouteList = (isAdmin: boolean): Route[] => {
         path: "/admin/section/:sectionId",
         label: "Edit Section",
         element: <EditSection />,
+        inHeader: false,
+      },
+      {
+        path: "/admin/section/:sectionId/:objectiveId",
+        label: "Edit Content",
+        element: <EditContent />,
         inHeader: false,
       }
     );
