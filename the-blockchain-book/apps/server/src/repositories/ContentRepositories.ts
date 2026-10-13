@@ -36,19 +36,19 @@ export class ContentRepository {
     }
   }
   // Update existing content for objective
-  async updateContent(contentId: string, text: string, userId: string) {
+  async updateContent(objectiveId: string, text: string, userId: string) {
     try {
-      const result = await this.db.query(
+      const { rows } = await this.db.query(
         `
           UPDATE content
           SET text = $1, last_user = $2
-          WHERE content_id = $3
-          RETURNING updated_at
+          WHERE objective_id = $3
+          RETURNING *;
           `,
-        [text, userId, contentId]
+        [text, userId, objectiveId]
       );
-      if (result.rows.length === 0) return null;
-      return result.rows[0];
+      if (rows.length === 0) return null;
+      return rows[0];
     } catch (err) {
       throw err;
     }
