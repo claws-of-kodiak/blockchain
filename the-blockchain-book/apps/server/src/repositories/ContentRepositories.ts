@@ -5,6 +5,17 @@ export class ContentRepository {
   constructor(db: Database) {
     this.db = db;
   }
+  // Get content by Id
+  async getContentByObjective(contentId: string) {
+    const result = await this.db.query(
+      `
+        SELECT * FROM content WHERE objective_id = $1
+        `,
+      [contentId]
+    );
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
   // Create content for objective
   async createContent(objectiveId: string, text: string, userId: string) {
     try {

@@ -111,6 +111,17 @@ courseRouter.get("/getObjectives/:sectionId", async (req, res, next) => {
 courseRouter.post("/updateObjective", (req, res, next) => {});
 
 ////////// CONTENT REPOS ///////////
+courseRouter.get("/content/:objectiveId", async (req, res, next) => {
+  try {
+    const objectiveId = req.params.objectiveId;
+    const content = await contentRepo.getContentByObjective(objectiveId);
+    return res.status(200).json({ content });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 courseRouter.post(
   "/content/:objectiveId",
   async (req: AuthRequest, res, next) => {
