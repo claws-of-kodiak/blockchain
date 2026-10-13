@@ -1,49 +1,32 @@
 import Header from "../shared/components/Header";
-import { useProgressClient } from "../services/progressClient";
-import { useProgress } from "../shared/hooks/useProgress";
+import StepControl from "../features/course/StepControl";
+import ObjectiveContent from "../features/course/ObjectiveContent";
+import { useState } from "react";
+import "../styles/progress-page.css";
 import { Button } from "../shared/components/Button";
-import DisplayCourseContent from "../features/course/DisplayCourseContent";
-import { useCourse } from "../shared/hooks/useCourse";
-import ErrorMsg from "../shared/components/ErrorMsg";
 
 export default function ProgressPage() {
-  const { sections } = useCourse();
-  const isCourse = sections.length !== 0;
-  const { currentObjective, currentSection, isLoading, error } = useProgress();
-  const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
-
-  if (isLoading) return <p>Loading page...</p>;
+  const [isLearning, setIsLearning] = useState(false);
 
   return (
     <>
       <Header />
-      <h2>Track Your Progress</h2>
-      {currentSection !== "Not found" ? (
-        <div>
-          <p>Current Section: {currentSection}</p>
-          <p>Current Objective: {currentObjective}</p>
-          <Button
-            onClick={() => unlockStep.mutate()}
-            disabled={unlockStep.isPending}
-          >
-            Next Step
+      <div className={`progress-layout ${isLearning ? "is-learning" : ""}`}>
+        <main className="progress-main">
+          <StepControl />
+          <Button onClick={() => setIsLearning(!isLearning)}>
+            {isLearning ? "Exit" : "Study Content"}
           </Button>
-          <Button onClick={() => deleteProgress.mutateAsync()}>
-            Restart Progress
-          </Button>
-        </div>
-      ) : (
-        <Button disabled={!isCourse} onClick={() => beginCourse.mutate()}>
-          Begin Course
-        </Button>
-      )}
-      {error ? (
-        <ErrorMsg msg={error.message} />
-      ) : isCourse ? (
-        <DisplayCourseContent />
-      ) : (
-        <ErrorMsg msg="Contact admin - no course content." />
-      )}
+        </main>
+
+        <aside
+          className="progress-panel"
+          aria-hidden={!isLearning}
+          inert={!isLearning}
+        >
+          <ObjectiveContent />
+        </aside>
+      </div>
     </>
   );
 }

@@ -1,0 +1,38 @@
+.progress-layout {
+  display: flex;
+  width: 100%;
+  overflow-x: hidden; /* no horizontal scrollbar during the animation */
+}
+
+/* Main area shrinks as the panel grows, so it feels like a "push" */
+.progress-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Panel animates its width from 0 to 66% */
+.progress-panel {
+  flex: 0 0 auto;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-layout.is-learning .progress-panel {
+  width: 66%;
+}
+
+/* Inner content keeps a fixed width so text doesn't reflow while animating */
+.progress-panel .content-sidebar {
+  width: 66vw;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-panel {
+    transition: none;
+  }
+}
