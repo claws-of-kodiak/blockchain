@@ -13,6 +13,7 @@ export default function UserProvider({
   const value: UserContextType = useMemo(
     () => ({
       id: user?.id,
+      name: user?.name,
       email: user?.email,
       birthDate: user?.birthDate,
       createdAt: user?.createdAt,

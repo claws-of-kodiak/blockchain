@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router";
 import { getRouteList } from "./routes";
 import { useUser } from "./shared/hooks/useUser";
+import "./styles/app.css";
 
 const AppRoutes = () => {
   const { isAdmin } = useUser();

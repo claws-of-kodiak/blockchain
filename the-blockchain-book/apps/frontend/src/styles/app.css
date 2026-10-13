@@ -1,0 +1,45 @@
+/* Neo-Brutalist Modern Retro Link Styles */
+.retro-link {
+  display: inline-block;
+  position: relative;
+  padding: 0.5rem 1.2rem;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 900;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+
+  /* Bold Retro Palette */
+  color: #1a1a1a;
+  background-color: #00ffcc; /* Electric Retro Cyan */
+  border: 3px solid #1a1a1a;
+
+  /* Hard 3D Shadow (Early Web / Z-Axis Depth) */
+  box-shadow: 4px 4px 0px 0px #1a1a1a;
+
+  /* Smooth Modern Performance */
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease-in-out;
+}
+
+/* Hover State: Shifts Color & Expands Shadow */
+.retro-link:hover {
+  background-color: #ff007f; /* Neon Hot Pink */
+  color: #ffffff;
+  box-shadow: 7px 7px 0px 0px #1a1a1a;
+  transform: translate(-3px, -3px);
+}
+
+/* Active State: "Sinks" into the page when clicked */
+.retro-link:active {
+  box-shadow: 0px 0px 0px 0px #1a1a1a;
+  transform: translate(4px, 4px);
+}
+
+/* Focus State for Accessibility */
+.retro-link:focus-visible {
+  outline: 3px dashed #ff007f;
+  outline-offset: 4px;
+}
