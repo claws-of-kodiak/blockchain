@@ -15,7 +15,7 @@ export default function ProgressPage() {
         <main className="progress-main">
           <StepControl />
           <Button onClick={() => setIsLearning(!isLearning)}>
-            {isLearning ? "Exit" : "Study Content"}
+            {isLearning ? "Exit" : "Study"}
           </Button>
         </main>
 
