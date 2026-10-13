@@ -2,9 +2,11 @@ import express from "express";
 import db from "../db";
 import { CourseRepository } from "../repositories/CourseRepositories";
 import { AuthRequest, requireAuth } from "../middleware/middleware";
+import { ContentRepository } from "../repositories/ContentRepositories";
 
 const courseRouter = express.Router();
 const courseRepo = new CourseRepository(db);
+const contentRepo = new ContentRepository(db);
 
 courseRouter.use(requireAuth);
 
@@ -107,5 +109,45 @@ courseRouter.get("/getObjectives/:sectionId", async (req, res, next) => {
 });
 
 courseRouter.post("/updateObjective", (req, res, next) => {});
+
+////////// CONTENT REPOS ///////////
+courseRouter.post(
+  "/content/:objectiveId",
+  async (req: AuthRequest, res, next) => {
+    try {
+      const objectiveId = req.params.objectiveId as string;
+      const text = req.body.text;
+      const userId = req.payload?.id || "";
+      const result = await contentRepo.createContent(objectiveId, text, userId);
+      return res
+        .status(200)
+        .json({ contentId: result.contentId, message: "New content updated." });
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  }
+);
+courseRouter.put("/:contentId", async (req: AuthRequest, res, next) => {
+  try {
+    const contentId = req.params.contentId as string;
+    const text = req.body.text;
+    const userId = req.payload?.id || "";
+    await contentRepo.updateContent(contentId.toString(), text, userId);
+    return res.status(200).json({ message: "New content updated." });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+courseRouter.delete("/:contentId", async (req, res, next) => {
+  try {
+    await contentRepo.deleteContent(req.params.contentId);
+    return res.status(200).json({ message: "Reset content." });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 
 export default courseRouter;
