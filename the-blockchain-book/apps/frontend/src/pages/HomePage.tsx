@@ -5,7 +5,7 @@ export default function HomePage() {
     <>
       <Header />
       <div id="home-page">
-        <h2>You are official a blockchain student.</h2>
+        <h2>You are officially a blockchain student.</h2>
         <p>There is a lot of cool stuff coming soon.</p>
       </div>
     </>
