@@ -1,5 +1,15 @@
 import z from "zod";
 
+export const contentSchema = z.object({
+  contentId: z.string(),
+  obectiveId: z.string(),
+  text: z.string(),
+  lastUser: z.string(),
+  updatedAt: z.date().default(() => new Date()),
+});
+
+export type Content = z.infer<typeof contentSchema>;
+
 export const newObjectiveSchema = z.object({
   label: z.string().min(1, "Label required"),
   description: z.string().min(1, "Description required"),
