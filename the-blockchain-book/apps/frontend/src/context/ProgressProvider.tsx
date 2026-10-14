@@ -27,13 +27,14 @@ export default function ProgressProvider({
     enabled: !!email,
   });
 
-  const currentSection = data?.sectionTitle ?? "Not found";
-  const currentObjective = data?.objectiveLabel ?? "Not found";
+  const { sectionTitle, sectionId, objectiveLabel, objectiveId } = data || {};
 
   const value: ProgressContextType = useMemo(
     () => ({
-      currentSection,
-      currentObjective,
+      sectionTitle,
+      sectionId,
+      objectiveLabel,
+      objectiveId,
       isLoading: isLoading || sessionPending,
       error,
       refetch,
