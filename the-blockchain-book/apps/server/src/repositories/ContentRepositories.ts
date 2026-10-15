@@ -9,7 +9,7 @@ export class ContentRepository {
   async getContentByObjective(contentId: string) {
     const result = await this.db.query(
       `
-        SELECT * FROM content WHERE objective_id = $1
+        SELECT text FROM content WHERE objective_id = $1
         `,
       [contentId]
     );

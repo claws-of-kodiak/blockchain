@@ -11,12 +11,16 @@ const courseRepo = new CourseRepository(db);
 userRouter.use(requireAuth);
 
 userRouter.get("/user", async (req: AuthRequest, res, next) => {
+  console.log("GET /progress/user fires");
   try {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
-    const currentStep = await userRepo.getProgressById(id);
-    if (!currentStep) return res.status(200).json(0);
-    return res.status(200).json(currentStep);
+    console.log("id", id);
+    const progress = await userRepo.getProgressById(id);
+    // RETURNING NULL FROM REPO
+    console.log("progress", progress);
+    if (!progress) return res.status(200).json(null);
+    return res.status(200).json(progress);
   } catch (err) {
     next(err);
   }
@@ -63,7 +67,6 @@ userRouter.post("/unlockStep", async (req: AuthRequest, res, next) => {
     if (!req.payload) throw new Error("Auth failed");
     const id = req.payload.id;
     const progress = await userRepo.getProgressById(id);
-    console.log("Progress", progress);
     if (!progress) {
       return res
         .status(400)

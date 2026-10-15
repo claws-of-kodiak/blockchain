@@ -23,8 +23,7 @@ export class UserRepository {
   }
   // Get user progress
   async getProgressById(userId: string) {
-    const result = await this.db.query(
-      `
+    const queryText = `
       SELECT 
         s.section_id,
         s.title AS section_title,
@@ -35,10 +34,9 @@ export class UserRepository {
       FROM user_progress p
       LEFT JOIN sections s ON s.section_id = p.current_section
       LEFT JOIN objectives o ON o.objective_id = p.current_objective
-      WHERE p.user_id = $1;
-      `,
-      [userId]
-    );
+      WHERE p.user_id = $1;      
+      `;
+    const result = await this.db.query(queryText, [userId]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
@@ -88,7 +86,7 @@ export class UserRepository {
             [nextSectionId]
           );
           if (nextObjectiveResult.rows.length === 0)
-            throw Error("No objectives for the next section.");
+            throw Error("No more objectives.");
           const nextObjId = nextObjectiveResult.rows[0].objective_id;
           const result = await client.query(
             // Updates user_progress to next section_id and objective position to 1

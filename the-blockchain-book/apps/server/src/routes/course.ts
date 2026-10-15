@@ -114,8 +114,8 @@ courseRouter.post("/updateObjective", (req, res, next) => {});
 courseRouter.get("/content/:objectiveId", async (req, res, next) => {
   try {
     const objectiveId = req.params.objectiveId;
-    const content = await contentRepo.getContentByObjective(objectiveId);
-    return res.status(200).json({ content });
+    const result = await contentRepo.getContentByObjective(objectiveId);
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     next(err);
@@ -127,7 +127,7 @@ courseRouter.post(
   async (req: AuthRequest, res, next) => {
     try {
       const objectiveId = req.params.objectiveId as string;
-      const text = req.body.text || "";
+      const text = req.body.text || "Satoshi is...";
       console.log(text);
       const userId = req.payload?.id || "";
       const result = await contentRepo.createContent(objectiveId, text, userId);
