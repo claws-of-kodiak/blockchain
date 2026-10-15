@@ -20,7 +20,7 @@ export function useProgressClient() {
 
   // Invalidates query cache when progress changes
   const refreshCache = () =>
-    queryClient.invalidateQueries({ queryKey: ["currentStep"] });
+    queryClient.invalidateQueries({ queryKey: ["progress"] });
 
   const beginMut = useMutation({
     mutationFn: (options?: RequestInit) => progress.begin(options),

@@ -49,7 +49,7 @@ export function useCourseClient() {
 
   // Helper to refresh the Context data cache
   const refreshCache = () =>
-    queryClient.invalidateQueries({ queryKey: ["course-content"] });
+    queryClient.invalidateQueries({ queryKey: ["sections-objectives"] });
 
   // Define individual mutations implicitly
   const addSectionMut = useMutation({

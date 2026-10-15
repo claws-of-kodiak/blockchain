@@ -13,10 +13,11 @@ export default function EditSection() {
   const { sectionId } = useParams(); // New tool learned here
   const { deleteObjective } = useCourseClient();
   const { data } = useQuery({
-    queryKey: ["course-content", sectionId],
+    queryKey: ["sections", sectionId],
     queryFn: () => getObjectives(sectionId),
     enabled: !!sectionId,
   });
+
   const objectives: Objective[] = data;
   const sortedObjectives = sortByPosition(objectives);
 

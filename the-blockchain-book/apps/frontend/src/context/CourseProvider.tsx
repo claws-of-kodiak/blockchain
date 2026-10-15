@@ -13,7 +13,7 @@ export default function CourseProvider({
   const userId = session?.user.id;
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["course-content", userId],
+    queryKey: ["sections-objectives", userId],
     queryFn: () => authFetch.get("/course"),
     enabled: !!userId,
   });

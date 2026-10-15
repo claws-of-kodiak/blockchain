@@ -33,7 +33,7 @@ export default function NewObjectiveForm({ onClose }) {
     addObjective.mutate(payload, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success
-        queryClient.invalidateQueries({ queryKey: ["course-content"] }); // Refetch data in EditSection
+        queryClient.invalidateQueries({ queryKey: ["sections"] }); // Refetch data in EditSection
         onClose();
       },
       onError: (err) => {
@@ -65,7 +65,6 @@ export default function NewObjectiveForm({ onClose }) {
               {...register("description")}
             />
           </FormField>
-          {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
         <Button type="submit" isLoading={isPending}>
           Add to Section

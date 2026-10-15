@@ -29,7 +29,7 @@ export default function NewSectionForm({ onClose }) {
     mutate(payload, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success
-        queryClient.invalidateQueries({ queryKey: ["courses"] }); // Refetch data in DisplaySections
+        queryClient.invalidateQueries({ queryKey: ["sections"] }); // Refetch data in DisplaySections
         onClose();
       },
       onError: (err) => {
@@ -57,7 +57,6 @@ export default function NewSectionForm({ onClose }) {
               {...register("title", { required: true })}
             />
           </FormField>
-          {errors.root && <ErrorMsg msg={errors.root.message} />}
         </div>
 
         <Button type="submit" isLoading={isPending}>
