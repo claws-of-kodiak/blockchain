@@ -7,7 +7,7 @@ import { useProgress } from "../../shared/hooks/useProgress";
 export default function StepControl() {
   const { sections } = useCourse();
   const isCourse = sections.length !== 0;
-  const { currentObjective, currentSection, isLoading, error } = useProgress();
+  const { details, isData, isLoading, error } = useProgress();
   const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
 
   if (isLoading) return <p>Loading page...</p>;
@@ -15,16 +15,17 @@ export default function StepControl() {
   return (
     <div className="step-control">
       <h2>Track Your Progress</h2>
-      {currentSection !== "Not found" ? (
+      {isData ? (
         <div>
-          <p>Current Section: {currentSection}</p>
-          <p>Current Objective: {currentObjective}</p>
+          <p>Current Section: {details.sectionTitle}</p>
+          <p>Current Objective: {details.objectiveLabel}</p>
           <Button
             onClick={() => unlockStep.mutate()}
             disabled={unlockStep.isPending}
           >
             Next Step
           </Button>
+          {unlockStep.error && <ErrorMsg msg={unlockStep.error.message} />}
           <Button onClick={() => deleteProgress.mutateAsync()}>
             Restart Progress
           </Button>

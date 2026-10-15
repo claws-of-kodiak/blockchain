@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
 import { getContent } from "../../services/contentClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
+import { useProgress } from "../../shared/hooks/useProgress";
 
 export default function ObjectiveContent() {
-  const { currentObjective } = useParams();
+  const { objectiveId } = useProgress().details;
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["content", currentObjective],
-    queryFn: () => getContent(`/course/content/${currentObjective}`),
-    enabled: !!currentObjective,
+    queryKey: ["content", objectiveId],
+    queryFn: () => getContent(objectiveId),
+    enabled: !!objectiveId,
   });
 
   if (isLoading) return <p>Loading data...</p>;
@@ -17,7 +17,7 @@ export default function ObjectiveContent() {
 
   return (
     <div className="content-sidebar">
-      <p>Display the query data: {data}</p>
+      <p>{data ? data.text : "No content from admin"}</p>
     </div>
   );
 }

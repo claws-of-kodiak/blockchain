@@ -66,7 +66,6 @@ export default function RegisterCard() {
         >
           <Input type="checkbox" {...register("isAdmin")} />
         </FormField>
-        {errors.root && <ErrorMsg msg={errors.root.message} />}
         <Button type="submit" isLoading={isPending}>
           Create Account
         </Button>

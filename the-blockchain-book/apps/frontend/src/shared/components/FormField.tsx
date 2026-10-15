@@ -3,7 +3,7 @@ import ErrorMsg from "./ErrorMsg";
 
 interface FormFieldProps {
   label: string;
-  error?: string;
+  error?: Error;
   children: React.ReactNode;
 }
 
@@ -12,7 +12,7 @@ export function FormField({ label, error, children }: FormFieldProps) {
     <div className="form-field-group">
       <label className="form-label">{label ? label + ": " : ""}</label>
       {children}
-      {error && <ErrorMsg msg={error} />}
+      {error && <ErrorMsg msg={error.message} />}
     </div>
   );
 }

@@ -48,9 +48,12 @@ export default function LogInCard() {
           <Input type="email" placeholder="Email" {...register("email")} />
         </FormField>
         <FormField label="" error={errors.password}>
-          <Input type="text" placeholder="Password" {...register("password")} />
+          <Input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+          />
         </FormField>
-        {errors.root && <ErrorMsg msg={errors.root.message} />}
         <Button type="submit" isLoading={isPending}>
           Log In
         </Button>

@@ -6,28 +6,30 @@ import { Button } from "../../shared/components/Button";
 
 export default function EditContent() {
   const { objectiveId } = useParams();
-  const { data } = useQuery({
-    queryKey: ["content", objectiveId],
+  const { data, isLoading } = useQuery({
+    queryKey: ["content"],
     queryFn: () => getContent(objectiveId),
     enabled: !!objectiveId,
   });
+
   const { updateContent, createContent } = useContentClient();
 
-  const [content, setContent] = useState<string>(data?.content.text || "");
+  // Update to session storage state and manage refresh
+  const [content, setContent] = useState<string>(data?.text || "");
 
   const handleUpdate = () => {
     updateContent.mutate({ text: content, objectiveId });
-    console.log("TIRGGER UPDATE");
   };
   const handleCreate = () => {
     createContent.mutate(objectiveId);
   };
 
+  if (isLoading) return <p>Loading...</p>;
   // NEED TO FIX REFRESH DATA
   return (
     <div className="edit-content-wrap">
       <h2>Content for Objective</h2>
-      {data?.content.text ? (
+      {data?.text ? (
         <>
           <textarea
             onChange={(e) => setContent(e.target.value)}

@@ -4,9 +4,11 @@ import ObjectiveContent from "../features/course/ObjectiveContent";
 import { useState } from "react";
 import "../styles/progress-page.css";
 import { Button } from "../shared/components/Button";
+import { useProgress } from "../shared/hooks/useProgress";
 
 export default function ProgressPage() {
   const [isLearning, setIsLearning] = useState(false);
+  const { isData } = useProgress();
 
   return (
     <>
@@ -14,7 +16,7 @@ export default function ProgressPage() {
       <div className={`progress-layout ${isLearning ? "is-learning" : ""}`}>
         <main className="progress-main">
           <StepControl />
-          <Button onClick={() => setIsLearning(!isLearning)}>
+          <Button disabled={!isData} onClick={() => setIsLearning(!isLearning)}>
             {isLearning ? "Exit" : "Study"}
           </Button>
         </main>

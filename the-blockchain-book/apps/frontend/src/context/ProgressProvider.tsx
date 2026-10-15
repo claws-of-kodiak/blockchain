@@ -21,25 +21,39 @@ export default function ProgressProvider({
   const { data: session, isPending: sessionPending } = authClient.useSession();
   const email = session?.user.email;
 
+  // ERROR with GET fetch below
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["currentStep", email],
+    queryKey: ["progress", email],
     queryFn: () => authFetch.get(`/progress/user`),
     enabled: !!email,
   });
 
-  const { sectionTitle, sectionId, objectiveLabel, objectiveId } = data || {};
+  // DATA RETURNING NULL FROM REPO
+  const { sectionTitle, sectionId, objectiveLabel, objectiveId } = data ?? {};
 
   const value: ProgressContextType = useMemo(
     () => ({
-      sectionTitle,
-      sectionId,
-      objectiveLabel,
-      objectiveId,
+      details: {
+        sectionTitle,
+        sectionId,
+        objectiveLabel,
+        objectiveId,
+      },
+      isData: !!data,
       isLoading: isLoading || sessionPending,
       error,
       refetch,
     }),
-    [data, isLoading, error, refetch]
+    [
+      sectionTitle,
+      sectionId,
+      objectiveLabel,
+      objectiveId,
+      isLoading,
+      sessionPending,
+      error,
+      refetch,
+    ]
   );
   return <ProgressContext value={value}>{children}</ProgressContext>;
 }
