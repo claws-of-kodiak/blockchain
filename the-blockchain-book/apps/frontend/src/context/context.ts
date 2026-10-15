@@ -1,11 +1,16 @@
 import type { Objective, Section, User } from "@repo/validations";
 import { createContext } from "react";
 
-export type ProgressContextType = {
+export type ProgressDetails = {
   sectionTitle: string | null;
   sectionId: string;
   objectiveLabel: string | null;
   objectiveId: string;
+};
+
+export type ProgressContextType = {
+  details: ProgressDetails;
+  isData: boolean;
   isLoading: boolean;
   error: Error;
   refetch: () => void;
