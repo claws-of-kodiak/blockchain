@@ -10,8 +10,10 @@ export default function DisplayUserData() {
       <p>
         {name} - {email}
       </p>
-      <p>Birthday: {formatDate(birthDate)}</p>
-      <p>Member since: {formatDate(createdAt)}</p>
+      <p>Birthday: {formatDate({ dateInput: birthDate, format: "short" })}</p>
+      <p>
+        Member since: {formatDate({ dateInput: createdAt, timeZone: "EST" })}
+      </p>
       <p>
         {isAdmin ? (
           <Link to="/admin" className="retro-link">

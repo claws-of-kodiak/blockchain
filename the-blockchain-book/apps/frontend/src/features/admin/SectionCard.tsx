@@ -19,7 +19,7 @@ export default function SectionCard({ payload }) {
             </li>
           ))}
       </ul>
-      <p>Last Update: {formatDate(createdAt)}</p>
+      <p>Last Update: {formatDate({ dateInput: createdAt })}</p>
       <Link to={`/admin/section/${sectionId}`} className="edit-button">
         <FaEdit />
       </Link>
