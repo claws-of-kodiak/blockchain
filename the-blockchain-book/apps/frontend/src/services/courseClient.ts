@@ -22,6 +22,15 @@ async function deleteSection(sectionId: string) {
   return res;
 }
 
+export async function getSection(sectionId: string) {
+  const res = await authFetch.get(`/course/section/${sectionId}`);
+  return res;
+}
+export async function getObjective(objectiveId: string) {
+  const res = await authFetch.get(`/course/objective/${objectiveId}`);
+  return res;
+}
+
 export async function getObjectives(sectionId: string) {
   const res = await authFetch.get(`/course/getObjectives/${sectionId}`);
   return res;

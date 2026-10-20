@@ -6,12 +6,12 @@ export class ContentRepository {
     this.db = db;
   }
   // Get content by Id
-  async getContentByObjective(contentId: string) {
+  async getContentByObjective(objectiveId: string) {
     const result = await this.db.query(
       `
         SELECT text FROM content WHERE objective_id = $1
         `,
-      [contentId]
+      [objectiveId]
     );
     if (result.rows.length === 0) return null;
     return result.rows[0];

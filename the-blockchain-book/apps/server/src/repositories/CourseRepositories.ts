@@ -179,7 +179,16 @@ export class CourseRepository {
       [sectionId]
     );
     if (result.rows.length === 0) return null;
-    return result.rows;
+    return result.rows[0];
+  }
+  // Get one objective
+  async getObjectiveById(objectiveId: string) {
+    const result = await this.db.query(
+      `SELECT * FROM objectives WHERE objective_id = $1;`,
+      [objectiveId]
+    );
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
   }
   // Get all objectives
   async getAllObjectives() {

@@ -6,10 +6,8 @@ export async function getContent(objectiveId: string) {
   return res;
 }
 
-async function createContent(objectiveId: string, textBox) {
-  const res = await authFetch.post(`/course/content/${objectiveId}`, {
-    textBox,
-  });
+async function createContent(objectiveId: string) {
+  const res = await authFetch.post(`/course/content/${objectiveId}`);
   return res;
 }
 
@@ -26,17 +24,17 @@ export function useContentClient() {
   const queryClient = useQueryClient();
 
   // Helper to refresh the Context data cache
-  const refreshCache = () =>
-    queryClient.invalidateQueries({ queryKey: ["content"] });
+  const refreshCache = (objectiveId: string) =>
+    queryClient.invalidateQueries({ queryKey: ["content", objectiveId] });
 
   // Define individual mutations implicitly
   const createContentMut = useMutation({
     mutationFn: createContent,
-    onSuccess: refreshCache,
+    onSuccess: (_, objectiveId) => refreshCache(objectiveId), // New prop holder learned "_"
   });
   const updateContentMut = useMutation({
     mutationFn: updateContent,
-    onSuccess: refreshCache,
+    onSuccess: (objectiveId) => refreshCache(objectiveId),
   });
   const deleteContentMut = useMutation({
     mutationFn: deleteContent,
@@ -57,7 +55,7 @@ export function useContentClient() {
       mutateAsync: updateContentMut.mutateAsync,
       isPending: updateContentMut.isPending,
       error: updateContentMut.error,
-      isSuccess: deleteContentMut.isSuccess,
+      isSuccess: updateContentMut.isSuccess,
     },
     deleteContent: {
       mutate: deleteContentMut.mutate,

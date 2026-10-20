@@ -33,7 +33,7 @@ export default function NewObjectiveForm({ onClose }) {
     addObjective.mutate(payload, {
       onSuccess: () => {
         reset(); // Clear the form fields upon success
-        queryClient.invalidateQueries({ queryKey: ["sections"] }); // Refetch data in EditSection
+        queryClient.invalidateQueries({ queryKey: ["sections", sectionId] }); // Refetch data in EditSection
         onClose();
       },
       onError: (err) => {
@@ -67,7 +67,7 @@ export default function NewObjectiveForm({ onClose }) {
           </FormField>
         </div>
         <Button type="submit" isLoading={isPending}>
-          Add to Section
+          Add Objective
         </Button>
       </form>
     </div>

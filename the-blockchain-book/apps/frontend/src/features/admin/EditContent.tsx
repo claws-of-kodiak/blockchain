@@ -1,26 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getContent, useContentClient } from "../../services/contentClient";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../../shared/components/Button";
+import { getObjective } from "../../services/courseClient";
 
 export default function EditContent() {
   const { objectiveId } = useParams();
+
   const { data, isLoading } = useQuery({
-    queryKey: ["content"],
+    queryKey: ["content", objectiveId],
     queryFn: () => getContent(objectiveId),
+    enabled: !!objectiveId,
+  });
+
+  const { data: objective } = useQuery({
+    queryKey: ["objective", objectiveId],
+    queryFn: () => getObjective(objectiveId),
     enabled: !!objectiveId,
   });
 
   const { updateContent, createContent } = useContentClient();
 
   // Update to session storage state and manage refresh
-  const [content, setContent] = useState<string>(data?.text || "");
+  const [content, setContent] = useState<string>("");
+
+  useEffect(() => {
+    if (data?.text !== undefined) {
+      setContent(data.text);
+    }
+  }, [data?.text]);
 
   const handleUpdate = () => {
+    if (!objectiveId) return;
     updateContent.mutate({ text: content, objectiveId });
   };
   const handleCreate = () => {
+    if (!objectiveId) return;
     createContent.mutate(objectiveId);
   };
 
@@ -28,7 +44,7 @@ export default function EditContent() {
   // NEED TO FIX REFRESH DATA
   return (
     <div className="edit-content-wrap">
-      <h2>Content for Objective</h2>
+      {objective && <h2>{objective.description}</h2>}
       {data?.text ? (
         <>
           <textarea

@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Edit Section Management View (Terminal Style Editor)
+   ========================================================================== */
+
+/* Outer Wrapper for the Editor view */
+.edit-section-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Global Quick Actions Top Bar (The PopUp button container) */
+.editor-top-actions {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 1rem;
+}
+
+/* Individual Objective Node Grouping */
+.objective-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The actual horizontal interactive data strip */
+.objective-row {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-left: 2px solid var(--text-muted); /* Subdued left line by default */
+  border-radius: 4px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes text left, tools right */
+  gap: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Interactive Hover state for the row */
+.objective-row:hover {
+  background-color: rgba(255, 255, 255, 0.02); /* Ghost micro-tint */
+  border-color: var(--accent-muted);
+  border-left-color: var(--accent-retro); /* Illuminates green on hover */
+  transform: translateX(4px); /* Sleek slide-in feedback */
+}
+
+/* Content Text Typography inside the strip */
+.objective-data-text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Cyberpunk terminal prompt prefix before the text */
+.objective-data-text::before {
+  content: "•";
+  color: var(--accent-retro); /* Glow green bullet indicator */
+  font-weight: bold;
+}
+
+/* Inline Right-Aligned Toolbar */
+.objective-actions-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0; /* Prevents icons from squishing */
+}
+
+/* Specific styling for the Edit link icon inside this utility view */
+.objective-actions-toolbar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.objective-actions-toolbar a:hover {
+  color: var(--accent-retro);
+  background-color: rgba(0, 255, 100, 0.08); /* Faint green terminal halo */
+}
+
+/* Targets DeleteBin if rendered as direct svg or wrapped button */
+.objective-actions-toolbar > svg,
+.objective-actions-toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.objective-actions-toolbar > svg:hover,
+.objective-actions-toolbar button:hover {
+  color: #ef4444; /* Alert red */
+  background-color: rgba(239, 68, 68, 0.08); /* Faint red warning halo */
+}
+
+/* Hover-to-insert middle divider component custom injection */
+.inline-divider-wrapper {
+  margin: -0.25rem 0; /* Tightly nests the button track between nodes */
+  z-index: 10;
+}

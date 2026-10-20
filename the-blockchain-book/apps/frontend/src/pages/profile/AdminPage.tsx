@@ -9,7 +9,9 @@ export default function AdminPage() {
       <Header />
       <div id="admin-wrapper">
         <h2 style={{ margin: 0 }}>Create and Manage Course Here</h2>
-        <PopUp label="+ Add New Section" component={NewSectionForm} />
+        <div className="editor-top-actions">
+          <PopUp label="+ Add New Section" component={NewSectionForm} />
+        </div>
         <DisplaySections />
       </div>
     </>

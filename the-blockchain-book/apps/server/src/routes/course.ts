@@ -21,6 +21,28 @@ courseRouter.get("/", async (req, res, next) => {
     next(err);
   }
 });
+// get section by id
+courseRouter.get("/section/:sectionId", async (req, res, next) => {
+  try {
+    const sectionId = req.params.sectionId;
+    const section = await courseRepo.getSectionById(sectionId);
+    if (!section) throw new Error("No section found.");
+    return res.status(200).json(section);
+  } catch (err) {
+    next(err);
+  }
+});
+// get objective by id
+courseRouter.get("/objective/:objectiveId", async (req, res, next) => {
+  try {
+    const objectiveId = req.params.objectiveId;
+    const objective = await courseRepo.getObjectiveById(objectiveId);
+    if (!objective) throw new Error("No objective found.");
+    return res.status(200).json(objective);
+  } catch (err) {
+    next(err);
+  }
+});
 // Query will insert at MAX position + 1
 courseRouter.post("/addSection", async (req: AuthRequest, res, next) => {
   try {
@@ -127,8 +149,7 @@ courseRouter.post(
   async (req: AuthRequest, res, next) => {
     try {
       const objectiveId = req.params.objectiveId as string;
-      const text = req.body.text || "Satoshi is...";
-      console.log(text);
+      const text = "Satoshi is...";
       const userId = req.payload?.id || "";
       const result = await contentRepo.createContent(objectiveId, text, userId);
       return res

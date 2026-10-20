@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useCourseClient } from "../../services/courseClient";
 import DeleteBin from "../../shared/components/DeleteBin";
 import { FaEdit } from "react-icons/fa";
+import { formatDate } from "../../util/formatDate";
 
 export default function SectionCard({ payload }) {
   const { sectionId, title, objectives, createdAt } = payload;
@@ -18,8 +19,8 @@ export default function SectionCard({ payload }) {
             </li>
           ))}
       </ul>
-      <p>Created at: {createdAt}</p>
-      <Link to={`/admin/section/${sectionId}`}>
+      <p>Last Update: {formatDate(createdAt)}</p>
+      <Link to={`/admin/section/${sectionId}`} className="edit-button">
         <FaEdit />
       </Link>
       <DeleteBin onClick={() => deleteSection.mutate(sectionId)} />
