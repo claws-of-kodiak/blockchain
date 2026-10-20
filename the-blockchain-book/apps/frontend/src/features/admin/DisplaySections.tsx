@@ -4,8 +4,8 @@ import type { Section } from "@repo/validations";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import SectionCard from "./SectionCard";
 import { sortByPosition } from "../../util/sortByPosition";
-import { HoverAddItemButton } from "./AddItemButton";
-import NewSectionForm from "./NewSectionForm";
+import { HoverAddItemButton } from "./forms/AddItemButton";
+import NewSectionForm from "./forms/NewSectionForm";
 
 export default function DisplaySections() {
   const { sections, isLoading, error } = useCourse();

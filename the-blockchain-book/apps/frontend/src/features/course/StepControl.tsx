@@ -7,14 +7,13 @@ import { useProgress } from "../../shared/hooks/useProgress";
 export default function StepControl() {
   const { sections } = useCourse();
   const isCourse = sections.length !== 0;
-  const { details, isData, isLoading, error } = useProgress();
+  const { details, isData, isLoading } = useProgress();
   const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
 
   if (isLoading) return <p>Loading page...</p>;
 
   return (
     <div className="step-control">
-      <h2>Track Your Progress</h2>
       {isData ? (
         <div>
           <p>Current Section: {details.sectionTitle}</p>
@@ -35,7 +34,6 @@ export default function StepControl() {
           Begin Course
         </Button>
       )}
-      {error && <ErrorMsg msg={error.message} />}
     </div>
   );
 }

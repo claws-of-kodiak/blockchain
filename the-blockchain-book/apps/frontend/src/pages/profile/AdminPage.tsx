@@ -1,5 +1,5 @@
 import DisplaySections from "../../features/admin/DisplaySections";
-import NewSectionForm from "../../features/admin/NewSectionForm";
+import NewSectionForm from "../../features/admin/forms/NewSectionForm";
 import Header from "../../shared/components/Header";
 import PopUp from "../../shared/components/PopUp";
 
