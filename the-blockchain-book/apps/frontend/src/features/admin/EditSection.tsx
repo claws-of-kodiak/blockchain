@@ -7,12 +7,13 @@ import {
   useCourseClient,
 } from "../../services/courseClient";
 import PopUp from "../../shared/components/PopUp";
-import NewObjectiveForm from "./NewObjectiveForm";
+import NewObjectiveForm from "./forms/NewObjectiveForm";
 import DeleteBin from "../../shared/components/DeleteBin";
-import { HoverAddItemButton } from "./AddItemButton";
+import { HoverAddItemButton } from "./forms/AddItemButton";
 import { sortByPosition } from "../../util/sortByPosition";
 import { FaEdit } from "react-icons/fa";
 import { Spinner } from "../../shared/components/Spinner";
+import SectionHeader from "./SectionHeader";
 
 export default function EditSection() {
   const { sectionId } = useParams(); // New tool learned here
@@ -36,8 +37,8 @@ export default function EditSection() {
 
   return (
     <>
+      <SectionHeader title={section.title} />
       <div className="edit-section-container">
-        {section && <h2>{section.title}</h2>}
         <div className="editor-top-actions">
           <PopUp component={NewObjectiveForm} label="+ Add New Objective" />
         </div>

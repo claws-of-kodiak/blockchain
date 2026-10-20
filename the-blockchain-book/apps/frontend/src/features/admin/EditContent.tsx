@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../../shared/components/Button";
 import { getObjective } from "../../services/courseClient";
+import SectionHeader from "./SectionHeader";
 
 export default function EditContent() {
   const { objectiveId } = useParams();
@@ -44,7 +45,10 @@ export default function EditContent() {
   // NEED TO FIX REFRESH DATA
   return (
     <div className="edit-content-wrap">
-      {objective && <h2>{objective.description}</h2>}
+      <SectionHeader
+        label={objective.label}
+        description={objective.description}
+      />
       {data?.text ? (
         <>
           <textarea
