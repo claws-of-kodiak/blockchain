@@ -8,9 +8,12 @@ export default function StepControl() {
   const { sections } = useCourse();
   const isCourse = sections.length !== 0;
   const { details, isData, isLoading } = useProgress();
-  const { beginCourse, unlockStep, deleteProgress } = useProgressClient();
+  const objectiveId = details?.objectiveId ?? "";
+  const { unlockStep, deleteProgress } = useProgressClient(objectiveId);
 
   if (isLoading) return <p>Loading page...</p>;
+
+  if (!isCourse) return <ErrorMsg msg="No course found - contact admin." />;
 
   return (
     <div className="step-control">
@@ -20,19 +23,22 @@ export default function StepControl() {
           <p>Current Objective: {details.objectiveLabel}</p>
           <Button
             onClick={() => unlockStep.mutate()}
-            disabled={unlockStep.isPending}
+            disabled={unlockStep.isPending || !objectiveId}
           >
             Next Step
           </Button>
           {unlockStep.error && <ErrorMsg msg={unlockStep.error.message} />}
-          <Button onClick={() => deleteProgress.mutateAsync()}>
+          <Button onClick={() => deleteProgress.mutate()}>
             Restart Progress
           </Button>
         </div>
       ) : (
-        <Button disabled={!isCourse} onClick={() => beginCourse.mutate()}>
-          Begin Course
-        </Button>
+        <div>
+          <h3>Course Complete</h3>
+          <Button onClick={() => deleteProgress.mutate()}>
+            Restart Progress
+          </Button>
+        </div>
       )}
     </div>
   );

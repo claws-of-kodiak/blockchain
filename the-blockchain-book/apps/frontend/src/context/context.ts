@@ -14,6 +14,7 @@ export type ProgressContextType = {
   isLoading: boolean;
   error: Error;
   refetch: () => void;
+  email: string | undefined;
 };
 
 export const ProgressContext = createContext<ProgressContextType | undefined>(

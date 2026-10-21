@@ -2,12 +2,8 @@ import { authFetch } from "./apiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const progress = {
-  begin: async (options: RequestInit = {}) => {
-    return authFetch.post("/progress/begin", { ...options });
-  },
-
-  nextStep: async () => {
-    return authFetch.post("/progress/unlockStep");
+  nextStep: async (currentObjectiveId: string) => {
+    return authFetch.post(`/progress/unlockStep/${currentObjectiveId}`);
   },
 
   delete: async (options: RequestInit = {}) => {
@@ -15,20 +11,17 @@ const progress = {
   },
 };
 
-export function useProgressClient() {
+export function useProgressClient(currentObjectiveId: string) {
   const queryClient = useQueryClient();
 
   // Invalidates query cache when progress changes
   const refreshCache = () =>
-    queryClient.invalidateQueries({ queryKey: ["progress"] });
-
-  const beginMut = useMutation({
-    mutationFn: (options?: RequestInit) => progress.begin(options),
-    onSuccess: refreshCache,
-  });
+    queryClient.invalidateQueries({
+      queryKey: ["progress"],
+    });
 
   const nextStepMut = useMutation({
-    mutationFn: () => progress.nextStep(),
+    mutationFn: () => progress.nextStep(currentObjectiveId),
     onSuccess: refreshCache,
   });
 
@@ -38,12 +31,6 @@ export function useProgressClient() {
   });
 
   return {
-    beginCourse: {
-      mutate: beginMut.mutate,
-      mutateAsync: beginMut.mutateAsync,
-      isPending: beginMut.isPending,
-      error: beginMut.error,
-    },
     unlockStep: {
       mutate: nextStepMut.mutate,
       mutateAsync: nextStepMut.mutateAsync,

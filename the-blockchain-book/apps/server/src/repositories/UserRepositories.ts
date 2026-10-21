@@ -1,4 +1,3 @@
-import { ReturnUserProgress } from "@repo/validations";
 import { Database } from "../db";
 
 export class UserRepository {
@@ -24,22 +23,37 @@ export class UserRepository {
   // Get user progress
   async getProgressById(userId: string) {
     const queryText = `
-      SELECT 
-        s.section_id,
-        s.title AS section_title,
-        s.position AS section_position,
-        o.objective_id,
-        o.label AS objective_label,
-        o.position AS objective_position
-      FROM user_progress p
-      LEFT JOIN sections s ON s.section_id = p.current_section
-      LEFT JOIN objectives o ON o.objective_id = p.current_objective
-      WHERE p.user_id = $1;      
+      SELECT s.section_id AS "sectionId", s.title AS "sectionTitle",
+        o.objective_id AS "objectiveId", o.label AS "objectiveLabel"
+      FROM objectives o
+      JOIN sections s ON s.section_id = o.section_id
+      LEFT JOIN user_objective_completion c
+        ON c.objective_id = o.objective_id AND c.user_id = $1
+      WHERE c.objective_id IS NULL
+      ORDER BY s.position, o.position 
+      LIMIT 1;    
       `;
     const result = await this.db.query(queryText, [userId]);
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
+  // Get next objective
+  async getNextObjective(currentObjectiveId: string) {
+    const queryText = `
+      SELECT o.objective_id AS "objectiveId", o.label AS "objectiveLabel",
+        s.section_id AS "sectionId", s.title AS "sectionTitle"
+      FROM objectives o
+      JOIN sections s ON s.section_id = o.section_id
+      WHERE o.position = (
+        SELECT position + 1 FROM objectives WHERE objective_id = $1
+      )
+      LIMIT 1;
+    `;
+    const result = await this.db.query(queryText, [currentObjectiveId]);
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+  }
+
   // Get user progress
   async getUserById(userId: string) {
     const result = await this.db.query(
@@ -51,69 +65,21 @@ export class UserRepository {
     if (result.rows.length === 0) return null;
     return result.rows[0];
   }
-  // Unlock next step
-  // Try to move to next objective in same section, if doesnt exist try to move to next section, if doesnt exist course complete
-  // SELECT objective_id and section_id where position = nextObj
-  // Then SELECT section_id WHERE position is +1 current section_id and SELECT objective_id WHERE section_id is = next section
-  // Then UPDATE user_progress
 
-  // First, try simple increment to next objective
-  // If fail, try to increment to next section and objective with position 1 in that section
-  // If fail, Course has been completed! return no more steps to complete
-  async unlockNextStep(userId: string, progress: ReturnUserProgress) {
-    const { objectivePosition, sectionPosition, sectionId } = progress;
-    const nextObjectivePos = Number(objectivePosition + 1);
-    const nextSectionPos = Number(sectionPosition + 1);
+  // Add objective to completion table
+  async unlockNextStep(userId: string, objectiveId: string) {
     try {
-      const result = await this.db.transaction(async (client) => {
-        const objResult = await client.query(
-          // Selects next objective_id in line
-          `SELECT objective_id FROM objectives WHERE position = $1 AND section_id = $2`,
-          [nextObjectivePos, sectionId]
-        );
-        if (objResult.rows.length === 0) {
-          const sectionResult = await client.query(
-            // Selects next section_id in line
-            `SELECT section_id FROM sections WHERE position = $1`,
-            [nextSectionPos]
-          );
-          if (sectionResult.rows.length === 0)
-            return { status: "complete", message: "Course completed." }; // If no next section_id, return {status: "complete"}
-          const nextSectionId = sectionResult.rows[0].section_id;
-          const nextObjectiveResult = await client.query(
-            // Selects objective_id from new section where position = 1
-            `SELECT objective_id FROM objectives WHERE position = 1 AND section_id = $1`,
-            [nextSectionId]
-          );
-          if (nextObjectiveResult.rows.length === 0)
-            throw Error("No more objectives.");
-          const nextObjId = nextObjectiveResult.rows[0].objective_id;
-          const result = await client.query(
-            // Updates user_progress to next section_id and objective position to 1
-            `
-            UPDATE user_progress 
-            SET current_section = $1, current_objective = $2 
-            WHERE user_id = $3 
-            RETURNING *
-            `,
-            [nextSectionId, nextObjId, userId]
-          );
-          return result.rows[0];
-        }
-        const nextObjId = objResult.rows[0].objective_id;
-        const result = await client.query(
-          // Updates user_progress to next objective
-          `
-          UPDATE user_progress 
-          SET current_objective = $1
-          WHERE user_id = $2 
-          RETURNING *
-          `,
-          [nextObjId, userId]
-        );
-        return result.rows[0];
-      });
-      return result;
+      const result = await this.db.query(
+        `
+        INSERT INTO user_objective_completion (user_id, objective_id)
+        VALUES ($1, $2)
+        ON CONFLICT DO NOTHING
+        RETURNING *
+        `,
+        [userId, objectiveId]
+      );
+      if (result.rows.length === 0) return null;
+      return result.rows[0];
     } catch (err) {
       console.error("Unlock next step error", err);
       throw err;
@@ -121,10 +87,9 @@ export class UserRepository {
   }
   async deleteProgress(userId: string) {
     const result = await this.db.query(
-      `DELETE FROM user_progress WHERE user_id = $1`,
+      `DELETE FROM user_objective_completion WHERE user_id = $1 RETURNING *`,
       [userId]
     );
-    if (result.rows.length === 0) return null;
-    return result.rows[0];
+    return result.rows;
   }
 }
