@@ -44,7 +44,7 @@ userRouter.post(
       const userId = req.payload.id;
       const objectiveId = req.params.objectiveId as string;
       const newProgress = await userRepo.unlockNextStep(userId, objectiveId);
-      return res.status(200).json(newProgress);
+      return res.status(200).json(newProgress); // Will pass null value for client to check
     } catch (err) {
       next(err);
     }

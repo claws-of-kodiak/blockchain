@@ -22,6 +22,7 @@ export class UserRepository {
   }
   // Get user progress
   async getProgressById(userId: string) {
+    // ORDER BY with LIMIT 1 takes the first null value of the next position that is not complete
     const queryText = `
       SELECT s.section_id AS "sectionId", s.title AS "sectionTitle",
         o.objective_id AS "objectiveId", o.label AS "objectiveLabel"
