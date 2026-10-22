@@ -1,0 +1,53 @@
+/* Dashboard layout wrapper using a 3x3 grid system */
+.dashboard-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem 2rem; /* Bottom padding prevents content from hiding behind the fixed ticker */
+  box-sizing: border-box;
+}
+
+/* 1. Progress Bar takes up the entire first row (all 3 columns) */
+.dashboard-wrap > .progress-bar-container {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+/* 2. Community Card takes up column 1, spanning rows 2 and 3 */
+.dashboard-wrap > .community-card {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  height: 100%;
+}
+
+/* 3. Reports Card takes up column 2, spanning rows 2 and 3 */
+.dashboard-wrap > #study-card {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  height: 100%;
+}
+
+/* 4. Study Card takes up column 3, spanning rows 2 and 3 */
+.dashboard-wrap > #reports-card {
+  grid-column: 3;
+  grid-row: 2 / span 2;
+  height: 100%;
+}
+
+/* Responsive adjustment for smaller screens (tablets/mobile) */
+@media (max-width: 900px) {
+  .dashboard-wrap {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .dashboard-wrap > .community-card,
+  .dashboard-wrap > #reports-card,
+  .dashboard-wrap > #study-card {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

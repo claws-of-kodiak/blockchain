@@ -1,0 +1,53 @@
+/* Container styling using the base color scheme */
+#study-card {
+  background-color: rgb(111, 111, 111);
+  padding: 1.5rem;
+  border-radius: 8px;
+  color: #cccccc;
+  font-family: inherit;
+  max-width: 400px; /* Optional: adjust as needed */
+}
+
+/* Question Prompt styling */
+#study-card p {
+  color: #f2c2ff;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: bolder;
+  font-size: 1.05rem;
+}
+
+/* 2x2 Grid for the list of answers */
+#study-card ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual answer box styling */
+#study-card li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-wrap: break-word;
+  font-weight: bolder;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  color: #cccccc;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover & Active States */
+#study-card li:hover {
+  color: #f2c2ff;
+  border-bottom: 3px solid blueviolet;
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.25);
+}

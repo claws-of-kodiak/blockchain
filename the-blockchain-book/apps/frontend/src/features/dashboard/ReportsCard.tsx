@@ -1,3 +1,5 @@
+import "../../styles/dashboard/reports-card.css";
+
 export default function ReportsCard() {
   return (
     <div id="reports-card">

@@ -1,3 +1,5 @@
+import "../../styles/dashboard/study-card..css";
+
 export default function StudyCard() {
   return (
     <div id="study-card">

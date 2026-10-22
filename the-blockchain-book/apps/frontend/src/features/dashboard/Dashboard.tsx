@@ -4,8 +4,7 @@ import ProgressBar from "./ProgressBar";
 import ReportsCard from "./ReportsCard";
 import StudyCard from "./StudyCard";
 
-// Need to create and import css style page
-
+import "../../styles/dashboard/dashboard-container.css";
 export default function Dashboard() {
   return (
     <div className="dashboard-wrap">

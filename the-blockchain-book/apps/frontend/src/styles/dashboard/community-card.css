@@ -1,0 +1,59 @@
+/* Container styling using the base color scheme */
+.community-card {
+  background-color: rgb(111, 111, 111);
+  padding: 1.5rem;
+  border-radius: 8px;
+  color: #cccccc;
+  font-family: inherit;
+  max-width: 400px; /* Optional: adjust as needed */
+}
+
+/* Card Title */
+.community-card h2 {
+  color: #f2c2ff;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: bolder;
+}
+
+/* 2x2 Grid for the List Items */
+.community-card #community-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual list item wrapper */
+.community-card #community-list li {
+  display: flex;
+}
+
+/* Link Styling styled similarly to the progress interactive items */
+.community-card #community-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  word-wrap: break-word;
+  font-weight: bolder;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: #cccccc;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* Hover & Active States (matching your color scheme) */
+.community-card #community-list li a:hover,
+.community-card #community-list li a:focus {
+  color: #f2c2ff;
+  border-bottom: 3px solid blueviolet;
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.25);
+}

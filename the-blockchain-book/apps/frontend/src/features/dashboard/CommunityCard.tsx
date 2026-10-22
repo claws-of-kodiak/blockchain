@@ -1,3 +1,5 @@
+import "../../styles/dashboard/community-card.css";
+
 export default function CommunityCard() {
   return (
     <div className="community-card">

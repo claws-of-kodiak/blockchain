@@ -1,6 +1,6 @@
 import { useCourse } from "../../shared/hooks/useCourse";
 import { useProgress } from "../../shared/hooks/useProgress";
-import "../../styles/progress-bar.css";
+import "../../styles/./dashboard/progress-bar.css";
 
 const ProgressBar: React.FC = () => {
   const { sections } = useCourse();
