@@ -1,5 +1,4 @@
 import LandingPage from "./pages/LandingPage";
-import ProgressPage from "./pages/ProgressPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
@@ -9,6 +8,7 @@ import AdminPage from "./pages/profile/AdminPage";
 import SettingsPage from "./pages/profile/SettingsPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import EditContent from "./features/admin/EditContent";
+import CoursePage from "./pages/CoursePage";
 
 export const getRouteList = (isAdmin: boolean): Route[] => {
   const baseRoutes: Route[] = [
@@ -26,9 +26,9 @@ export const getRouteList = (isAdmin: boolean): Route[] => {
       inHeader: false,
     },
     {
-      path: "/progress",
-      label: "Progress",
-      element: <ProgressPage />,
+      path: "/course",
+      label: "Course",
+      element: <CoursePage />,
       inHeader: true,
     },
     {

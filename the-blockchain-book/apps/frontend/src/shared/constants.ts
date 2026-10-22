@@ -1,7 +1,7 @@
 export const APP_ROUTES = {
   LANDING: "/",
   LOG_IN: "/login",
-  PROGRESS: "/progress",
+  COURSE: "/course",
   REGISTER: "/register",
   HOME: "/home",
   ADMIN: "/admin",
