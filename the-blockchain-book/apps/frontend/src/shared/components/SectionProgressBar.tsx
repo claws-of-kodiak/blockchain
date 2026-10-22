@@ -1,14 +1,23 @@
-import { useCourse } from "../../shared/hooks/useCourse";
-import { useProgress } from "../../shared/hooks/useProgress";
+import { useCourse } from "../hooks/useCourse";
+import { useProgress } from "../hooks/useProgress";
 import "../../styles/./dashboard/progress-bar.css";
 
-const ProgressBar: React.FC = () => {
+type ProgressBarVariant = "dashboard" | "course" | "profile";
+
+export default function SectionProgressBar({
+  variant,
+}: {
+  variant: ProgressBarVariant;
+}) {
   const { sections } = useCourse();
   const { sectionId } = useProgress().details;
 
+  const containerClass = `${variant}-progress-bar-container`;
+  const wrapperClass = `${variant}-progress-bar-wrap`;
+
   return (
-    <div className="progress-bar-container">
-      <div className="progress-track-wrapper">
+    <div className={containerClass}>
+      <div className={wrapperClass}>
         {sections.map((section, index) => (
           <div
             key={index}
@@ -22,6 +31,4 @@ const ProgressBar: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default ProgressBar;
+}
