@@ -1,16 +1,10 @@
 import { useCourse } from "../../shared/hooks/useCourse";
 import { useProgress } from "../../shared/hooks/useProgress";
+import "../../styles/progress-bar.css";
 
 const ProgressBar: React.FC = () => {
   const { sections } = useCourse();
   const { sectionId } = useProgress().details;
-
-  const calculateProgress = (index: number) => {
-    const currentSectionIndex = sections.findIndex(
-      (section) => section.id === sectionId
-    );
-    return index <= currentSectionIndex ? "completed" : "pending";
-  };
 
   return (
     <div className="progress-bar-container">
@@ -18,7 +12,9 @@ const ProgressBar: React.FC = () => {
         {sections.map((section, index) => (
           <div
             key={index}
-            className={`progress-segment ${calculateProgress(index)}`}
+            className={`progress-${
+              sectionId === section.sectionId ? "is-active" : "inactive"
+            }`}
           >
             {section.title}
           </div>
