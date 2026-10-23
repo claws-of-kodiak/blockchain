@@ -9,7 +9,7 @@ import "../../styles/dashboard/dashboard-container.css";
 export default function Dashboard() {
   return (
     <div className="dashboard-wrap">
-      <SectionProgressBar />
+      <SectionProgressBar variant="dashboard" />
       <CommunityCard />
       <ReportsCard />
       <StudyCard />

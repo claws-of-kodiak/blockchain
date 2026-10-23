@@ -11,7 +11,7 @@
 }
 
 /* 1. Progress Bar takes up the entire first row (all 3 columns) */
-.dashboard-wrap > .progress-bar-container {
+.dashboard-wrap > .progress-bar--dashboard {
   grid-column: 1 / -1;
   grid-row: 1;
 }

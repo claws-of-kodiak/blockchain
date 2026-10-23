@@ -1,0 +1,62 @@
+/* ==========================================================================
+   Progress Bar Component (Base Styles)
+   ========================================================================== */
+
+.progress-bar {
+  background-color: rgb(111, 111, 111);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.progress-bar__track {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.progress-bar__item {
+  word-wrap: break-word;
+  font-weight: bolder;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+/* ==========================================================================
+     Item States (Active / Inactive / Completed)
+     ========================================================================== */
+
+.progress-bar__item--is-inactive {
+  color: #cccccc;
+}
+
+.progress-bar__item--is-active {
+  color: #f2c2ff;
+  border-bottom: 3px solid blueviolet;
+  transform: scale(1.05);
+}
+
+/* Kept from your original logic if you plan to track completed items later */
+.progress-bar__item--completed {
+  color: blueviolet;
+}
+
+/* ==========================================================================
+     Variant Overrides (Dashboard / Course / Profile)
+     ========================================================================== */
+
+.progress-bar--dashboard {
+  /* Add specific background or padding adjustments for dashboard if needed */
+}
+
+.progress-bar--course {
+  height: fit-content;
+  background-color: rgb(35, 146, 54);
+  font-size: 0.8em;
+  padding: 0;
+}
+
+.progress-bar--profile {
+  /* Add specific adjustments for profile view */
+}

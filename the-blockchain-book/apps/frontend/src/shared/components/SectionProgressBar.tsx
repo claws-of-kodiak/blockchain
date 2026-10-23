@@ -1,33 +1,40 @@
 import { useCourse } from "../hooks/useCourse";
 import { useProgress } from "../hooks/useProgress";
-import "../../styles/./dashboard/progress-bar.css";
+import "../../styles/progress-bar.css";
 
 type ProgressBarVariant = "dashboard" | "course" | "profile";
 
+interface SectionProgressBarProps {
+  variant: ProgressBarVariant;
+}
+
 export default function SectionProgressBar({
   variant,
-}: {
-  variant: ProgressBarVariant;
-}) {
+}: SectionProgressBarProps) {
   const { sections } = useCourse();
   const { sectionId } = useProgress().details;
 
-  const containerClass = `${variant}-progress-bar-container`;
-  const wrapperClass = `${variant}-progress-bar-wrap`;
+  // Base block class with a dynamic variant modifier
+  const containerClass = `progress-bar progress-bar--${variant}`;
 
   return (
     <div className={containerClass}>
-      <div className={wrapperClass}>
-        {sections.map((section, index) => (
-          <div
-            key={index}
-            className={`progress-${
-              sectionId === section.sectionId ? "is-active" : "inactive"
-            }`}
-          >
-            {section.title}
-          </div>
-        ))}
+      <div className="progress-bar__track">
+        {sections.map((section, index) => {
+          const isActive = sectionId === section.sectionId;
+
+          // Determine status state class
+          const statusClass = isActive ? "is-active" : "is-inactive";
+
+          return (
+            <div
+              key={section.sectionId || index}
+              className={`progress-bar__item progress-bar__item--${statusClass}`}
+            >
+              {section.title}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
