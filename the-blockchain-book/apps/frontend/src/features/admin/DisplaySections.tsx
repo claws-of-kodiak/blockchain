@@ -6,13 +6,14 @@ import SectionCard from "./SectionCard";
 import { sortByPosition } from "../../util/sortByPosition";
 import { HoverAddItemButton } from "./forms/AddItemButton";
 import NewSectionForm from "./forms/NewSectionForm";
+import PageLoading from "../../shared/components/PageLoading";
 
 export default function DisplaySections() {
   const { sections, isLoading, error } = useCourse();
 
   const sortedSections = sortByPosition(sections);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <PageLoading />;
   if (error) return <ErrorMsg msg={error.message} />;
   const isSections: boolean = !(sortedSections.length === 0);
 

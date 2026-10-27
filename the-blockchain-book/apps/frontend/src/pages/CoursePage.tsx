@@ -6,6 +6,7 @@ import DisplayContent from "../features/course/DisplayContent";
 import SectionProgressBar from "../shared/components/SectionProgressBar";
 import SideBarDetails from "../features/course/SideBarDetails";
 import { useCourse } from "../shared/hooks/useCourse";
+import PageLoading from "../shared/components/PageLoading";
 
 export default function CoursePage() {
   const { sections, objectives, isLoading } = useCourse();
@@ -14,7 +15,7 @@ export default function CoursePage() {
     <>
       <Header />
       {isLoading ? (
-        <p>Loading course...</p>
+        <PageLoading />
       ) : (
         <div className="progress-layout">
           <SectionProgressBar variant="course" sections={sections} />

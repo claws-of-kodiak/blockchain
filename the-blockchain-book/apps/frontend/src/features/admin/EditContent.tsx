@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "../../shared/components/Button";
 import { getObjective } from "../../services/courseClient";
 import SectionHeader from "./SectionHeader";
+import PageLoading from "../../shared/components/PageLoading";
 
 export default function EditContent() {
   const { objectiveId } = useParams();
@@ -44,7 +45,7 @@ export default function EditContent() {
     createContent.mutate(objectiveId);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <PageLoading />;
   return (
     <div className="edit-content-wrap">
       <SectionHeader

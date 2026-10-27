@@ -1,6 +1,7 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { Spinner } from "./Spinner";
 import "../../styles/button.css";
+import PageLoading from "./PageLoading";
 
 export type ButtonVariant = "base" | "hero" | "header"; // Your original archetypes
 export type ButtonSize = "sm" | "md" | "lg";
@@ -48,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {isLoading ? (
           <span className="btn__loading-content">
             <Spinner className="btn__spinner" />
-            <span>Loading...</span>
+            <PageLoading />
           </span>
         ) : (
           children
