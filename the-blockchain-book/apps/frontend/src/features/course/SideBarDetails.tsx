@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useCourse } from "../../shared/hooks/useCourse";
 import SideBarListItem from "./SideBarListItem";
+import type { Objective, Section } from "@repo/validations";
 
-function SideBarDetails() {
-  const { sections, objectives, isLoading } = useCourse();
+interface SideBarProps {
+  objectives: Objective[];
+  sections: Section[];
+}
+
+function SideBarDetails({ objectives, sections }: SideBarProps) {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>(
     {}
   );
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   const toggleSection = (sectionId: string) => {
     setOpenSections((prevState) => ({

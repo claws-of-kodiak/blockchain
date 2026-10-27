@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getContent } from "../../services/contentClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { useProgress } from "../../shared/hooks/useProgress";
+import StepControl from "./StepControl";
 
 export default function DisplayContent() {
   const { objectiveId } = useProgress().details;
@@ -18,6 +19,7 @@ export default function DisplayContent() {
   return (
     <div className="content-sidebar">
       <p>{data ? data.text : "No content from admin"}</p>
+      <StepControl />
     </div>
   );
 }

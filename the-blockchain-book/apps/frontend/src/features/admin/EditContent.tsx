@@ -22,6 +22,9 @@ export default function EditContent() {
   });
 
   const { updateContent, createContent } = useContentClient();
+  // Consider creating client hook content components (video, text, quiz, etc.)
+  // The content table should no longer just hold text but have keys that point to the contents component tables.
+  // Need some sort of edit shortcuts. Drag and drop components to reorder. Add new components. Delete components. Each component should have its own edit UI.
 
   // Update to session storage state and manage refresh
   const [content, setContent] = useState<string>("");
@@ -42,11 +45,10 @@ export default function EditContent() {
   };
 
   if (isLoading) return <p>Loading...</p>;
-  // NEED TO FIX REFRESH DATA
   return (
     <div className="edit-content-wrap">
       <SectionHeader
-        label={objective.label}
+        label={objective?.label}
         description={objective.description}
       />
       {data?.text ? (
@@ -58,6 +60,13 @@ export default function EditContent() {
           >
             {content}
           </textarea>
+          {/* <textarea
+            onChange={(e) => setQuestions(e.target.value)}
+            value={questions}
+            placeholder="No questions found"
+          >
+            {questions}
+          </textarea> */}
           <Button onClick={handleUpdate}>Save Content</Button>
         </>
       ) : (
