@@ -1,0 +1,12 @@
+.content-sidebar {
+  position: relative;
+  min-height: 100px; /* Ensure the container has enough height to notice the alignment */
+  height: 100%;
+}
+
+/* The parent container must have relative positioning */
+.step-control {
+  position: absolute; /* Ensure the parent container is positioned relatively */
+  right: 1px;
+  bottom: 14px;
+}

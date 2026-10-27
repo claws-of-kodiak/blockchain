@@ -3,6 +3,7 @@ import { getContent } from "../../services/contentClient";
 import ErrorMsg from "../../shared/components/ErrorMsg";
 import { useProgress } from "../../shared/hooks/useProgress";
 import StepControl from "./StepControl";
+import "../../styles/course/display-content.css";
 
 export default function DisplayContent() {
   const { objectiveId } = useProgress().details;
